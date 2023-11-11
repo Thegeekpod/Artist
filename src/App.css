@@ -70,6 +70,7 @@ button.theme-button.content-block-5__button::before  {
     -moz-transition: all 0.3s linear;
     -o-transition: all 0.3s linear;
     transition: all 0.3s linear;
+    margin: 15px 0px
   }
   
   .imgtitle {
