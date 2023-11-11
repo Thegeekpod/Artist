@@ -1,38 +1,134 @@
-.App {
-  text-align: center;
+
+
+  .svgicon {
+    fill: white;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+svg.e-font-icon-svg {
+    width: 38px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* Apply Flexbox to the row */
+.rowflex {
+    display: flex;
+    align-items: center;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  
+  /* Make each box flex and take up equal space */
+  .col-sm-12 {
+    flex: 1;
+    align-self: stretch;
   }
-  to {
-    transform: rotate(360deg);
+  
+  /* Optional: Add some margin or padding to the boxes */
+  .box {
+    margin: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
   }
+  
+  .box:hover {
+    background: black;
+}
+.box:hover p {
+    color: white; /* Change this to the desired text color */
+}
+
+.contitems{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.hourly {
+    background: white;
+    padding: 3px;
+    border-radius: 60px;
+}
+
+button.theme-button.content-block-5__button {
+    padding: 14px;
+    /* height: 37px; */
+    border-radius: 33px;
+}
+button.theme-button.content-block-5__button::before  {
+    padding: 14px;
+    /* height: 37px; */
+    border-radius: 33px;
+}
+/* imgbox */
+
+.imgbox {
+ 
+    position: relative;
+    overflow: hidden;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+  }
+  
+  .imgtitle {
+    background: #000000a6;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    /* left: 50%; */
+    margin-left: 5px;
+    margin-bottom: -40px;
+    width: 350px;
+    /* height: 30px; */
+    /* line-height: 30px; */
+    text-align: center;
+    opacity: 0;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    padding: 26px 25px;
+  }
+  
+ 
+ 
+  .imgbox:hover .imgtitle {
+    opacity: 1;
+    margin-bottom: 0px;
+  }
+  .imgbo{
+    width: 350px;
+    height: 250px;
+  }
+  /* like view  */
+  .like{
+    background: black;
+    padding: 9px;
+    border-radius: 23px;
+    font-size: 15px;
+}
+
+.coll-6 {
+    width: 50%;
+}
+.d-flex{
+    display: flex;
+}
+
+/* mobile  */
+
+@media only screen and (max-width: 768px) {
+    .rowflex {
+        display: block;
+  }
+  .imgtitle {
+   
+    /* left: 50%; */
+    margin-left: -10px;
+  }
+ .mcenter {
+    text-align: center;
+}
 }
