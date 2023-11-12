@@ -10,6 +10,8 @@ const Home = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000, // Set autoplay speed to 2 seconds
   };
   useEffect(() => {
     const script = document.createElement('script');
