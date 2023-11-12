@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
 const Header = () => {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = '/js/main.js';   //(This is external js url)
-    script.async = true;
-    document.body.appendChild(script);
-  }, [])
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleMenu = () => {
+    setIsActive(!isActive);
+  };
   return (
    <>
-      {/* <div
+      <div
       className="modal"
       tabIndex={-1}
       aria-labelledby="search_modal"
@@ -35,7 +34,7 @@ const Header = () => {
           </button>
         </form>
       </div>
-    </div> */}
+    </div>
      {/* Logo: contains logo in various header layouts */}
      <div className="ds page_toplogo">
           <div className="container">
@@ -72,7 +71,7 @@ const Header = () => {
                   </a>
                 </div>
               </div>
-              <div className="col-md-4 col-lg-4">
+              <div className="col-md-4 col-lg-4 m-none">
                 <ul className="controls-list text-right text-md-center">
                   <li className="dropdown login-dropdown my-account">
                     <a
@@ -84,7 +83,7 @@ const Header = () => {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      <span>Log in</span>
+                      <span>Sign In / Sign Up</span>
                     </a>
                     <div className="dropdown-menu" aria-labelledby="login">
                       <p>
@@ -137,13 +136,79 @@ const Header = () => {
         </div>
         {/* Header: contains site site Main Menu */}
         <header className="ds header-bg-1">
-          <div className="page_header">
+          <div className={`page_header  ${isActive ? 'mobile-active' : ''}`}>
             <div className="container">
               <div className="row">
-                <div className="col-lg-12 text-md-center">
-                  <span className="toggle_menu">
+                <div className="col-lg-12 text-md-right">
+                  <div className="d-flex">
+                  <div className='col-sm-6 coll-6 d-md-none' style={{width:"110%"}}>
+                  <ul className="controls-list text-right text-md-center">
+                  <li className="dropdown login-dropdown my-account">
+                    <a
+                      className="header-button"
+                      id="login"
+                      data-target="#"
+                      href="https://html.modernwebtemplates.com/"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <span>Sign In / Sign Up</span>
+                    </a>
+                    <div className="dropdown-menu" aria-labelledby="login">
+                      <p>
+                        <strong>If you have an account, please log in:</strong>
+                      </p>
+                      <form action="https://html.modernwebtemplates.com/">
+                        <div className="form-group">
+                          <label htmlFor="login_email">Email address</label>
+                          <input
+                            type="email"
+                            className="form-control"
+                            id="login_email"
+                            placeholder="Email Address"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor="login_password">Password</label>
+                          <input
+                            type="password"
+                            className="form-control"
+                            id="login_password"
+                            placeholder="Password"
+                          />
+                        </div>
+                        <button type="button" className="theme-button color1">
+                          Log in
+                        </button>
+                        <a
+                          href="shop-register.html"
+                          className="theme-button color2"
+                        >
+                          Register
+                        </a>
+                      </form>
+                      <div className="password-info topmargin_20">
+                        <a href="shop-register.html">Forgot Your Password?</a>
+                      </div>
+                    </div>
+                  </li>
+                 
+                  <li>
+                    <a href="#" className="search_modal_button serach-button">
+                      <i className="fa fa-search" aria-hidden="true" />
+                    </a>
+                  </li>
+                </ul>
+                  </div>
+                  <div className='col-sm-6 coll-6 '>
+                  <span   onClick={toggleMenu} className={`toggle_menu ${isActive ? 'mobile-active' : ''}`}>
                     <span />
+                    
                   </span>
+                  </div>
+                  </div>
+                 
                   {/* Main navigation start */}
                   <nav className="mainmenu_wrapper text-center">
                     <ul className="mainmenu nav sf-menu">

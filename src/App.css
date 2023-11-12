@@ -117,10 +117,20 @@ button.theme-button.content-block-5__button::before  {
 .d-flex{
     display: flex;
 }
-
+.d-md-none{
+    display: none;
+}
 /* mobile  */
-
+.m-none{
+    display: block;
+}
 @media only screen and (max-width: 768px) {
+    .d-md-none{
+        display: block;
+    }
+    .m-none{
+        display: none;
+    }
     .rowflex {
         display: block;
   }
