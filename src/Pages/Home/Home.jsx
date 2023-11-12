@@ -640,8 +640,8 @@ const Home = () => {
         <div className="container">
           <div className="row bottommargin_40">
             <div className="col-lg-12 text-center">
-              <h3 className="page-title-1">EQUIPMENT &amp; ACCESSORIES</h3>
-              <h6 className="subheader-type-1">No longer beyond your budget</h6>
+              <h3 className="page-title-1">FINE ART &amp; TATTOO</h3>
+              <h6 className="subheader-type-1">Artists that use incredible techniques to design unique creations like glow-in-the-dark tattoos</h6>
             </div>
            
           </div>
