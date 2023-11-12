@@ -14,7 +14,7 @@ const Footer = () => {
               </div>
               <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center text-center">
                 <figure className="footer-logo">
-                  <a href="index-2.html">
+                  <a href="/">
                     <img src="images/img_footer-logo.jpg" alt="" />
                   </a>
                 </figure>

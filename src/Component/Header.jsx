@@ -66,7 +66,7 @@ const Header = () => {
               </div>
               <div className="col-md-4 col-lg-4 text-center">
                 <div className="logo">
-                  <a href="index-2.html">
+                  <a href="/">
                     <img src="images/img_logo.jpg" alt="" />
                   </a>
                 </div>
@@ -112,14 +112,14 @@ const Header = () => {
                           Log in
                         </button>
                         <a
-                          href="shop-register.html"
+                          href="#"
                           className="theme-button color2"
                         >
                           Register
                         </a>
                       </form>
                       <div className="password-info topmargin_20">
-                        <a href="shop-register.html">Forgot Your Password?</a>
+                        <a href="#">Forgot Your Password?</a>
                       </div>
                     </div>
                   </li>
@@ -148,7 +148,7 @@ const Header = () => {
                       className="header-button"
                       id="login"
                       data-target="#"
-                      href="https://html.modernwebtemplates.com/"
+                      href="#"
                       data-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false"
@@ -159,7 +159,7 @@ const Header = () => {
                       <p>
                         <strong>If you have an account, please log in:</strong>
                       </p>
-                      <form action="https://html.modernwebtemplates.com/">
+                      <form action="#">
                         <div className="form-group">
                           <label htmlFor="login_email">Email address</label>
                           <input
@@ -182,14 +182,14 @@ const Header = () => {
                           Log in
                         </button>
                         <a
-                          href="shop-register.html"
+                          href="#"
                           className="theme-button color2"
                         >
                           Register
                         </a>
                       </form>
                       <div className="password-info topmargin_20">
-                        <a href="shop-register.html">Forgot Your Password?</a>
+                        <a href="#">Forgot Your Password?</a>
                       </div>
                     </div>
                   </li>
