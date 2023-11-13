@@ -1,15 +1,16 @@
 // UserContext.js
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useState, useEffect } from 'react';
 
-// Move the userReducer definition above its usage
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'SET_USER':
       const newState = { ...state, user: action.payload };
       localStorage.setItem('user', JSON.stringify(newState.user));
       return newState;
-    case 'SET_TOKEN': // Add case for setting the token
-      return { ...state, token: action.payload };
+    case 'SET_TOKEN':
+      const newTokenState = { ...state, token: action.payload };
+      localStorage.setItem('token', newTokenState.token);
+      return newTokenState;
     default:
       return state;
   }
@@ -17,10 +18,10 @@ const userReducer = (state, action) => {
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
-  token: null, // Initialize the token property
+  token: localStorage.getItem('token') || null,
 };
 
-const UserContext = createContext(initialState);
+const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
@@ -51,7 +52,7 @@ export const useUser = () => {
   return context;
 };
 
-// ... (rest of the code remains the same)
+
 
 // UserContext.js
 // ... (previous code)
