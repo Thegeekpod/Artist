@@ -18,7 +18,7 @@ const Profile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); 
 
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     // Replace 'your_api_endpoint' with the actual API endpoint you want to call
