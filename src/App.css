@@ -124,7 +124,13 @@ button.theme-button.content-block-5__button::before  {
 .m-none{
     display: block;
 }
+.white{
+    color: white;
+}
 @media only screen and (max-width: 768px) {
+    .m-padding-0{
+        padding: 0px;
+    }
     .d-md-none{
         display: block;
     }

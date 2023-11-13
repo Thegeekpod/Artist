@@ -6,6 +6,7 @@ import Home from './Pages/Home/Home';
 import Artis from './Pages/Arists/Artis';
 import Artist_about from './Pages/Arists/Artist-about';
 import Artist_picture from './Pages/Arists/Artist_picture';
+import Login from './Pages/Account/Login';
 function App() {
   const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ function App() {
       {
         path:'/:artist/:seq',
         element:<Artist_picture/>
+      },
+      {
+        path:'/login',
+        element:<Login/>
       }
     ]
 
