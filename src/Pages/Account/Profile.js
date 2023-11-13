@@ -21,7 +21,7 @@ const Profile = () => {
 
   useEffect(() => {
     // Replace 'your_api_endpoint' with the actual API endpoint you want to call
-    const apiUrl = 'http://sweetdevelopers.com/artist/api/artist';
+    const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
 
     // Ensure that there is a valid token before making the API call
     if (!token) {
