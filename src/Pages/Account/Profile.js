@@ -36,8 +36,8 @@ const Profile = () => {
     // Make the API call using Axios
     axios.get(apiUrl, axiosConfig)
       .then(response => {
-        setData(response.data.artworks);
-        console.log(response.data.artworks);
+        setData(response.data.data.artworks);
+        console.log(response.data.data.artworks);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
