@@ -26,9 +26,15 @@ export const UserProvider = ({ children }) => {
     dispatch({ type: 'SET_USER', payload: user });
   };
 
+  const setToken = (token) => {
+    dispatch({ type: 'SET_TOKEN', payload: token });
+  };
+
   const contextValue = {
     user: state.user,
+    token: state.token,
     setUser,
+    setToken,
   };
 
   return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;

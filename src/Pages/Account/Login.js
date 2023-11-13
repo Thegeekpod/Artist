@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { isAuthenticated, useUser } from './UserContext';
 
 const Login = () => {
-    const { user, setUser } = useUser();
+    const { setToken, setUser } = useUser();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
    const navigate=  useNavigate();
@@ -29,6 +29,7 @@ const Login = () => {
   
         // Assuming the API response contains user information
         setUser(data.data);
+        setToken(data.token);
         console.log(data.data);
         navigate('/profile')
 
