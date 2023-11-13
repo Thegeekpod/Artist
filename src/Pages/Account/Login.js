@@ -10,7 +10,7 @@ const Login = () => {
       e.preventDefault();
   
       try {
-        const response = await axios.post('http://sweetdevelopers.com/artist/api/login', {
+        const response = await axios.post('https://sweetdevelopers.com/artist/api/login', {
           email,
           password,
         });
