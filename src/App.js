@@ -7,6 +7,8 @@ import Artis from './Pages/Arists/Artis';
 import Artist_about from './Pages/Arists/Artist-about';
 import Artist_picture from './Pages/Arists/Artist_picture';
 import Login from './Pages/Account/Login';
+import Profile from './Pages/Account/Profile';
+import { UserProvider } from './Pages/Account/UserContext';
 function App() {
   const router = createBrowserRouter([
     {
@@ -31,13 +33,20 @@ function App() {
       {
         path:'/login',
         element:<Login/>
+      },
+      {
+        path:'/profile',
+        element:<Profile/>
       }
     ]
 
     }
   ])
   return (
+    <UserProvider>
 <RouterProvider router={router}/>
+
+    </UserProvider>
   );
 }
 

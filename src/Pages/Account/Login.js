@@ -1,11 +1,21 @@
 import axios from 'axios';
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { isAuthenticated, useUser } from './UserContext';
 
 const Login = () => {
+    const { user, setUser } = useUser();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-  
+   const navigate=  useNavigate();
+   useEffect(() => {
+    // Check if the user is authenticated when the component mounts
+    if (!isAuthenticated()) {
+      // Redirect to the login page if not authenticated
+      navigate('/profile');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
     const handleFormSubmit = async (e) => {
       e.preventDefault();
   
@@ -15,9 +25,14 @@ const Login = () => {
           password,
         });
   
-        // Handle the API response as needed.
         const data = response.data;
-       console.log(data)
+  
+        // Assuming the API response contains user information
+        setUser(data.user);
+        navigate('/profile')
+
+  
+        // You can also redirect the user or perform other actions based on the successful login.
       } catch (error) {
         console.error('Error submitting form:', error);
         // Handle errors appropriately, update state, show error messages, etc.
