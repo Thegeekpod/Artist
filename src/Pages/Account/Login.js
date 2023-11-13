@@ -28,8 +28,8 @@ const Login = () => {
         const data = response.data;
   
         // Assuming the API response contains user information
-        setUser(data);
-        console.log(data);
+        setUser(data.data);
+        console.log(data.data);
         navigate('/profile')
 
   

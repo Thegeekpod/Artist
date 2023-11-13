@@ -46,7 +46,10 @@ const Profile = () => {
           </div>
         </div>
         <div className="col-md-8 offset-sm-top--10">
-        <h3 class="page-title-1 text-center ">{artist}</h3>
+        <h3 class="page-title-1 text-center ">{user.name}</h3>
+        <p className="fst-italic h3 font-size-22 font-secondary offset-top-17 text-regular">
+        {user.supriyo}
+          </p>
         <dl className="dl-horizontal-mod-3 offset-top-34">
               <dt>
                 <span className="icon icon-sm-1 text-dark mdi mdi-cellphone-android text-middle" />
@@ -64,13 +67,13 @@ const Profile = () => {
                   className="h4 text-regular text-middle text-lightener"
                   href="mailto:#"
                 >
-                <i class="fa fa-envelope white" aria-hidden="true"> saramorgan@demolink.org</i>  
+                <i class="fa fa-envelope white" aria-hidden="true"> {user.email}</i>  
                 </a> {'\u00A0'} </li>
                 <li> <a
                   className="h4 text-regular text-middle text-lightener"
                   href="tel:#"
                 >
-                 <i class="fa fa-phone white" aria-hidden="true"> 1-800-1234-567</i> 
+                 <i class="fa fa-phone white" aria-hidden="true"> {user.phone}</i> 
                 </a></li>
               <li>
               <i class="fa fa-facebook" aria-hidden="true"></i>
