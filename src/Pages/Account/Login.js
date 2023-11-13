@@ -10,7 +10,7 @@ const Login = () => {
    const navigate=  useNavigate();
    useEffect(() => {
     // Check if the user is authenticated when the component mounts
-    if (!isAuthenticated()) {
+    if (isAuthenticated()) {
       // Redirect to the login page if not authenticated
       navigate('/profile');
     }

@@ -43,10 +43,9 @@ function App() {
     }
   ])
   return (
-    <UserProvider>
 <RouterProvider router={router}/>
 
-    </UserProvider>
+  
   );
 }
 
