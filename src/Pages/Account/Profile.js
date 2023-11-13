@@ -547,33 +547,7 @@ const Profile = () => {
      
     </div>
     <div className='row text-center'>
-    {data ? (
-      <div className="row">
-        {/* Map over the data array and render something for each item */}
-        {data.map(item => (
-          <div className="col-lg-4" key={item.id}>
-            <div className="imgbox">
-              <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title} />
-              <div className="imgtitle">
-                <h4 className="page-title-1" style={{ color: 'white' }}>
-                  {item.title}
-                </h4>
-                <div className="row d-flex">
-                  <div className="col-6 text-left">
-                    <i className="fa fa-thumbs-up like" aria-hidden="true"> 100</i>
-                  </div>
-                  <div className="col-6 text-right">
-                    <i className="fa fa-eye like" aria-hidden="true"> 200</i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    ) : (
-      <p>Loading...</p>
-    )}
+    
       
       </div>
   </div>
