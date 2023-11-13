@@ -6,23 +6,18 @@ import axios from 'axios';
 const Profile = () => {
   let { artist } = useParams();
   let { seq } = useParams();
-  const {user,token}= useUser(); 
-  console.log(token);
-  const navigate = useNavigate()
-  useEffect(() => {
-    // Check if the user is authenticated when the component mounts
-    if (!isAuthenticated()) {
-      // Redirect to the login page if not authenticated
-      navigate('/login');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
-
+  const { user, token } = useUser();
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Replace 'your_api_endpoint' with the actual API endpoint you want to call
     const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
+
+    // Check if the user is authenticated when the component mounts
+    if (!isAuthenticated()) {
+      navigate('/login');
+      return;
+    }
 
     // Ensure that there is a valid token before making the API call
     if (!token) {
@@ -33,7 +28,7 @@ const Profile = () => {
     // Axios request configuration with the bearer token in the headers
     const axiosConfig = {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json', // Adjust content type based on your API requirements
       },
     };
@@ -41,13 +36,15 @@ const Profile = () => {
     // Make the API call using Axios
     axios.get(apiUrl, axiosConfig)
       .then(response => {
-        setData(response.data);
-        console.log(response.data);
+        setData(response.data.artworks);
+        console.log(response.data.artworks);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, [token]);
+  }, [token, isAuthenticated, navigate]);
+
+  // ... rest of your component code
   return (
     <>
     <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
@@ -547,7 +544,33 @@ const Profile = () => {
      
     </div>
     <div className='row text-center'>
-    
+    {data ? (
+      <div className="row">
+        {/* Map over the data array and render something for each item */}
+        {data.map(item => (
+          <div className="col-lg-4" key={item.id}>
+            <div className="imgbox">
+              <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title} />
+              <div className="imgtitle">
+                <h4 className="page-title-1" style={{ color: 'white' }}>
+                  {item.title}
+                </h4>
+                <div className="row d-flex">
+                  <div className="col-6 text-left">
+                    <i className="fa fa-thumbs-up like" aria-hidden="true"> 100</i>
+                  </div>
+                  <div className="col-6 text-right">
+                    <i className="fa fa-eye like" aria-hidden="true"> 200</i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p>Loading...</p>
+    )}
       
       </div>
   </div>
