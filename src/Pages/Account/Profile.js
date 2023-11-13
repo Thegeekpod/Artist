@@ -7,6 +7,7 @@ const Profile = () => {
   let { artist } = useParams();
   let { seq } = useParams();
   const {user,token}= useUser(); 
+  console.log(token);
   const navigate = useNavigate()
   useEffect(() => {
     // Check if the user is authenticated when the component mounts
@@ -40,7 +41,7 @@ const Profile = () => {
     // Make the API call using Axios
     axios.get(apiUrl, axiosConfig)
       .then(response => {
-        setData(response.data.artworks);
+        setData(response.data);
         console.log(response.data);
       })
       .catch(error => {
