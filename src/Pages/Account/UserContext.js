@@ -8,6 +8,8 @@ const userReducer = (state, action) => {
       const newState = { ...state, user: action.payload };
       localStorage.setItem('user', JSON.stringify(newState.user));
       return newState;
+    case 'SET_TOKEN': // Add case for setting the token
+      return { ...state, token: action.payload };
     default:
       return state;
   }
@@ -15,6 +17,7 @@ const userReducer = (state, action) => {
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
+  token: null, // Initialize the token property
 };
 
 const UserContext = createContext(initialState);
@@ -47,6 +50,8 @@ export const useUser = () => {
   }
   return context;
 };
+
+// ... (rest of the code remains the same)
 
 // UserContext.js
 // ... (previous code)
