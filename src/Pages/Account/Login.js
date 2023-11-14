@@ -7,6 +7,7 @@ const Login = () => {
     const { setToken, setUser } = useUser();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const[error,setError] = useState(false);
    const navigate=  useNavigate();
    useEffect(() => {
     // Check if the user is authenticated when the component mounts
@@ -16,31 +17,45 @@ const Login = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); 
-    const handleFormSubmit = async (e) => {
-      e.preventDefault();
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
   
-      try {
-        
-        const response = await axios.post('https://sweetdevelopers.com/artist/api/login', {
-          email,
-          password,
-        });
+    try {
+      const proxyUrl = 'https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/login';
   
-        const data = response.data;
+      const response = await axios.post(proxyUrl, {
+        email,
+        password,
+      });
   
-        // Assuming the API response contains user information
+      const data = response.data;
+  
+      if (data.status === false) {
+        // Handle incorrect ID or password scenario
+        console.error('Incorrect ID or password');
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 5000);
+        // You might want to update state, show an error message, etc.
+      } else if (data.status === true) {
+        setError(true);
+        // Handle successful login scenario
         setUser(data.data);
         setToken(data.token);
         console.log(data.data);
-        navigate('/profile')
-
-  
+        navigate('/profile');
         // You can also redirect the user or perform other actions based on the successful login.
-      } catch (error) {
-        console.error('Error submitting form:', error);
-        // Handle errors appropriately, update state, show error messages, etc.
+      } else {
+        // Handle other scenarios if needed
       }
-    };
+  
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Handle errors appropriately, update state, show error messages, etc.
+    }
+  };
+  
       
   return (
     <>
@@ -70,6 +85,8 @@ const Login = () => {
         <div className="row">
         <form className="shop-register" onSubmit={handleFormSubmit}>
       <div className="col-sm-12">
+      {error && <p className='error'> Incorrect email or password</p>}
+
         <div
           className="form-group validate-required validate-email"
           id="billing_email_field"
@@ -94,7 +111,7 @@ const Login = () => {
             <span className="required">*</span>
           </label>
           <input
-            type="text"
+            type="password"
             className="form-control"
             name="billing_password"
             id="billing_password"

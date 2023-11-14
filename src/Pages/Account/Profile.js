@@ -3,12 +3,26 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { isAuthenticated, useUser } from './UserContext';
 import axios from 'axios';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
+import 'swiper/css/mousewheel';
+import 'swiper/css/bundle';
+import 'swiper/css/navigation';
+
+// import required modules
+import { EffectCoverflow, Pagination,Autoplay ,Mousewheel,Navigation} from 'swiper/modules';
 const Profile = () => {
   let { artist } = useParams();
   let { seq } = useParams();
-  const { user, token } = useUser();
+  const { token } = useUser();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [user, setUserData] = useState([]);
 
   useEffect(() => {
     const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
@@ -19,11 +33,12 @@ const Profile = () => {
       return;
     }
 
-    // Ensure that there is a valid token before making the API call
-    if (!token) {
-      console.error('No token available.');
-      return;
-    }
+    // // Ensure that there is a valid token before making the API call
+    // if (!token) {
+    //   console.error('No token available.');
+    //   navigate('/login');
+    //   return;
+    // }
 
     // Axios request configuration with the bearer token in the headers
     const axiosConfig = {
@@ -37,6 +52,7 @@ const Profile = () => {
     axios.get(apiUrl, axiosConfig)
       .then(response => {
         setData(response.data.data.artworks);
+        setUserData(response.data.data);
         console.log(response.data.data.artworks);
       })
       .catch(error => {
@@ -44,7 +60,7 @@ const Profile = () => {
       });
   }, [token, isAuthenticated, navigate]);
 
-  // ... rest of your component code
+  
   return (
     <>
     <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
@@ -67,8 +83,7 @@ const Profile = () => {
          src={`https://sweetdevelopers.com/artist/storage/ProfileImage/${user?.profile_image}`}
 
           alt=""
-          width={310}
-          height={310}
+          style={{ width:'100%'}}
         />
       </div>
    
@@ -76,9 +91,9 @@ const Profile = () => {
      
     </div>
   </div>
-  <div className="col-md-8 offset-sm-top--10">
+  <div className="col-md-8 m-padding-0 offset-sm-top--10">
   <h3 class="page-title-1 text-center ">{user?.name}</h3>
-  <p className="fst-italic h3 font-size-22 font-secondary offset-top-17 text-regular">
+  <p className="fst-italic h3 font-size-22 font-secondary offset-top-17 text-regular" style={{margin:"0px"}}>
   {user?.username}
     </p>
   <dl className="dl-horizontal-mod-3 offset-top-34">
@@ -99,13 +114,13 @@ const Profile = () => {
             href="mailto:#"
           >
           <i class="fa fa-envelope white" aria-hidden="true"> {user?.email}</i>  
-          </a> {'\u00A0'} </li>
+          </a> {'\u00A0'} </li>{'\u00A0'}
           <li> <a
             className="h4 text-regular text-middle text-lightener"
             href="tel:#"
           >
            <i class="fa fa-phone white" aria-hidden="true"> {user?.phone}</i> 
-          </a></li>
+          </a></li>{'\u00A0'}
         <li>
         <i class="fa fa-facebook" aria-hidden="true"></i>
         </li>
@@ -121,7 +136,7 @@ const Profile = () => {
       </ul>
         </dd>
       </dl>
-    <img src='/images/Screenshot-2023-09-03-160739.png'/>
+    <img src='/images/Screenshot-2023-09-03-160739.png' style={{ width:'80%'}}/>
     
     {/* PhotoSwipe*/}
    
@@ -175,9 +190,64 @@ const Profile = () => {
   </div>
 </div>
 {/* Breadcrumbs*/}
+<div className="ds ms section_padding_top_60 section_padding_bottom_10 tab-recent-work">
+<div className="container">
+<Swiper
+        effect={'coverflow'}
+        grabCursor={true}
+        centeredSlides={true}
+        slidesPerView={'auto'}
+        coverflowEffect={{
+          rotate: 80,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }}
+        loop={true}
+                autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false
+                }}
+        pagination={true}
+        mousewheel={true} 
+        modules={[EffectCoverflow, Pagination,Autoplay,Mousewheel,Navigation]}
+        className="mySwiper"
+      >
+        <SwiperSlide>
+          <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
+        </SwiperSlide>
+      </Swiper>
+</div>
+</div>
+
 <div className="ds section_padding_top_105 section_padding_bottom_120 parallax-block-1 parallax">
   <div className="container">
-    <h3 class="page-title-1 text-center ">Highlights From Caymus Tattoos</h3>
+    <h3 class="page-title-1 text-center ">Highlights From {user?.username}</h3>
     <div className="row rowflex">
 
       <div className=" box col-sm-12 col-md-4 col-lg-4">
@@ -289,152 +359,78 @@ const Profile = () => {
     <div className="row bottommargin_40">
       <div className="col-lg-12 text-center">
         <h3 className="page-title-1">
-          GOOD TATTOOS ARE NOT CHEAP &amp; CHEAP TATTOOS ARE NOT GOOD
+        Hours Of Operation
         </h3>
-        <h6 className="subheader-type-1">
+        {/* <h6 className="subheader-type-1">
           Creating Great Tattoos For Over 29 Years
-        </h6>
+        </h6> */}
       </div>
     </div>
     <div className="row vertical-tabs vertical-tabs-type-1 vertical-tabs--position">
-      <div className="col-sm-12 col-md-3 col-lg-3">
-        {/* Nav tabs */}
-        <ul className="nav" role="tablist">
-          <li className="active">
-            <a href="#vertical-tab1" role="tab" data-toggle="tab">
-              <figure className="vertical-tabs-type-1__img">
-                <img
-                  src="images/services/navs_services/img_navs_services-01.jpg"
-                  alt=""
-                />
-              </figure>
-              <span className="vertical-tabs-type-1__cont">
-                Tattoo design
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#vertical-tab2" role="tab" data-toggle="tab">
-              <figure className="vertical-tabs-type-1__img">
-                <img
-                  src="images/services/navs_services/img_navs_services-02.jpg"
-                  alt=""
-                />
-              </figure>
-              <span className="vertical-tabs-type-1__cont">
-                Tattoo removal
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#vertical-tab3" role="tab" data-toggle="tab">
-              <figure className="vertical-tabs-type-1__img">
-                <img
-                  src="images/services/navs_services/img_navs_services-03.jpg"
-                  alt=""
-                />
-              </figure>
-              <span className="vertical-tabs-type-1__cont">
-                Special Occasions
-              </span>
-            </a>
-          </li>
-        </ul>
+    <div className="col-sm-12 col-md-12 col-lg-12">
+    <div className="col-sm-12 col-md-6 col-lg-6">
+    <table className="table">
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Opening Time</th>
+      <th>Closing Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mon</td>
+      <td>9:00 AM</td>
+      <td>6:00 PM</td>
+    </tr>
+    <tr>
+      <td>Tue</td>
+      <td>9:00 AM</td>
+      <td>6:00 PM</td>
+    </tr>
+    <tr>
+      <td>Wed</td>
+      <td>9:00 AM</td>
+      <td>6:00 PM</td>
+    </tr>
+    <tr>
+      <td>Thu</td>
+      <td>9:00 AM</td>
+      <td>6:00 PM</td>
+    </tr>
+    <tr>
+      <td>Fri</td>
+      <td>9:00 AM</td>
+      <td>6:00 PM</td>
+    </tr>
+    <tr>
+      <td>Sat</td>
+      <td>9:00 AM</td>
+      <td>6:00 PM</td>
+    </tr>
+    <tr>
+      <td>Sun</td>
+      <td>9:00 AM</td>
+      <td>6:00 PM</td>
+    </tr>
+  </tbody>
+</table>
+
       </div>
       <div className="col-sm-12 col-md-6 col-lg-6">
-        {/* Tab panes */}
-        <div className="tab-content tab-content-type-1">
-          <div className="tab-pane fade in active" id="vertical-tab1">
-            <figure className="tab-content-type-1__img">
-              <img src="images/content_block/img_content-05.png" alt="" />
-            </figure>
-          </div>
-          <div className="tab-pane fade" id="vertical-tab2">
-            <figure className="tab-content-type-1__img">
-              <img src="images/content_block/img_content-05.png" alt="" />
-            </figure>
-          </div>
-          <div className="tab-pane fade" id="vertical-tab3">
-            <figure className="tab-content-type-1__img">
-              <img src="images/content_block/img_content-05.png" alt="" />
-            </figure>
-          </div>
-          <div className="tab-pane fade" id="vertical-tab4">
-            <figure className="tab-content-type-1__img">
-              <img src="images/content_block/img_content-05.png" alt="" />
-            </figure>
-          </div>
-          <div className="tab-pane fade" id="vertical-tab5">
-            <figure className="tab-content-type-1__img">
-              <img src="images/content_block/img_content-05.png" alt="" />
-            </figure>
-          </div>
-          <div className="tab-pane fade" id="vertical-tab6">
-            <figure className="tab-content-type-1__img">
-              <img src="images/content_block/img_content-05.png" alt="" />
-            </figure>
-          </div>
-        </div>
-      </div>
-      <div className="col-sm-12 col-md-3 col-lg-3">
-        {/* Nav tabs */}
-        <ul className="nav" role="tablist">
-          <li>
-            <a href="#vertical-tab4" role="tab" data-toggle="tab">
-              <figure className="vertical-tabs-type-1__img">
-                <img
-                  src="images/services/navs_services/img_navs_services-04.jpg"
-                  alt=""
-                />
-              </figure>
-              <span className="vertical-tabs-type-1__cont">
-                Henna design
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#vertical-tab5" role="tab" data-toggle="tab">
-              <figure className="vertical-tabs-type-1__img">
-                <img
-                  src="images/services/navs_services/img_navs_services-05.jpg"
-                  alt=""
-                />
-              </figure>
-              <span className="vertical-tabs-type-1__cont">
-                Body Piercing
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#vertical-tab6" role="tab" data-toggle="tab">
-              <figure className="vertical-tabs-type-1__img">
-                <img
-                  src="images/services/navs_services/img_navs_services-06.jpg"
-                  alt=""
-                />
-              </figure>
-              <span className="vertical-tabs-type-1__cont">
-                Body Modification
-              </span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div className="col-sm-12 col-md-12 col-lg-12">
-        <div className='container'>
-          <div className='row hourly'>
-            <div className="col-lg-6 col-sm-12 text-left mcenter">
-              <h4 style={{ margin: "8px 12px" }}>Hours Of Operation</h4>
-              <strong style={{ margin: "8px 12px" }} > Monday- Sunday 9.00 am - 6.00 pm</strong>
-            </div>
-            <div className="col-lg-6 col-sm-12 text-right mcenter" style={{ padding: '15px' }}>
+<iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3313.3924725342317!2d-117.87323959999999!3d33.8537749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dcd68b71684c3f%3A0xc0b18d5029e17291!2s2769%20E%20Regal%20Park%20Dr%2C%20Anaheim%2C%20CA%2092806%2C%20USA!5e0!3m2!1sen!2sin!4v1699897960457!5m2!1sen!2sin"
 
-              <button class="theme-button content-block-5__button">Contact Us</button>
 
-            </div>
-          </div>
-        </div>
-      </div>
+  style={{ border: 0 , width:'100%',height:'300px'}}
+  allowFullScreen=""
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+/>
+
+</div>
+    </div>
+     
     </div>
   </div>
 </div>
@@ -545,29 +541,35 @@ const Profile = () => {
     </div>
     <div className='row text-center'>
     {data ? (
-      <div className="row">
+  <>
         {/* Map over the data array and render something for each item */}
         {data.map(item => (
-          <div className="col-lg-4" key={item.id}>
-            <div className="imgbox">
-              <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title} />
-              <div className="imgtitle">
-                <h4 className="page-title-1" style={{ color: 'white' }}>
-                  {item.title}
+              <div className="col-lg-4 "  key={item.id}>
+              <div class="imgbox">
+              <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title}  />
+ <div className='imgtitle'>
+                <h4 class="page-title-1 " style={{color:'white'}}>
+                {item.title} 
                 </h4>
                 <div className="row d-flex">
-                  <div className="col-6 text-left">
-                    <i className="fa fa-thumbs-up like" aria-hidden="true"> 100</i>
+                  
+                  <div className="coll-6 text-left">
+                  
+                  <i class="fa fa-thumbs-up like" aria-hidden="true"> 100</i>
+                      
+                   
+
                   </div>
-                  <div className="col-6 text-right">
-                    <i className="fa fa-eye like" aria-hidden="true"> 200</i>
+                  <div className="coll-6 text-right">
+                  <i class="fa fa-eye like" aria-hidden="true"> 200</i>
                   </div>
                 </div>
+                </div>
+              
               </div>
-            </div>
-          </div>
+              </div>
         ))}
-      </div>
+  </>
     ) : (
       <p>Loading...</p>
     )}

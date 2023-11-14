@@ -100,8 +100,8 @@ button.theme-button.content-block-5__button::before  {
     margin-bottom: 0px;
   }
   .imgbo{
-    width: 350px;
-    height: 250px;
+    width: 350px !important;
+    height: 250px !important;
   }
   /* like view  */
   .like{
@@ -128,6 +128,11 @@ button.theme-button.content-block-5__button::before  {
     color: white;
 }
 @media only screen and (max-width: 768px) {
+  .list-inline>li {
+    display: inline-block;
+    padding-right: 8px;
+    padding-left: 8px;
+}
     .m-padding-0{
         padding: 0px;
     }
@@ -148,4 +153,55 @@ button.theme-button.content-block-5__button::before  {
  .mcenter {
     text-align: center;
 }
+}
+
+
+
+
+
+table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+table, th, td {
+  border: 1px solid #ddd;
+}
+th, td {
+  padding: 15px;
+  text-align: center;
+}
+th {
+  background-color: #f2f2f2;
+}
+
+.swiper {
+  width: 100%;
+  padding-top: 50px !important;
+  padding-bottom: 50px !important;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px !important;
+  height: 300px !important;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+}
+.logout{
+  width: auto !important;
+
+  right: -5px !important;
+  padding: 5px !important;
+  
+}
+.error{
+  background: red;
+  color: wheat;
+  text-align: center;
+  padding: 2px;
 }

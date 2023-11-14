@@ -1,16 +1,26 @@
 // UserContext.js
-import React, { createContext, useContext, useReducer, useState, useEffect } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'SET_USER':
-      const newState = { ...state, user: action.payload };
-      localStorage.setItem('user', JSON.stringify(newState.user));
-      return newState;
+      if (action.payload) {
+        const newState = { ...state, user: action.payload };
+        localStorage.setItem('user', JSON.stringify(newState.user));
+        return newState;
+      }
+      return state;
     case 'SET_TOKEN':
-      const newTokenState = { ...state, token: action.payload };
-      localStorage.setItem('token', newTokenState.token);
-      return newTokenState;
+      if (action.payload) {
+        const newTokenState = { ...state, token: action.payload };
+        localStorage.setItem('token', newTokenState.token);
+        return newTokenState;
+      }
+      return state;
+    case 'LOGOUT':
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      return { user: null, token: null };
     default:
       return state;
   }
@@ -34,11 +44,16 @@ export const UserProvider = ({ children }) => {
     dispatch({ type: 'SET_TOKEN', payload: token });
   };
 
+  const logout = () => {
+    dispatch({ type: 'LOGOUT' });
+  };
+
   const contextValue = {
     user: state.user,
     token: state.token,
     setUser,
     setToken,
+    logout,
   };
 
   return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
@@ -52,14 +67,8 @@ export const useUser = () => {
   return context;
 };
 
-
-
-// UserContext.js
-// ... (previous code)
-
 export const isAuthenticated = () => {
   const user = JSON.parse(localStorage.getItem('user'));
-  return user !== null && user !== undefined;
+  const token = localStorage.getItem('token');
+  return user !== null && user !== undefined && token !== null && token !== undefined;
 };
-
-// ... (rest of the code remains the same)

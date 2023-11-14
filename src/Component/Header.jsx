@@ -1,11 +1,63 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
+import axios from 'axios';
+import { isAuthenticated,useUser } from '../Pages/Account/UserContext';
 const Header = () => {
   const [isActive, setIsActive] = useState(false);
-
+  const { setUser, setToken,user,token ,logout} = useUser();
+  const navigate = useNavigate();
   const toggleMenu = () => {
     setIsActive(!isActive);
+  };
+  //login
+
+  const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const[error,setError] = useState(false);
+    const handleFormSubmit = async (e) => {
+      e.preventDefault();
+    
+      try {
+        const proxyUrl = 'https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/login';
+    
+        const response = await axios.post(proxyUrl, {
+          email,
+          password,
+        });
+    
+        const data = response.data;
+    
+        if (data.status === false) {
+          // Handle incorrect ID or password scenario
+          console.error('Incorrect ID or password');
+          setError(true);
+          setTimeout(() => {
+            setError(false);
+          }, 5000);
+          // You might want to update state, show an error message, etc.
+        } else if (data.status === true) {
+          setError(true);
+          // Handle successful login scenario
+          setUser(data.data);
+          setToken(data.token);
+          console.log(data.data);
+          navigate('/profile');
+          // You can also redirect the user or perform other actions based on the successful login.
+        } else {
+          // Handle other scenarios if needed
+        }
+    
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        // Handle errors appropriately, update state, show error messages, etc.
+      }
+    };
+
+    //logout
+  const handleLogout = () => {
+    logout();
+    navigate('/login')
   };
   return (
    <>
@@ -73,8 +125,12 @@ const Header = () => {
               </div>
               <div className="col-md-4 col-lg-4 m-none">
                 <ul className="controls-list text-right text-md-center">
-                  <li className="dropdown login-dropdown my-account">
-                    <a
+                  
+                  {isAuthenticated() ? (
+                    <li className="dropdown login-dropdown my-account">
+
+                   
+<a
                       className="header-button"
                       id="login"
                       data-target="#"
@@ -83,46 +139,84 @@ const Header = () => {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
+                      
+                      <span> Welcome {user?.name}</span>
+                    </a>
+                    <div className="dropdown-menu logout" aria-labelledby="login" onClick={handleLogout}>
+                      Log Out
+                    </div>
+        </li>
+      ) : (
+       <>
+       <li className="dropdown login-dropdown my-account ">
+        <a
+                      className="header-button"
+                      id="login"
+                      data-target="#"
+                      href="https://html.modernwebtemplates.com/"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      
                       <span>Sign In / Sign Up</span>
                     </a>
                     <div className="dropdown-menu" aria-labelledby="login">
                       <p>
                         <strong>If you have an account, please log in:</strong>
                       </p>
-                      <form action="https://html.modernwebtemplates.com/">
-                        <div className="form-group">
-                          <label htmlFor="login_email">Email address</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="login_email"
-                            placeholder="Email Address"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="login_password">Password</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="login_password"
-                            placeholder="Password"
-                          />
-                        </div>
-                        <button type="button" className="theme-button color1">
-                          Log in
-                        </button>
-                        <a
-                          href="#"
-                          className="theme-button color2"
-                        >
-                          Register
-                        </a>
-                      </form>
+                      <form className="shop-register" onSubmit={handleFormSubmit}>
+      <div >
+      {error && <p className='error'> Incorrect email or password</p>}
+
+        <div
+          className="form-group "
+         
+        >
+          <label htmlFor="login_email" className="control-label">
+            <span className="grey">Email Address </span>
+            <span className="required">*</span>
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            name="login_email"
+          
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group" >
+          <label htmlFor="login_password" className="control-label">
+            <span className="grey">Password</span>
+            <span className="required">*</span>
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            name="login_password"
+           
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div >
+        <button type="submit" className="theme-button">
+          Login
+        </button>
+      </div>
+    </form>
                       <div className="password-info topmargin_20">
                         <a href="#">Forgot Your Password?</a>
                       </div>
                     </div>
-                  </li>
+                    </li>
+       </>
+      )}
+                   
                  
                   <li>
                     <a href="#" className="search_modal_button serach-button">
@@ -159,35 +253,50 @@ const Header = () => {
                       <p>
                         <strong>If you have an account, please log in:</strong>
                       </p>
-                      <form action="#">
-                        <div className="form-group">
-                          <label htmlFor="login_email">Email address</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="login_email"
-                            placeholder="Email Address"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="login_password">Password</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="login_password"
-                            placeholder="Password"
-                          />
-                        </div>
-                        <button type="button" className="theme-button color1">
-                          Log in
-                        </button>
-                        <a
-                          href="#"
-                          className="theme-button color2"
-                        >
-                          Register
-                        </a>
-                      </form>
+                      <form className="shop-register" onSubmit={handleFormSubmit}>
+      <div className="col-sm-12">
+      {error && <p className='error'> Incorrect email or password</p>}
+
+        <div
+          className="form-group "
+         
+        >
+          <label htmlFor="login_email" className="control-label">
+            <span className="grey">Email Address </span>
+            <span className="required">*</span>
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            name="login_email"
+          
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group" >
+          <label htmlFor="login_password" className="control-label">
+            <span className="grey">Password</span>
+            <span className="required">*</span>
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            name="login_password"
+           
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="col-sm-12">
+        <button type="submit" className="theme-button">
+          Login
+        </button>
+      </div>
+    </form>
                       <div className="password-info topmargin_20">
                         <a href="#">Forgot Your Password?</a>
                       </div>
@@ -213,7 +322,7 @@ const Header = () => {
                   <nav className="mainmenu_wrapper text-center">
                     <ul className="mainmenu nav sf-menu">
                       <li className="">
-                        <a href="/">Home</a>
+                        <Link to="/">Home</Link>
                       </li>
                       {/* Pages */}
                       <li>
