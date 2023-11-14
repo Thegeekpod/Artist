@@ -140,7 +140,7 @@ const Header = () => {
                       aria-expanded="false"
                     >
                       
-                      <span> Welcome {user?.name}</span>
+                      <span onClick={()=>navigate('/profile')}> Welcome {user?.name}</span>
                     </a>
                     <div className="dropdown-menu logout" aria-labelledby="login" onClick={handleLogout}>
                       Log Out
