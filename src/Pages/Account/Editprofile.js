@@ -30,7 +30,7 @@ const Editprofile = () => {
       });
       const [artdata, setArtData] = useState([]);
       const [bannerImagedata, setBannerimageData] = useState([]);
-      const [timedata,setTimedata]=useState([]);
+      // const [timedata,setTimedata]=useState([]);
       const {token,user} = useUser();
       const [sucess , setSucess]= useState(false);
       const navigate = useNavigate();
@@ -69,7 +69,24 @@ const Editprofile = () => {
       }, [token, isAuthenticated, navigate]);
     
       //Edit Your Personal Information
-      const handleInputChange = (e) => {
+      const [timedata, setTimedata] = useState({
+        sunday_from: '',
+        sunday_to: '',
+        monday_from: '',
+        monday_to: '',
+        tuesday_from: '',
+        tuesday_to: '',
+        wednesday_from: '',
+        wednesday_to: '',
+        thrusday_from: '',
+        thrusday_to: '',
+        friday_from: '',
+        friday_to: '',
+        saterday_from: '',
+        saterday_to: '',
+      });
+    
+    const handleInputChange = (e) => {
         if (e.target.type === 'file') {
           const selectedImage = e.target.files[0];
           setFormData({
@@ -82,10 +99,36 @@ const Editprofile = () => {
           setFormData({ ...formData, [name]: value });
         }
       };
-    // console.log(timedata);
-      const handleSubmit = (e) => {
+    
+      const handleTimeInputChange = (day, field, value) => {
+        setTimedata({
+          ...timedata,
+          [`${day}_${field}`]: value,
+        });
+      };
+
+    
+      const handleSubmit = async (e) => {
         e.preventDefault();
-        
+        try {
+          // Example: Update timetable data using API
+          const response = await fetch(`https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`, {
+            method: 'post',
+            headers: {
+
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'multipart/form-data',
+            },
+            body: JSON.stringify({
+              ...formData,
+              timedata,
+            }),
+          });
+    
+          // Handle response as needed
+        } catch (error) {
+          // Handle error
+        }
       };
      
       //Upload Your Arts
@@ -167,14 +210,6 @@ const Editprofile = () => {
     image: null,
     imagePreview: null,
   });
-
-  const handleBannerInputChange = (event) => {
-    const { name, value } = event.target;
-    setBannerData({
-      ...bannerData,
-      [name]: value,
-    });
-  };
 
   const handleBannerImageChange = (event) => {
     const file = event.target.files[0];
@@ -333,50 +368,134 @@ const Editprofile = () => {
         </div>
       </div>
       <table className="table">
-  <thead>
-    <tr>
-      <th>Day</th>
-      <th>Opening Time</th>
-      <th>Closing Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Mon</td>
-      <td>{timedata.monday_from}</td>
-      <td>{timedata.monday_to}</td>
-    </tr>
-    <tr>
-      <td>Tue</td>
-      <td>{timedata.tuesday_from}</td>
-      <td>{timedata.tuesday_to}</td>
-    </tr>
-    <tr>
-      <td>Wed</td>
-      <td>{timedata.wednesday_from}</td>
-      <td>{timedata.wednesday_to}</td>
-    </tr>
-    <tr>
-      <td>Thu</td>
-      <td>{timedata.thrusday_from}</td>
-      <td>{timedata.thrusday_to}</td>
-    </tr>
-    <tr>
-      <td>Fri</td>
-      <td>{timedata.friday_from}</td>
-      <td>{timedata.friday_to}</td>
-    </tr>
-    <tr>
-      <td>Sat</td>
-      <td>{timedata.saterday_from}</td>
-      <td>{timedata.saterday_to}</td>
-    </tr>
-    <tr>
-      <td>Sun</td>
-      <td>{timedata.sunday_from}</td>
-      <td>{timedata.sunday_to}</td>
-    </tr>
-  </tbody>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Opening Time</th>
+            <th>Closing Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sun</td>
+            <td>
+              <input
+                type="text"
+                value={timedata.sunday_from}
+                onChange={(e) => handleTimeInputChange('sunday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata.sunday_to}
+                onChange={(e) => handleTimeInputChange('sunday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Mon</td>
+            <td>
+              <input
+                type="text"
+                value={timedata.monday_from}
+                onChange={(e) => handleTimeInputChange('monday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata.monday_to}
+                onChange={(e) => handleTimeInputChange('monday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Tue</td>
+            <td>
+              <input
+                type="text"
+                value={timedata.tuesday_from}
+                onChange={(e) => handleTimeInputChange('tuesday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata.tuesday_to}
+                onChange={(e) => handleTimeInputChange('tuesday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Wed</td>
+            <td>
+              <input
+                type="text"
+                value={timedata.wednesday_from}
+                onChange={(e) => handleTimeInputChange('wednesday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata.wednesday_to}
+                onChange={(e) => handleTimeInputChange('wednesday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Thu</td>
+            <td>
+              <input
+                type="text"
+                value={timedata.thrusday_from}
+                onChange={(e) => handleTimeInputChange('thursday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata.thrusday_to}
+                onChange={(e) => handleTimeInputChange('thursday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Fri</td>
+            <td>
+              <input
+                type="text"
+                value={timedata.friday_from}
+                onChange={(e) => handleTimeInputChange('friday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata.friday_to}
+                onChange={(e) => handleTimeInputChange('friday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Sat</td>
+            <td>
+              <input
+                type="text"
+                value={timedata.saterday_from}
+                onChange={(e) => handleTimeInputChange('saturday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata.saterday_to}
+                onChange={(e) => handleTimeInputChange('saturday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+        </tbody>
       </table>
       <div className="row">
         <div className="col-md-12 text-center" style={{marginTop:'20px'}}>
