@@ -123,6 +123,7 @@ const Editprofile = () => {
               headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json', // Change content type if needed
+                'Accept' : 'application/json',
               },
             }
           );
