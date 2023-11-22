@@ -137,10 +137,10 @@ const Editprofile = () => {
           console.log('File uploaded successfully:', response.data);
           // Handle success or reset form
           setSucess(true);
-          const { name } = event.target;
+          const { name,value } = null;
           setArtworkData({
             ...artworkData,
-            [name]: '',
+            [name]: value,
           });
           setArtworkData({
             ...artworkData,
