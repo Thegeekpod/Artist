@@ -222,4 +222,13 @@ th {
 .timedis{
   justify-content: space-between;
   display: flex;
+  
+}
+.sucess {
+  background: #3aab3a;
+  color: white;
+  margin: 7px 0;
+  padding: 0px 11px;
+  border-radius: 4px;
+  text-align: center;
 }
