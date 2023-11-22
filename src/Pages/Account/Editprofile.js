@@ -114,7 +114,7 @@ const Editprofile = () => {
           
           
           const response = await axios.post(
-            `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
+            `https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
             {
               ...formData,
               timedata,
@@ -122,7 +122,7 @@ const Editprofile = () => {
             {
               headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json', // Change content type if needed
+                'Content-Type': 'multipart/form-data', // Change content type if needed
                 'Accept' : 'application/json',
               },
             }
