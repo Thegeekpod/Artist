@@ -126,16 +126,15 @@ const Editprofile = () => {
           Object.keys(timedata).forEach((key) => {
             formDataToSend.append(key, timedata[key]);
           });
-          const proxyUrl = `https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`;
-  
+      
           const response = await axios.post(
-            proxyUrl,
+            `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
             formDataToSend,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data', // Ensure the correct content type
-                // Accept: 'application/json',
+                'Content-Type': 'application/json', // Ensure the correct content type
+                Accept: 'application/json',
               },
             }
           );
@@ -189,9 +188,7 @@ const Editprofile = () => {
         formData.append('subject_id', artworkData.subjectName);
         formData.append('image', artworkData.image);
         try {
-          const proxyUrl = `https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/upload-artwork`;
-  
-          const response = await axios.post(proxyUrl, formData, {
+          const response = await axios.post('https://sweetdevelopers.com/artist/api/upload-artwork', formData, {
             headers: {
               Authorization: `Bearer ${token}`,
               'Content-Type': 'multipart/form-data',
