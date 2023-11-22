@@ -111,33 +111,40 @@ const Editprofile = () => {
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          
-          
+          const formDataToSend = new FormData();
+      
+          // Append individual fields to formDataToSend
+          Object.keys(formData).forEach((key) => {
+            if (key === 'profileImage') {
+              formDataToSend.append(key, formData[key]);
+            } else {
+              formDataToSend.append(key, formData[key]);
+            }
+          });
+      
+          // Append timedata fields to formDataToSend
+          Object.keys(timedata).forEach((key) => {
+            formDataToSend.append(key, timedata[key]);
+          });
+      
           const response = await axios.post(
-            `https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
-            {
-              ...formData,
-              timedata,
-            },
+            `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
+            formDataToSend,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data', // Change content type if needed
-                'Accept' : 'application/json',
+                'Content-Type': 'multipart/form-data', // Ensure the correct content type
+                Accept: 'application/json',
               },
             }
           );
       
+          console.log('Success:', response.data);
           // Handle success
-          console.log('Success:', response.data); // Log the response data
-          
-          // You can perform other actions based on success here
-          
-        } catch (error) {
-          // Handle error
-          console.error('Error:', error); // Log the error to the console
       
-          // You can perform other actions based on error here
+        } catch (error) {
+          console.error('Error:', error);
+          // Handle error
         }
       };
      
