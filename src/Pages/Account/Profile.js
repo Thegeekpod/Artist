@@ -23,7 +23,8 @@ const Profile = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [user, setUserData] = useState([]);
-  const [timedata,setTimedata]=useState([]);
+  const [timedata,setTimedata]=useState([null]);
+  const [bannerImagedata, setBannerimageData] = useState([]);
 
   useEffect(() => {
     const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
@@ -55,6 +56,7 @@ const Profile = () => {
         setData(response.data.data.artworks);
         setUserData(response.data.data);
         setTimedata(response.data.data.time_data);
+        setBannerimageData(response.data.data.banner_images);
         console.log(response.data.data.artworks);
       })
       .catch(error => {
@@ -217,33 +219,21 @@ const Profile = () => {
         modules={[EffectCoverflow, Pagination,Autoplay,Mousewheel,Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-        </SwiperSlide>
+    {bannerImagedata ? (
+  <>
+        {/* Map over the data array and render something for each item */}
+        {bannerImagedata.map(item => (
+            <SwiperSlide key={item.id}>
+            <img src={`https://sweetdevelopers.com/artist/storage/BannerImage/${item.banner_image}`} alt={item.banner_image}  />
+ 
+          </SwiperSlide>
+              
+        ))}
+  </>
+    ) : (
+      <p>No banner images upload your bannaer images now</p>
+    )}
+
       </Swiper>
 </div>
 </div>
@@ -383,38 +373,38 @@ const Profile = () => {
   <tbody>
     <tr>
       <td>Mon</td>
-      <td>{timedata.monday_from}</td>
-      <td>{timedata.monday_to}</td>
+      <td>{timedata?.monday_from}</td>
+      <td>{timedata?.monday_to}</td>
     </tr>
     <tr>
       <td>Tue</td>
-      <td>{timedata.tuesday_from}</td>
-      <td>{timedata.tuesday_to}</td>
+      <td>{timedata?.tuesday_from}</td>
+      <td>{timedata?.tuesday_to}</td>
     </tr>
     <tr>
       <td>Wed</td>
-      <td>{timedata.wednesday_from}</td>
-      <td>{timedata.wednesday_to}</td>
+      <td>{timedata?.wednesday_from}</td>
+      <td>{timedata?.wednesday_to}</td>
     </tr>
     <tr>
       <td>Thu</td>
-      <td>{timedata.thrusday_from}</td>
-      <td>{timedata.thrusday_to}</td>
+      <td>{timedata?.thrusday_from}</td>
+      <td>{timedata?.thrusday_to}</td>
     </tr>
     <tr>
       <td>Fri</td>
-      <td>{timedata.friday_from}</td>
-      <td>{timedata.friday_to}</td>
+      <td>{timedata?.friday_from}</td>
+      <td>{timedata?.friday_to}</td>
     </tr>
     <tr>
       <td>Sat</td>
-      <td>{timedata.saterday_from}</td>
-      <td>{timedata.saterday_to}</td>
+      <td>{timedata?.saterday_from}</td>
+      <td>{timedata?.saterday_to}</td>
     </tr>
     <tr>
       <td>Sun</td>
-      <td>{timedata.sunday_from}</td>
-      <td>{timedata.sunday_to}</td>
+      <td>{timedata?.sunday_from}</td>
+      <td>{timedata?.sunday_to}</td>
     </tr>
   </tbody>
       </table>

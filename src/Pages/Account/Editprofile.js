@@ -126,15 +126,16 @@ const Editprofile = () => {
           Object.keys(timedata).forEach((key) => {
             formDataToSend.append(key, timedata[key]);
           });
-      
+          const proxyUrl = `https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`;
+  
           const response = await axios.post(
-            `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
+            proxyUrl,
             formDataToSend,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data', // Ensure the correct content type
-                Accept: 'application/json',
+                // Accept: 'application/json',
               },
             }
           );
@@ -188,7 +189,9 @@ const Editprofile = () => {
         formData.append('subject_id', artworkData.subjectName);
         formData.append('image', artworkData.image);
         try {
-          const response = await axios.post('https://sweetdevelopers.com/artist/api/upload-artwork', formData, {
+          const proxyUrl = `https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/upload-artwork`;
+  
+          const response = await axios.post(proxyUrl, formData, {
             headers: {
               Authorization: `Bearer ${token}`,
               'Content-Type': 'multipart/form-data',
@@ -398,14 +401,14 @@ const Editprofile = () => {
             <td>
               <input
                 type="text"
-                value={timedata.sunday_from}
+                value={timedata?.sunday_from}
                 onChange={(e) => handleTimeInputChange('sunday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
                 type="text"
-                value={timedata.sunday_to}
+                value={timedata?.sunday_to}
                 onChange={(e) => handleTimeInputChange('sunday', 'to', e.target.value)}
               />
             </td>
@@ -415,14 +418,14 @@ const Editprofile = () => {
             <td>
               <input
                 type="text"
-                value={timedata.monday_from}
+                value={timedata?.monday_from}
                 onChange={(e) => handleTimeInputChange('monday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
                 type="text"
-                value={timedata.monday_to}
+                value={timedata?.monday_to}
                 onChange={(e) => handleTimeInputChange('monday', 'to', e.target.value)}
               />
             </td>
@@ -432,14 +435,14 @@ const Editprofile = () => {
             <td>
               <input
                 type="text"
-                value={timedata.tuesday_from}
+                value={timedata?.tuesday_from}
                 onChange={(e) => handleTimeInputChange('tuesday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
                 type="text"
-                value={timedata.tuesday_to}
+                value={timedata?.tuesday_to}
                 onChange={(e) => handleTimeInputChange('tuesday', 'to', e.target.value)}
               />
             </td>
@@ -449,14 +452,14 @@ const Editprofile = () => {
             <td>
               <input
                 type="text"
-                value={timedata.wednesday_from}
+                value={timedata?.wednesday_from}
                 onChange={(e) => handleTimeInputChange('wednesday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
                 type="text"
-                value={timedata.wednesday_to}
+                value={timedata?.wednesday_to}
                 onChange={(e) => handleTimeInputChange('wednesday', 'to', e.target.value)}
               />
             </td>
@@ -466,14 +469,14 @@ const Editprofile = () => {
             <td>
               <input
                 type="text"
-                value={timedata.thrusday_from}
+                value={timedata?.thrusday_from}
                 onChange={(e) => handleTimeInputChange('thursday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
                 type="text"
-                value={timedata.thrusday_to}
+                value={timedata?.thrusday_to}
                 onChange={(e) => handleTimeInputChange('thursday', 'to', e.target.value)}
               />
             </td>
@@ -483,14 +486,14 @@ const Editprofile = () => {
             <td>
               <input
                 type="text"
-                value={timedata.friday_from}
+                value={timedata?.friday_from}
                 onChange={(e) => handleTimeInputChange('friday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
                 type="text"
-                value={timedata.friday_to}
+                value={timedata?.friday_to}
                 onChange={(e) => handleTimeInputChange('friday', 'to', e.target.value)}
               />
             </td>
@@ -500,14 +503,14 @@ const Editprofile = () => {
             <td>
               <input
                 type="text"
-                value={timedata.saterday_from}
+                value={timedata?.saterday_from}
                 onChange={(e) => handleTimeInputChange('saturday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
                 type="text"
-                value={timedata.saterday_to}
+                value={timedata?.saterday_to}
                 onChange={(e) => handleTimeInputChange('saturday', 'to', e.target.value)}
               />
             </td>

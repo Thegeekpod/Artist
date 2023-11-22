@@ -207,10 +207,12 @@ const Header = () => {
         <button type="submit" className="theme-button">
           Login
         </button>
+        
       </div>
     </form>
                       <div className="password-info topmargin_20">
                         <a href="#">Forgot Your Password?</a>
+                        <p>if you no account please <Link to='/register'>Register Now</Link> </p>
                       </div>
                     </div>
                     </li>
@@ -295,6 +297,7 @@ const Header = () => {
         <button type="submit" className="theme-button">
           Login
         </button>
+        
       </div>
     </form>
                       <div className="password-info topmargin_20">

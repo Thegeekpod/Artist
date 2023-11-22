@@ -10,6 +10,7 @@ import Login from './Pages/Account/Login';
 import Profile from './Pages/Account/Profile';
 import { UserProvider } from './Pages/Account/UserContext';
 import Editprofile from './Pages/Account/Editprofile';
+import Register from './Pages/Account/Register';
 function App() {
   const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ function App() {
       {
         path:'/:artist/:seq',
         element:<Artist_picture/>
+      },
+      {
+        path:'/register',
+        element:<Register/>
       },
       {
         path:'/login',
