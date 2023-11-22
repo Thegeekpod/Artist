@@ -29,9 +29,10 @@ const Editprofile = () => {
     saterday_to: ""
       });
       const [artdata, setArtData] = useState([]);
+      const [bannerImagedata, setBannerimageData] = useState([]);
       const [timedata,setTimedata]=useState([]);
-      const [csrfToken, setCsrfToken] = useState('');
       const {token,user} = useUser();
+      const [sucess , setSucess]= useState(false);
       const navigate = useNavigate();
 
     
@@ -58,8 +59,7 @@ const Editprofile = () => {
             setFormData(response.data.data);
             setArtData(response.data.data.artworks);
             setTimedata(response.data.data.time_data);
-            setCsrfToken(response.data.csrf_token);
-            console.log({'token':response})
+            setBannerimageData(response.data.data.banner_images);
 
           })
           .catch(error => {
@@ -96,7 +96,7 @@ const Editprofile = () => {
         subjectName: '',
         image: null,
         imagePreview: null,
-        user_id: `${user.id}`,
+        user_id: `${user?.id}`,
       });
     
    
@@ -127,7 +127,6 @@ const Editprofile = () => {
         formData.append('style_id', artworkData.styleName);
         formData.append('subject_id', artworkData.subjectName);
         formData.append('image', artworkData.image);
-    console.log(artworkData.image)
         try {
           const response = await axios.post('https://sweetdevelopers.com/artist/api/upload-artwork', formData, {
             headers: {
@@ -137,6 +136,17 @@ const Editprofile = () => {
           });
           console.log('File uploaded successfully:', response.data);
           // Handle success or reset form
+          setSucess(true);
+          const { name } = event.target;
+          setArtworkData({
+            ...artworkData,
+            [name]: null,
+          });
+          setArtworkData({
+            ...artworkData,
+            image: null,
+            imagePreview: null,
+          });
         } catch (error) {
           console.error('Error uploading file:', error);
           // Handle error
@@ -444,17 +454,21 @@ const Editprofile = () => {
             <>
                <img src={artworkData.imagePreview} alt="Preview" style={{ Width: '155px', height:'155px',marginTop:'20px' }} />
                <div style={{marginTop:'20px', width:"100%"}}>
+           
                <button style={{ width:"100%"}} type="submit" className="btn btn-primary mt-3">Upload</button>
-
+               
                </div>
             </>
          
           )}
           {/* Additional input fields or previews */}
           {/* Add labels and input fields as needed */}
+          
         </div>
       </div>
-     
+      {sucess && <><div>
+                  <p  className='sucess'>your image upload sucessfull</p>
+                  </div></>}
     </form>
 <hr/>
 
@@ -534,31 +548,14 @@ const Editprofile = () => {
 
     <div className='row text-center'>
     <h4 class="page-title-1 " style={{color:'white'}}> All Banner Images </h4>
-    {artdata ? (
+    {bannerImagedata ? (
   <>
         {/* Map over the data array and render something for each item */}
-        {artdata.map(item => (
+        {bannerImagedata.map(item => (
               <div className="col-lg-4 "  key={item.id}>
               <div class="imgbox">
-              <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title}  />
- <div className='imgtitle'>
-                <h4 class="page-title-1 " style={{color:'white'}}>
-                {item.title} 
-                </h4>
-                <div className="row d-flex">
-                  
-                  <div className="coll-6 text-left">
-                  
-                  <i class="fa fa-thumbs-up like" aria-hidden="true"> 100</i>
-                      
-                   
-
-                  </div>
-                  <div className="coll-6 text-right">
-                  <i class="fa fa-eye like" aria-hidden="true"> 200</i>
-                  </div>
-                </div>
-                </div>
+              <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/BannerImage/${item.banner_image}`} alt={item.banner_image}  />
+ 
               
               </div>
               </div>
