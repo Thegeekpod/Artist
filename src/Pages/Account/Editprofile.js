@@ -140,7 +140,7 @@ const Editprofile = () => {
           const { name } = event.target;
           setArtworkData({
             ...artworkData,
-            [name]: null,
+            [name]: '',
           });
           setArtworkData({
             ...artworkData,
