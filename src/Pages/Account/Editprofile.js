@@ -111,23 +111,32 @@ const Editprofile = () => {
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          // Example: Update timetable data using API
-          const response = await fetch(`https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`, {
-            method: 'post',
-            headers: {
-
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'multipart/form-data',
-            },
-            body: JSON.stringify({
+          
+          
+          const response = await axios.post(
+            `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
+            {
               ...formData,
               timedata,
-            }),
-          });
-    
-          // Handle response as needed
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json', // Change content type if needed
+              },
+            }
+          );
+      
+          // Handle success
+          console.log('Success:', response.data); // Log the response data
+          
+          // You can perform other actions based on success here
+          
         } catch (error) {
           // Handle error
+          console.error('Error:', error); // Log the error to the console
+      
+          // You can perform other actions based on error here
         }
       };
      
