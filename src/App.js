@@ -9,6 +9,7 @@ import Artist_picture from './Pages/Arists/Artist_picture';
 import Login from './Pages/Account/Login';
 import Profile from './Pages/Account/Profile';
 import { UserProvider } from './Pages/Account/UserContext';
+import Editprofile from './Pages/Account/Editprofile';
 function App() {
   const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ function App() {
       {
         path:'/profile',
         element:<Profile/>
+      },
+      {
+        path:'/editprofile',
+        element:<Editprofile/>
       }
     ]
 

@@ -23,6 +23,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [user, setUserData] = useState([]);
+  const [timedata,setTimedata]=useState([]);
 
   useEffect(() => {
     const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
@@ -53,6 +54,7 @@ const Profile = () => {
       .then(response => {
         setData(response.data.data.artworks);
         setUserData(response.data.data);
+        setTimedata(response.data.data.time_data);
         console.log(response.data.data.artworks);
       })
       .catch(error => {
@@ -83,8 +85,9 @@ const Profile = () => {
          src={`https://sweetdevelopers.com/artist/storage/ProfileImage/${user?.profile_image}`}
 
           alt=""
-          style={{ width:'100%'}}
+          style={{ width:'100%', height:"295px", marginBottom:'10px'}}
         />
+<button type="button" class="btn btn-success" style={{width:'100%'}} onClick={()=>{navigate('/editprofile')}}>Edit Profile</button>
       </div>
    
      
@@ -380,41 +383,41 @@ const Profile = () => {
   <tbody>
     <tr>
       <td>Mon</td>
-      <td>9:00 AM</td>
-      <td>6:00 PM</td>
+      <td>{timedata.monday_from}</td>
+      <td>{timedata.monday_to}</td>
     </tr>
     <tr>
       <td>Tue</td>
-      <td>9:00 AM</td>
-      <td>6:00 PM</td>
+      <td>{timedata.tuesday_from}</td>
+      <td>{timedata.tuesday_to}</td>
     </tr>
     <tr>
       <td>Wed</td>
-      <td>9:00 AM</td>
-      <td>6:00 PM</td>
+      <td>{timedata.wednesday_from}</td>
+      <td>{timedata.wednesday_to}</td>
     </tr>
     <tr>
       <td>Thu</td>
-      <td>9:00 AM</td>
-      <td>6:00 PM</td>
+      <td>{timedata.thrusday_from}</td>
+      <td>{timedata.thrusday_to}</td>
     </tr>
     <tr>
       <td>Fri</td>
-      <td>9:00 AM</td>
-      <td>6:00 PM</td>
+      <td>{timedata.friday_from}</td>
+      <td>{timedata.friday_to}</td>
     </tr>
     <tr>
       <td>Sat</td>
-      <td>9:00 AM</td>
-      <td>6:00 PM</td>
+      <td>{timedata.saterday_from}</td>
+      <td>{timedata.saterday_to}</td>
     </tr>
     <tr>
       <td>Sun</td>
-      <td>9:00 AM</td>
-      <td>6:00 PM</td>
+      <td>{timedata.sunday_from}</td>
+      <td>{timedata.sunday_to}</td>
     </tr>
   </tbody>
-</table>
+      </table>
 
       </div>
       <div className="col-sm-12 col-md-6 col-lg-6">
