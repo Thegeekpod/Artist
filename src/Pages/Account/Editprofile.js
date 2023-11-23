@@ -130,7 +130,7 @@ const Editprofile = () => {
           const response = await axios.post(
             `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
            { 'name':'abc',
-           'zip':'1234567'
+           'zipcode':'1234567'
           },
             {
               headers: {
