@@ -103,7 +103,7 @@ const Editprofile = () => {
     
           // Append individual fields to formDataToSend
           Object.keys(formData).forEach((key) => {
-            if (key === 'profile_Image' && formData[key]) {
+            if (key === 'profile_image' && formData[key]) {
               formDataToSend.append(key, formData[key]);
             } else {
               formDataToSend.append(key, formData[key]);
@@ -269,14 +269,7 @@ const Editprofile = () => {
           <label htmlFor="profileImage" className="form-label">
             Profile Image
           </label>
-          <input
-            type="file"
-            className="form-control"
-            id="profileImage"
-            name="profileImage"
-            accept="image/*"
-            onChange={handleInputChange}
-          />
+        
         </div>
      
          
@@ -297,51 +290,12 @@ const Editprofile = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div className="col-md-6">
-          <label htmlFor="username" className="form-label">
-            Username
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="username"
-            name="username"
-            placeholder="Enter your username"
-            value={formData.username}
-            onChange={handleInputChange}
-          />
-        </div>
+       
         </div>
      
       <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="phone" className="form-label">
-            Phone
-          </label>
-          <input
-            type="tel"
-            className="form-control"
-            id="phone"
-            name="phone"
-            placeholder="Enter your phone number"
-            value={formData.phone}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="address" className="form-label">
-            Address
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="address"
-            name="address"
-            placeholder="Enter your address"
-            value={formData.address}
-            onChange={handleInputChange}
-          />
-        </div>
+      
+       
       </div>
       <div className="row mb-3">
         <div className="col-md-6">
@@ -358,151 +312,9 @@ const Editprofile = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div className="col-md-6">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-        </div>
+        
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Day</th>
-            <th>Opening Time</th>
-            <th>Closing Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Sun</td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.sunday_from}
-                onChange={(e) => handleTimeInputChange('sunday', 'from', e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.sunday_to}
-                onChange={(e) => handleTimeInputChange('sunday', 'to', e.target.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Mon</td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.monday_from}
-                onChange={(e) => handleTimeInputChange('monday', 'from', e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.monday_to}
-                onChange={(e) => handleTimeInputChange('monday', 'to', e.target.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Tue</td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.tuesday_from}
-                onChange={(e) => handleTimeInputChange('tuesday', 'from', e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.tuesday_to}
-                onChange={(e) => handleTimeInputChange('tuesday', 'to', e.target.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Wed</td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.wednesday_from}
-                onChange={(e) => handleTimeInputChange('wednesday', 'from', e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.wednesday_to}
-                onChange={(e) => handleTimeInputChange('wednesday', 'to', e.target.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Thu</td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.thrusday_from}
-                onChange={(e) => handleTimeInputChange('thursday', 'from', e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.thrusday_to}
-                onChange={(e) => handleTimeInputChange('thursday', 'to', e.target.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Fri</td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.friday_from}
-                onChange={(e) => handleTimeInputChange('friday', 'from', e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.friday_to}
-                onChange={(e) => handleTimeInputChange('friday', 'to', e.target.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Sat</td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.saterday_from}
-                onChange={(e) => handleTimeInputChange('saturday', 'from', e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                value={timedata?.saterday_to}
-                onChange={(e) => handleTimeInputChange('saturday', 'to', e.target.value)}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    
       <div className="row">
         <div className="col-md-12 text-center" style={{marginTop:'20px'}}>
           <button type="submit" className="btn btn-primary" style={{width:'40%'}}>
