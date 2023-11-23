@@ -199,6 +199,8 @@ const Editprofile = () => {
         },
       });
       console.log('File uploaded successfully:', response.data);
+       // Update ArtData after successful upload
+    setArtData(response.data.data.artworks);
       // Handle success or reset form
       setSucess(true);
       setTimeout(() => {
