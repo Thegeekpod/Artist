@@ -317,15 +317,15 @@ const Editprofile = () => {
           <label htmlFor="phone" className="form-label">
             Phone
           </label>
-          <input
-            type="tel"
+          {/* <input
+            type="number"
             className="form-control"
             id="phone"
             name="phone"
             placeholder="Enter your phone number"
             value={formData.phone}
             onChange={handleInputChange}
-          />
+          /> */}
         </div>
         <div className="col-md-6">
           <label htmlFor="address" className="form-label">
