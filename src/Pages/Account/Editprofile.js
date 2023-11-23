@@ -7,7 +7,7 @@ const Editprofile = () => {
     const [formData, setFormData] = useState({
         name: '',
         username: '',
-        phone: '',
+        phone:'',
         address: '',
         zipcode: '',
         email: '',
@@ -44,10 +44,10 @@ const Editprofile = () => {
         axios.get(apiUrl, axiosConfig)
           .then(response => {
             // setData(response.data.data.artworks);
-            setFormData(response.data.data);
-            setArtData(response.data.data.artworks);
-            setTimedata(response.data.data.time_data);
-            setBannerimageData(response.data.data.banner_images);
+            // setFormData(response.data.data);
+            // setArtData(response.data.data.artworks);
+            // setTimedata(response.data.data.time_data);
+            // setBannerimageData(response.data.data.banner_images);
 
           })
           .catch(error => {
