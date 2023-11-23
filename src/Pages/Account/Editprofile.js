@@ -16,6 +16,13 @@ const Editprofile = () => {
 
   const navigate = useNavigate();
 
+  const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
+  const axiosConfig = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type based on your API requirements
+    },
+  };
 
   useEffect(() => {
   
@@ -25,18 +32,10 @@ const Editprofile = () => {
       navigate('/login');
       return;
     }
-    const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
-    const axiosConfig = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json', // Adjust content type based on your API requirements
-      },
-    };
-
+    
     // Make the API call using Axios
     axios.get(apiUrl, axiosConfig)
       .then(response => {
-        // setData(response.data.data.artworks);
         setFormData(response.data.data);
         setArtData(response.data.data.artworks);
         setTimedatavalue(response.data.data.time_data);
@@ -134,13 +133,8 @@ const Editprofile = () => {
 
       const response = await axios.post(
         `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
-        formDataToSend,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-          },
-        }
+        formDataToSend,axiosConfig
+        
       );
 
       console.log('Success:', response.data);
@@ -194,12 +188,7 @@ const Editprofile = () => {
     formData.append('subject_id', artworkData.subjectName);
     formData.append('image', artworkData.image);
     try {
-      const response = await axios.post('https://sweetdevelopers.com/artist/api/upload-artwork', formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post('https://sweetdevelopers.com/artist/api/upload-artwork', formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
        // Update ArtData after successful upload
     // setArtData(response.data.data.artworks);
@@ -215,6 +204,17 @@ const Editprofile = () => {
         image: null,
         imagePreview: null,
       });
+      
+      axios.get(apiUrl, axiosConfig)
+      .then(response => {
+        setArtData(response.data.data.artworks);
+
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+
     } catch (error) {
       console.error('Error uploading file:', error);
       // Handle error
@@ -245,12 +245,7 @@ const Editprofile = () => {
     formData.append('banner_image', bannerData.image,);
 
     try {
-      const response = await axios.post('https://sweetdevelopers.com/artist/api/upload-banner', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post('https://sweetdevelopers.com/artist/api/upload-banner', formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
       // Handle success or reset form
       setbannerSucess(true);
@@ -263,6 +258,13 @@ const Editprofile = () => {
         ...artworkData,
         image: null,
         imagePreview: null,
+      });
+      axios.get(apiUrl, axiosConfig)
+      .then(response => {
+        setBannerimageData(response.data.data.banner_images);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
       });
     } catch (error) {
       console.error('Error uploading file:', error);
