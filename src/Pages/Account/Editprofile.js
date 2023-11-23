@@ -4,40 +4,25 @@ import { isAuthenticated, useUser } from './UserContext';
 import { useNavigate } from 'react-router-dom';
 
 const Editprofile = () => {
-  
+    const [formData, setFormData] = useState({
+        name: '',
+        username: '',
+        phone: '',
+        address: '',
+        zipcode: '',
+        email: '',
+        profileImage: null,
+        imagePreview: null, 
+        sunday_from: "",
+    
+      });
       const [artdata, setArtData] = useState([]);
       const [bannerImagedata, setBannerimageData] = useState([]);
       // const [timedata,setTimedata]=useState([]);
       const {token,user} = useUser();
       const [sucess , setSucess]= useState(false);
       const navigate = useNavigate();
-      const [formData, setFormData] = useState({
-        name: '',
-        username: '',
-        email: '',
-        phone: '',
-        address: '',
-        password: '',
-        zipcode: '',
-        profile_image: '',
-        banner_image: '',
-      });
-      const [timeData, setTimeData] = useState({
-        sunday_from: '',
-        sunday_to: '',
-        monday_from: '',
-        monday_to: '',
-        tuesday_from: '',
-        tuesday_to: '',
-        wednesday_from: '',
-        wednesday_to: '',
-        thrusday_from: '',
-        thrusday_to: '',
-        friday_from: '',
-        friday_to: '',
-        saterday_from: '',
-        saterday_to: '',
-      }); 
+
     
       useEffect(() => {
         const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
@@ -61,7 +46,7 @@ const Editprofile = () => {
             // setData(response.data.data.artworks);
             setFormData(response.data.data);
             setArtData(response.data.data.artworks);
-            setTimeData(response.data.data.time_data);
+            setTimedata(response.data.data.time_data);
             setBannerimageData(response.data.data.banner_images);
 
           })
@@ -70,54 +55,88 @@ const Editprofile = () => {
           });
     setFormData({ ...formData });
       }, [token, isAuthenticated, navigate]);
+    
+      //Edit Your Personal Information
+      const [timedata, setTimedata] = useState({
+        sunday_from: '',
+        sunday_to: '',
+        monday_from: '',
+        monday_to: '',
+        tuesday_from: '',
+        tuesday_to: '',
+        wednesday_from: '',
+        wednesday_to: '',
+        thrusday_from: '',
+        thrusday_to: '',
+        friday_from: '',
+        friday_to: '',
+        saterday_from: '',
+        saterday_to: '',
+      });
+    
+    const handleInputChange = (e) => {
+        if (e.target.type === 'file') {
+          const selectedImage = e.target.files[0];
+          setFormData({
+            ...formData,
+            profileImage: selectedImage,
+            imagePreview: URL.createObjectURL(selectedImage),
+          });
+        } else {
+          const { name, value } = e.target;
+          setFormData({ ...formData, [name]: value });
+        }
+      };
+    
+      const handleTimeInputChange = (day, field, value) => {
+        setTimedata({
+          ...timedata,
+          [`${day}_${field}`]: value,
+        });
+      };
 
-     
-    
-      const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-      };
-    
-      const handleTimeInputChange = (e) => {
-        const { name, value } = e.target;
-        setTimeData({
-          ...timeData,
-          [name]: value,
-        });
-      };
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-    
         try {
-          const response = await fetch(`https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`, {
-            method: 'post', // Assuming the update method is a PUT request
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-              // Add any required headers here 
-            },
-            body: JSON.stringify({ ...formData, ...timeData }),
+          const formDataToSend = new FormData();
+    
+          // Append individual fields to formDataToSend
+          Object.keys(formData).forEach((key) => {
+            if (key === 'profile_Image' && formData[key]) {
+              formDataToSend.append(key, formData[key]);
+            } else {
+              formDataToSend.append(key, formData[key]);
+            }
           });
     
-          const responseData = await response.json();
+          // Append timedata fields to formDataToSend
+          Object.keys(timedata).forEach((key) => {
+            formDataToSend.append(key.replace('_', ''), timedata[key]);
+          });
     
-          if (response.ok) {
-            // Handle successful response
-            console.log('Update successful:', responseData);
-          } else {
-            // Handle error response
-            console.error('Update failed:', responseData);
-          }
+          const response = await axios.post(
+            `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
+            formDataToSend,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+                // Don't specify 'Content-Type' manually for FormData
+                Accept: 'application/json',
+              },
+            }
+          );
+    
+          console.log('Success:', response.data);
+          // Handle success
+    
         } catch (error) {
-          // Handle fetch error
           console.error('Error:', error);
+          // Handle error
         }
       };
- 
+     
       //Upload Your Arts
       const [artworkData, setArtworkData] = useState({
         artistName: '',
@@ -236,98 +255,261 @@ const Editprofile = () => {
     <h4 class="page-title-1 " style={{color:'white'}}> Edit Your Personal Information </h4>
     </div>
     
-    <form onSubmit={handleSubmit}>
-      {/* Artist Information */}
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleInputChange}
-        placeholder="Name"
-        required
-      />
-      <input
-        type="text"
-        name="username"
-        value={formData.username}
-        onChange={handleInputChange}
-        placeholder="Username"
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleInputChange}
-        placeholder="Email"
-        required
-      />
-      <input
-        type="text"
-        name="phone"
-        value={formData.phone}
-        onChange={handleInputChange}
-        placeholder="Phone"
-      />
-      <input
-        type="text"
-        name="address"
-        value={formData.address}
-        onChange={handleInputChange}
-        placeholder="Address"
-      />
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleInputChange}
-        placeholder="Password"
-        required
-      />
-      <input
-        type="text"
-        name="zipcode"
-        value={formData.zipcode}
-        onChange={handleInputChange}
-        placeholder="Zipcode"
-        required
-      />
-      <input
-        type="text"
-        name="profile_image"
-        value={formData.profile_image}
-        onChange={handleInputChange}
-        placeholder="Profile Image URL"
-      />
-      <input
-        type="text"
-        name="banner_image"
-        value={formData.banner_image}
-        onChange={handleInputChange}
-        placeholder="Banner Image URL"
-      />
+    <form onSubmit={handleSubmit} >
+      <div className="row mb-3">
+      <div className="col-md-12 mt-3 text-center ">
+            <img
+          src={formData.imagePreview || `https://sweetdevelopers.com/artist/storage/ProfileImage/${formData.profile_image}`}
 
-      {/* Time Information */}
-      {/* Repeat this section for all time-related fields */}
-      <input
-        type="text"
-        name="sunday_from"
-        value={timeData.sunday_from}
-        onChange={handleTimeInputChange}
-        placeholder="Sunday From"
-        required
-      />
-      <input
-        type="text"
-        name="sunday_to"
-        value={timeData.sunday_to}
-        onChange={handleTimeInputChange}
-        placeholder="Sunday To"
-        required
-      />
-      {/* End of Time Information */}
-
-      <button type="submit">Update Artist</button>
+              alt="Preview"
+              style={{ maxWidth: '200px%', height: '200px' }}
+            />
+          </div>
+  <div className="col-md-12">
+          <label htmlFor="profileImage" className="form-label">
+            Profile Image
+          </label>
+          <input
+            type="file"
+            className="form-control"
+            id="profileImage"
+            name="profileImage"
+            accept="image/*"
+            onChange={handleInputChange}
+          />
+        </div>
+     
+         
+     
+      
+     
+        <div className="col-md-6">
+          <label htmlFor="name" className="form-label">
+            Name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            name="name"
+            placeholder="Enter your name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            value={formData.username}
+            onChange={handleInputChange}
+          />
+        </div>
+        </div>
+     
+      <div className="row mb-3">
+        <div className="col-md-6">
+          <label htmlFor="phone" className="form-label">
+            Phone
+          </label>
+          <input
+            type="tel"
+            className="form-control"
+            id="phone"
+            name="phone"
+            placeholder="Enter your phone number"
+            value={formData.phone}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="address" className="form-label">
+            Address
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="address"
+            name="address"
+            placeholder="Enter your address"
+            value={formData.address}
+            onChange={handleInputChange}
+          />
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-md-6">
+          <label htmlFor="zipcode" className="form-label">
+            Zipcode
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="zipcode"
+            name="zipcode"
+            placeholder="Enter your zipcode"
+            value={formData.zipcode}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+        </div>
+      </div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Opening Time</th>
+            <th>Closing Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sun</td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.sunday_from}
+                onChange={(e) => handleTimeInputChange('sunday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.sunday_to}
+                onChange={(e) => handleTimeInputChange('sunday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Mon</td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.monday_from}
+                onChange={(e) => handleTimeInputChange('monday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.monday_to}
+                onChange={(e) => handleTimeInputChange('monday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Tue</td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.tuesday_from}
+                onChange={(e) => handleTimeInputChange('tuesday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.tuesday_to}
+                onChange={(e) => handleTimeInputChange('tuesday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Wed</td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.wednesday_from}
+                onChange={(e) => handleTimeInputChange('wednesday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.wednesday_to}
+                onChange={(e) => handleTimeInputChange('wednesday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Thu</td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.thrusday_from}
+                onChange={(e) => handleTimeInputChange('thursday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.thrusday_to}
+                onChange={(e) => handleTimeInputChange('thursday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Fri</td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.friday_from}
+                onChange={(e) => handleTimeInputChange('friday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.friday_to}
+                onChange={(e) => handleTimeInputChange('friday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Sat</td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.saterday_from}
+                onChange={(e) => handleTimeInputChange('saturday', 'from', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={timedata?.saterday_to}
+                onChange={(e) => handleTimeInputChange('saturday', 'to', e.target.value)}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div className="row">
+        <div className="col-md-12 text-center" style={{marginTop:'20px'}}>
+          <button type="submit" className="btn btn-primary" style={{width:'40%'}}>
+            Submit
+          </button>
+        </div>
+      </div>
     </form>
 
       </div>
