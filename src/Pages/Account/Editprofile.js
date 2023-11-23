@@ -112,36 +112,36 @@ const Editprofile = () => {
         e.preventDefault();
         try {
           const formDataToSend = new FormData();
-      
+    
           // Append individual fields to formDataToSend
           Object.keys(formData).forEach((key) => {
-            if (key === 'profileImage') {
+            if (key === 'profileImage' && formData[key]) {
               formDataToSend.append(key, formData[key]);
             } else {
               formDataToSend.append(key, formData[key]);
             }
           });
-      
+    
           // Append timedata fields to formDataToSend
           Object.keys(timedata).forEach((key) => {
-            formDataToSend.append(key, timedata[key]);
+            formDataToSend.append(key.replace('_', ''), timedata[key]);
           });
-      
+    
           const response = await axios.post(
             `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
             formDataToSend,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json', // Ensure the correct content type
+                // Don't specify 'Content-Type' manually for FormData
                 Accept: 'application/json',
               },
             }
           );
-      
+    
           console.log('Success:', response.data);
           // Handle success
-      
+    
         } catch (error) {
           console.error('Error:', error);
           // Handle error
