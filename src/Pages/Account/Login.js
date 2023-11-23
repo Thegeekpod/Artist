@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
   
     try {
-      const proxyUrl = 'https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/login';
+      const proxyUrl = 'https://sweetdevelopers.com/artist/api/login';
   
       const response = await axios.post(proxyUrl, {
         email,
