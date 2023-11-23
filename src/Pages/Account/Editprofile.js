@@ -11,22 +11,10 @@ const Editprofile = () => {
         address: '',
         zipcode: '',
         email: '',
-        profileImage: null,
+        profile_image: null,
         imagePreview: null, 
-        sunday_from: "",
-    sunday_to: "",
-    monday_from: "",
-    monday_to: "",
-    tuesday_from: "",
-    tuesday_to: "",
-    wednesday_from: "",
-    wednesday_to: "",
-    thrusday_from: "",
-    thrusday_to: "",
-    friday_from: "",
-    friday_to: "",
-    saterday_from: "",
-    saterday_to: ""
+    
+  
       });
       const [artdata, setArtData] = useState([]);
       const [bannerImagedata, setBannerimageData] = useState([]);
@@ -91,7 +79,7 @@ const Editprofile = () => {
           const selectedImage = e.target.files[0];
           setFormData({
             ...formData,
-            profileImage: selectedImage,
+            profile_image: selectedImage,
             imagePreview: URL.createObjectURL(selectedImage),
           });
         } else {
@@ -109,47 +97,44 @@ const Editprofile = () => {
 
     
       const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          const formDataToSend = new FormData();
-    
-          // Append individual fields to formDataToSend
-          Object.keys(formData).forEach((key) => {
-            if (key === 'profile_Image' && formData[key]) {
-              formDataToSend.append(key, formData[key]);
-            } else {
-              formDataToSend.append(key, formData[key]);
-            }
-          });
-    
-          // Append timedata fields to formDataToSend
-          Object.keys(timedata).forEach((key) => {
-            formDataToSend.append(key.replace('_', ''), timedata[key]);
-          });
-    
-          const response = await axios.post(
-            `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
-           { 'name':'abc',
-           'zipcode':'1234567'
-          },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                 'Content-Type': 'multipart/form-data',
-                // Don't specify 'Content-Type' manually for FormData
-                Accept: 'application/json',
-              },
-            }
-          );
-    
-          console.log('Success:', response.data);
-          // Handle success
-    
-        } catch (error) {
-          console.error('Error:', error);
-          // Handle error
+    e.preventDefault();
+    try {
+      const formDataToSend = new FormData();
+
+      // Append individual fields to formDataToSend
+      Object.keys(formData).forEach((key) => {
+        if (key === 'profile_image' && formData[key]) {
+          formDataToSend.append(key, formData[key]);
+        } else {
+          formDataToSend.append(key, formData[key]);
         }
-      };
+      });
+
+      // Append timedata fields to formDataToSend
+      Object.entries(timedata).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
+      });
+
+      const response = await axios.post(
+        `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Don't specify 'Content-Type' manually for FormData
+            Accept: 'application/json',
+          },
+        }
+      );
+
+      console.log('Success:', response.data);
+      // Handle success
+
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error
+    }
+  };
      
       //Upload Your Arts
       const [artworkData, setArtworkData] = useState({
@@ -280,14 +265,14 @@ const Editprofile = () => {
             />
           </div>
   <div className="col-md-12">
-          <label htmlFor="profileImage" className="form-label">
+          <label htmlFor="profile_image" className="form-label">
             Profile Image
           </label>
           <input
             type="file"
             className="form-control"
-            id="profileImage"
-            name="profileImage"
+            id="profile_image"
+            name="profile_image"
             accept="image/*"
             onChange={handleInputChange}
           />
