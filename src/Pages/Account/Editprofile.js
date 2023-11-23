@@ -7,7 +7,7 @@ const Editprofile = () => {
     const [formData, setFormData] = useState({
         name: '',
         username: '',
-        phone:'',
+        // phone:'',
         address: '',
         zipcode: '',
         email: '',
