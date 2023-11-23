@@ -45,7 +45,7 @@ const Editprofile = () => {
         console.error('Error fetching data:', error);
       });
     setFormData({ ...formData });
-  }, [token, isAuthenticated, navigate,handleSubmitArt]);
+  }, [token, isAuthenticated, navigate]);
 
   //Edit Your Personal Information
   const [timedata, setTimedata] = useState({
@@ -166,9 +166,6 @@ const Editprofile = () => {
     imagePreview: null,
     user_id: `${user?.id}`,
   });
-
-
-
   const handleArtInputChange = (event) => {
     const { name, value } = event.target;
     setArtworkData({
@@ -176,7 +173,6 @@ const Editprofile = () => {
       [name]: value,
     });
   };
-
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setArtworkData({
@@ -185,7 +181,6 @@ const Editprofile = () => {
       imagePreview: URL.createObjectURL(file),
     });
   };
-
   const handleSubmitArt = async (event) => {
     event.preventDefault();
 
