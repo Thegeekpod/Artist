@@ -4,21 +4,10 @@ import { isAuthenticated, useUser } from './UserContext';
 import { useNavigate } from 'react-router-dom';
 
 const Editprofile = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        username: '',
-        phone: '',
-        address: '',
-        zipcode: '',
-        email: '',
-        profile_image: null,
-        imagePreview: null, 
-    
-  
-      });
+    const [formData, setFormData] = useState([]);
       const [artdata, setArtData] = useState([]);
       const [bannerImagedata, setBannerimageData] = useState([]);
-      // const [timedata,setTimedata]=useState([]);
+      const [timedatavalue,setTimedatavalue]=useState([]);
       const {token,user} = useUser();
       const [sucess , setSucess]= useState(false);
       const navigate = useNavigate();
@@ -46,7 +35,7 @@ const Editprofile = () => {
             // setData(response.data.data.artworks);
             setFormData(response.data.data);
             setArtData(response.data.data.artworks);
-            setTimedata(response.data.data.time_data);
+            setTimedatavalue(response.data.data.time_data);
             setBannerimageData(response.data.data.banner_images);
 
           })
@@ -73,70 +62,95 @@ const Editprofile = () => {
         saterday_from: '',
         saterday_to: '',
       });
+      const [originalTimedata, setOriginalUsertimeinfo] = useState({ ...timedata });
     
-    const handleInputChange = (e) => {
+
+
+      const [userinfo, setUserinfo] = useState({
+        name: '',
+        username: '',
+        phone: '',
+        address: '',
+        zipcode: '',
+        email: '',
+        profile_image: null,
+        imagePreview: null,
+        
+      });
+      const [originalUserinfo, setOriginalUserinfo] = useState({ ...userinfo });
+      const handleInputChange = (e) => {
         if (e.target.type === 'file') {
           const selectedImage = e.target.files[0];
-          setFormData({
-            ...formData,
+          setUserinfo((prevInfo) => ({
+            ...prevInfo,
             profile_image: selectedImage,
             imagePreview: URL.createObjectURL(selectedImage),
-          });
+          }));
         } else {
           const { name, value } = e.target;
-          setFormData({ ...formData, [name]: value });
+          setUserinfo((prevInfo) => ({
+            ...prevInfo,
+            [name]: value,
+          }));
         }
       };
-    
+      
       const handleTimeInputChange = (day, field, value) => {
         setTimedata({
           ...timedata,
           [`${day}_${field}`]: value,
         });
       };
-
-    
       const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const formDataToSend = new FormData();
-
-      // Append individual fields to formDataToSend
-      Object.keys(formData).forEach((key) => {
-        if (key === 'profile_image' && formData[key]) {
-          formDataToSend.append(key, formData[key]);
-        } else {
-          formDataToSend.append(key, formData[key]);
+        e.preventDefault();
+        try {
+          const formDataToSend = new FormData();
+      
+          // Append updated userinfo fields to formDataToSend
+          for (const key in userinfo) {
+            if (
+              userinfo.hasOwnProperty(key) &&
+              userinfo[key] !== originalUserinfo[key] &&
+              userinfo[key] !== null
+            ) {
+              formDataToSend.append(key, userinfo[key]);
+            }
+          }
+      
+          // Append updated timedata fields to formDataToSend
+          for (const key in timedata) {
+            if (
+              timedata.hasOwnProperty(key) &&
+              timedata[key] !== originalTimedata[key] &&
+              timedata[key] !== null
+            ) {
+              formDataToSend.append(key, timedata[key]);
+            }
+          }
+      
+          const response = await axios.post(
+            `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
+            formDataToSend,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+              },
+            }
+          );
+      
+          console.log('Success:', response.data);
+        
+        } catch (error) {
+          console.error('Error:', error);
+          // Handle error
         }
-      });
-
-      // Append timedata fields to formDataToSend
-      Object.entries(timedata).forEach(([key, value]) => {
-        formDataToSend.append(key, value);
-      });
-
-      const response = await axios.post(
-        `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
-        {'name':'ac',
-      'zipcode':'4444444'},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            // Don't specify 'Content-Type' manually for FormData
-            Accept: 'application/json',
-          },
-        }
-      );
-
-      console.log('Success:', response.data);
-      // Handle success
-
-    } catch (error) {
-      console.error('Error:', error);
-      // Handle error
-    }
-  };
-     
+      };
+      
+      
+      
+    
+      
       //Upload Your Arts
       const [artworkData, setArtworkData] = useState({
         artistName: '',
@@ -259,7 +273,7 @@ const Editprofile = () => {
       <div className="row mb-3">
       <div className="col-md-12 mt-3 text-center ">
             <img
-          src={formData.imagePreview || `https://sweetdevelopers.com/artist/storage/ProfileImage/${formData.profile_image}`}
+          src={userinfo.imagePreview || `https://sweetdevelopers.com/artist/storage/ProfileImage/${formData.profile_image}`}
 
               alt="Preview"
               style={{ maxWidth: '200px%', height: '200px' }}
@@ -272,7 +286,6 @@ const Editprofile = () => {
           <input
             type="file"
             className="form-control"
-            id="profile_image"
             name="profile_image"
             accept="image/*"
             onChange={handleInputChange}
@@ -293,7 +306,7 @@ const Editprofile = () => {
             id="name"
             name="name"
             placeholder="Enter your name"
-            value={formData.name}
+            value={userinfo.name || formData.name}
             onChange={handleInputChange}
           />
         </div>
@@ -304,10 +317,9 @@ const Editprofile = () => {
           <input
             type="text"
             className="form-control"
-            id="username"
             name="username"
             placeholder="Enter your username"
-            value={formData.username}
+            value={userinfo.username||formData.username}
             onChange={handleInputChange}
           />
         </div>
@@ -319,12 +331,11 @@ const Editprofile = () => {
             Phone
           </label>
           <input
-            type="tel"
+            type="number"
             className="form-control"
-            id="phone"
             name="phone"
             placeholder="Enter your phone number"
-            value={formData.phone}
+            value={userinfo.phone || formData.phone}
             onChange={handleInputChange}
           />
         </div>
@@ -335,10 +346,9 @@ const Editprofile = () => {
           <input
             type="text"
             className="form-control"
-            id="address"
             name="address"
             placeholder="Enter your address"
-            value={formData.address}
+            value={userinfo.address||formData.address}
             onChange={handleInputChange}
           />
         </div>
@@ -349,12 +359,11 @@ const Editprofile = () => {
             Zipcode
           </label>
           <input
-            type="text"
+            type="number"
             className="form-control"
-            id="zipcode"
             name="zipcode"
             placeholder="Enter your zipcode"
-            value={formData.zipcode}
+            value={userinfo.zipcode||formData.zipcode}
             onChange={handleInputChange}
           />
         </div>
@@ -368,7 +377,7 @@ const Editprofile = () => {
             id="email"
             name="email"
             placeholder="Enter your email"
-            value={formData.email}
+            value={userinfo.email||formData.email}
             onChange={handleInputChange}
           />
         </div>
@@ -386,15 +395,15 @@ const Editprofile = () => {
             <td>Sun</td>
             <td>
               <input
-                type="text"
-                value={timedata?.sunday_from}
+                type="time"
+                value={timedata?.sunday_from || timedatavalue?.sunday_from}
                 onChange={(e) => handleTimeInputChange('sunday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
-                type="text"
-                value={timedata?.sunday_to}
+                type="time"
+                value={timedata?.sunday_to || timedatavalue?.sunday_to}
                 onChange={(e) => handleTimeInputChange('sunday', 'to', e.target.value)}
               />
             </td>
@@ -403,15 +412,15 @@ const Editprofile = () => {
             <td>Mon</td>
             <td>
               <input
-                type="text"
-                value={timedata?.monday_from}
+                type="time"
+                value={timedata?.monday_from || timedatavalue?.monday_from}
                 onChange={(e) => handleTimeInputChange('monday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
-                type="text"
-                value={timedata?.monday_to}
+                type="time"
+                value={timedata?.monday_to || timedatavalue?.monday_to}
                 onChange={(e) => handleTimeInputChange('monday', 'to', e.target.value)}
               />
             </td>
@@ -420,15 +429,15 @@ const Editprofile = () => {
             <td>Tue</td>
             <td>
               <input
-                type="text"
-                value={timedata?.tuesday_from}
+                type="time"
+                value={timedata?.tuesday_from || timedatavalue?.tuesday_from}
                 onChange={(e) => handleTimeInputChange('tuesday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
-                type="text"
-                value={timedata?.tuesday_to}
+                type="time"
+                value={timedata?.tuesday_to || timedatavalue?.tuesday_to}
                 onChange={(e) => handleTimeInputChange('tuesday', 'to', e.target.value)}
               />
             </td>
@@ -437,15 +446,15 @@ const Editprofile = () => {
             <td>Wed</td>
             <td>
               <input
-                type="text"
-                value={timedata?.wednesday_from}
+                type="time"
+                value={timedata?.wednesday_from || timedatavalue?.wednesday_from}
                 onChange={(e) => handleTimeInputChange('wednesday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
-                type="text"
-                value={timedata?.wednesday_to}
+                type="time"
+                value={timedata?.wednesday_to || timedatavalue?.wednesday_to}
                 onChange={(e) => handleTimeInputChange('wednesday', 'to', e.target.value)}
               />
             </td>
@@ -454,16 +463,16 @@ const Editprofile = () => {
             <td>Thu</td>
             <td>
               <input
-                type="text"
-                value={timedata?.thrusday_from}
-                onChange={(e) => handleTimeInputChange('thursday', 'from', e.target.value)}
+                type="time"
+                value={timedata?.thrusday_from || timedatavalue?.thrusday_from}
+                onChange={(e) => handleTimeInputChange('thrusday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
-                type="text"
-                value={timedata?.thrusday_to}
-                onChange={(e) => handleTimeInputChange('thursday', 'to', e.target.value)}
+                type="time"
+                value={timedata?.thrusday_to || timedatavalue?.thrusday_to}
+                onChange={(e) => handleTimeInputChange('thrusday', 'to', e.target.value)}
               />
             </td>
           </tr>
@@ -471,15 +480,15 @@ const Editprofile = () => {
             <td>Fri</td>
             <td>
               <input
-                type="text"
-                value={timedata?.friday_from}
+                type="time"
+                value={timedata?.friday_from || timedatavalue?.friday_from}
                 onChange={(e) => handleTimeInputChange('friday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
-                type="text"
-                value={timedata?.friday_to}
+                type="time"
+                value={timedata?.friday_to || timedatavalue?.friday_to}
                 onChange={(e) => handleTimeInputChange('friday', 'to', e.target.value)}
               />
             </td>
@@ -488,16 +497,16 @@ const Editprofile = () => {
             <td>Sat</td>
             <td>
               <input
-                type="text"
-                value={timedata?.saterday_from}
-                onChange={(e) => handleTimeInputChange('saturday', 'from', e.target.value)}
+                type="time"
+                value={timedata?.saterday_from || timedatavalue?.saterday_from}
+                onChange={(e) => handleTimeInputChange('saterday', 'from', e.target.value)}
               />
             </td>
             <td>
               <input
-                type="text"
-                value={timedata?.saterday_to}
-                onChange={(e) => handleTimeInputChange('saturday', 'to', e.target.value)}
+                type="time"
+                value={timedata?.saterday_to || timedatavalue?.saterday_to}
+                onChange={(e) => handleTimeInputChange('saterday', 'to', e.target.value)}
               />
             </td>
           </tr>
