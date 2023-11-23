@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Editprofile = () => {
     const [formData, setFormData] = useState({
-        name: '',
+        // name: '',
         username: '',
         // phone:'',
-        address: '',
+        // address: '',
         zipcode: '',
-        email: '',
-        profile_image: null,
-        imagePreview: null, 
+        // email: '',
+        // profile_image: null,
+        // imagePreview: null, 
     
   
       });
@@ -110,10 +110,10 @@ const Editprofile = () => {
         }
       });
 
-      // Append timedata fields to formDataToSend
-      Object.entries(timedata).forEach(([key, value]) => {
-        formDataToSend.append(key, value);
-      });
+      // // Append timedata fields to formDataToSend
+      // Object.entries(timedata).forEach(([key, value]) => {
+      //   formDataToSend.append(key, value);
+      // });
 
       const response = await axios.post(
         `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
