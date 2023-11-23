@@ -157,6 +157,7 @@ const Editprofile = () => {
 
 
   //Upload Your Arts
+  
   const [artworkData, setArtworkData] = useState({
     artistName: '',
     placementName: '',
@@ -204,15 +205,7 @@ const Editprofile = () => {
         setSucess(false);
       }, 3000);
 
-      // Reset other data if needed
-      setArtworkData({
-        placementName: '',
-        styleName: '',
-        subjectName: '',
-        image: null,
-        imagePreview: null,
-        user_id: `${user.id}`,
-      });
+      
       setArtworkData({
         ...artworkData,
         image: null,
@@ -545,9 +538,8 @@ const Editprofile = () => {
                   />
 
                   <label htmlFor="placementName">Placement Name:</label>
-                  <label htmlFor="placementName">Placement Name:</label>
+                  {/* <label htmlFor="placementName">Placement Name:</label> */}
                   <select
-                    id="placementName"
                     name="placementName"
                     className="form-control"
                     value={artworkData.placementName}
@@ -561,7 +553,6 @@ const Editprofile = () => {
 
                   <label htmlFor="styleName">Style Name:</label>
                   <select
-                    id="styleName"
                     name="styleName"
                     className="form-control"
                     value={artworkData.styleName}
@@ -575,7 +566,6 @@ const Editprofile = () => {
 
                   <label htmlFor="subjectName">Subject Name:</label>
                   <select
-                    id="subjectName"
                     name="subjectName"
                     className="form-control"
                     value={artworkData.subjectName}
