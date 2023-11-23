@@ -16,14 +16,14 @@ const Editprofile = () => {
 
 
   useEffect(() => {
-    const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
+  
 
     // Check if the user is authenticated when the component mounts
     if (!isAuthenticated()) {
       navigate('/login');
       return;
     }
-
+    const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
     const axiosConfig = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -199,9 +199,10 @@ const Editprofile = () => {
         },
       });
       console.log('File uploaded successfully:', response.data);
-       // Update ArtData after successful upload
-    setArtData(response.data.data.artworks);
-      // Handle success or reset form
+       
+
+
+      
       setSucess(true);
       setTimeout(() => {
         setSucess(false);
@@ -218,7 +219,29 @@ const Editprofile = () => {
       // Handle error
     }
   };
+  useEffect(() => {
+  
+    const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
+    const axiosConfig = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json', // Adjust content type based on your API requirements
+      },
+    };
 
+    // Make the API call using Axios
+    axios.get(apiUrl, axiosConfig)
+      .then(response => {
+    
+        setArtData(response.data.data.artworks);
+ 
+
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    setFormData({ ...formData });
+  }, [handleSubmitArt]);
   //upload banner
   const [bannerData, setBannerData] = useState({
 
