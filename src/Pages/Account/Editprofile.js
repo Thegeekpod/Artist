@@ -268,14 +268,14 @@ const Editprofile = () => {
           <label htmlFor="profile_image" className="form-label">
             Profile Image
           </label>
-          <input
+          {/* <input
             type="file"
             className="form-control"
             id="profile_image"
             name="profile_image"
             accept="image/*"
             onChange={handleInputChange}
-          />
+          /> */}
         </div>
      
          
@@ -372,7 +372,7 @@ const Editprofile = () => {
           />
         </div>
       </div>
-      <table className="table">
+      {/* <table className="table">
         <thead>
           <tr>
             <th>Day</th>
@@ -501,7 +501,7 @@ const Editprofile = () => {
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> */}
       <div className="row">
         <div className="col-md-12 text-center" style={{marginTop:'20px'}}>
           <button type="submit" className="btn btn-primary" style={{width:'40%'}}>
