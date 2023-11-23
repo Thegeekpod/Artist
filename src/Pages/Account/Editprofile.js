@@ -20,7 +20,7 @@ const Editprofile = () => {
   const axiosConfig = {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
       'Accept': 'application/json',
     },
   };
