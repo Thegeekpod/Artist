@@ -115,7 +115,7 @@ const Editprofile = () => {
     
           // Append individual fields to formDataToSend
           Object.keys(formData).forEach((key) => {
-            if (key === 'profileImage' && formData[key]) {
+            if (key === 'profile_Image' && formData[key]) {
               formDataToSend.append(key, formData[key]);
             } else {
               formDataToSend.append(key, formData[key]);
@@ -133,6 +133,7 @@ const Editprofile = () => {
             {
               headers: {
                 Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
                 // Don't specify 'Content-Type' manually for FormData
                 Accept: 'application/json',
               },
