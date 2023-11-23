@@ -11,6 +11,8 @@ const Editprofile = () => {
   const { token, user } = useUser();
   const [sucess, setSucess] = useState(false);
   const [sucessprofileinfo, setSucessprofileinfo] = useState(false);
+  const [sucessbanner, setbannerSucess] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -221,7 +223,7 @@ const Editprofile = () => {
 
   //upload banner
   const [bannerData, setBannerData] = useState({
-
+    user_id: `${user?.id}`,
     image: null,
     imagePreview: null,
   });
@@ -239,17 +241,29 @@ const Editprofile = () => {
     event.preventDefault();
 
     const formData = new FormData();
-
-    formData.append('image', artworkData.image);
+    formData.append('user_id', bannerData.user_id);
+    formData.append('banner_image', bannerData.image,);
 
     try {
-      const response = await axios.post('YOUR_API_ENDPOINT_HERE', formData, {
+      const response = await axios.post('https://sweetdevelopers.com/artist/api/banner-artwork', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
         },
       });
       console.log('File uploaded successfully:', response.data);
       // Handle success or reset form
+      setbannerSucess(true);
+      setTimeout(() => {
+        setbannerSucess(false);
+      }, 3000);
+
+      
+      setBannerData({
+        ...artworkData,
+        image: null,
+        imagePreview: null,
+      });
     } catch (error) {
       console.error('Error uploading file:', error);
       // Handle error
@@ -674,6 +688,9 @@ const Editprofile = () => {
                         <button style={{ width: "100%" }} type="submit" className="btn btn-primary mt-3">Upload</button>
 
                       </div>
+                      {sucessbanner && <><div>
+                <p className='sucess'>Profile Update Sucessfull</p>
+              </div></>}
                     </>
 
                   )}

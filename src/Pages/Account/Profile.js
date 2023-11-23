@@ -34,14 +34,12 @@ const Profile = () => {
       navigate('/login');
       return;
     }
-
     // // Ensure that there is a valid token before making the API call
     // if (!token) {
     //   console.error('No token available.');
     //   navigate('/login');
     //   return;
     // }
-
     // Axios request configuration with the bearer token in the headers
     const axiosConfig = {
       headers: {
