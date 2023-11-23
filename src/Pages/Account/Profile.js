@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { isAuthenticated, useUser } from './UserContext';
 import axios from 'axios';
 
@@ -16,9 +16,8 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { EffectCoverflow, Pagination,Autoplay ,Mousewheel,Navigation} from 'swiper/modules';
+import { apibaseUrl } from '../../Component/Apibaseurl';
 const Profile = () => {
-  let { artist } = useParams();
-  let { seq } = useParams();
   const { token } = useUser();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -27,7 +26,7 @@ const Profile = () => {
   const [bannerImagedata, setBannerimageData] = useState([]);
 
   useEffect(() => {
-    const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
+    const apiUrl = `${apibaseUrl}/artist`;
 
     // Check if the user is authenticated when the component mounts
     if (!isAuthenticated()) {
@@ -55,7 +54,7 @@ const Profile = () => {
         setUserData(response.data.data);
         setTimedata(response.data.data.time_data);
         setBannerimageData(response.data.data.banner_images);
-        console.log(response.data.data.artworks);
+        // console.log(response.data.data.artworks);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -81,12 +80,27 @@ const Profile = () => {
   <div className="col-md-4 m-padding-0 text-center">
     <div className="inset-xl-right-15">
       <div className="img-wrap-1">
-        <img
-         src={`https://sweetdevelopers.com/artist/storage/ProfileImage/${user?.profile_image}`}
 
+        {user.profile_image && user.profile_image.length ?
+        <img
+        src={`https://sweetdevelopers.com/artist/storage/ProfileImage/${user?.profile_image}`}
           alt=""
           style={{ width:'100%', height:"295px", marginBottom:'10px'}}
-        />
+        /> : <div class="imgbox">
+        <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`} alt={''}  />
+<div className='imgtitle'>
+          <h4 class="page-title-1 " style={{color:'white'}}>
+         No Imgae
+          </h4>
+          <div className="row text-center">
+            
+          <button type="button" class="btn btn-info" onClick={()=>{navigate('/editprofile#profileupdate')}}>Upload Now</button>
+          </div>
+          </div>
+        
+        </div>
+      }
+        
 <button type="button" class="btn btn-success" style={{width:'100%'}} onClick={()=>{navigate('/editprofile')}}>Edit Profile</button>
       </div>
    
@@ -217,20 +231,35 @@ const Profile = () => {
         modules={[EffectCoverflow, Pagination,Autoplay,Mousewheel,Navigation]}
         className="mySwiper"
       >
-    {bannerImagedata ? (
+   {bannerImagedata && bannerImagedata.length ? (
   <>
-        {/* Map over the data array and render something for each item */}
-        {bannerImagedata.map(item => (
-            <SwiperSlide key={item.id}>
-            <img src={`https://sweetdevelopers.com/artist/storage/BannerImage/${item.banner_image}`} alt={item.banner_image}  />
- 
-          </SwiperSlide>
-              
-        ))}
+    {bannerImagedata.map(item => (
+      <SwiperSlide key={item.id}>
+        <img src={`https://sweetdevelopers.com/artist/storage/BannerImage/${item.banner_image}`} alt={item.banner_image} />
+      </SwiperSlide>
+    ))}
   </>
-    ) : (
-      <p>No banner images upload your bannaer images now</p>
-    )}
+) : (
+<>
+{[...Array(8)].map((_, index) => (
+    <SwiperSlide key={index}>
+      <div class="imgbox">
+              <img className="" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`} alt={''}  />
+               <div className='imgtitle'>
+                <h4 class="page-title-1 " style={{color:'white'}}>
+               No Imgae in Banner
+                </h4>
+                <div className="row text-center">
+                  
+                <button type="button" class="btn btn-info" onClick={()=>{navigate('/editprofile#bannerimage')}}>Upload Now</button>
+                </div>
+                </div>
+              
+              </div>
+    </SwiperSlide>
+  ))}
+</>
+)}
 
       </Swiper>
 </div>
@@ -531,9 +560,8 @@ const Profile = () => {
      
     </div>
     <div className='row text-center'>
-    {data ? (
+    {data && data.length? (
   <>
-        {/* Map over the data array and render something for each item */}
         {data.map(item => (
               <div className="col-lg-4 "  key={item.id}>
               <div class="imgbox">
@@ -562,7 +590,22 @@ const Profile = () => {
         ))}
   </>
     ) : (
-      <p>Loading...</p>
+     <>
+     <div className="col-lg-4 ">
+              <div class="imgbox">
+              <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`} alt={''}  />
+ <div className='imgtitle'>
+                <h4 class="page-title-1 " style={{color:'white'}}>
+               No Imgae
+                </h4>
+                <div className="row text-center">
+                  
+                <button type="button" class="btn btn-info" onClick={()=>{navigate('/editprofile#artsupload')}}>Upload Now</button>
+                </div>
+                </div>
+              
+              </div>
+              </div></>
     )}
       
       </div>

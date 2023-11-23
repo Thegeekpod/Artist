@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { isAuthenticated, useUser } from './UserContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { apibaseUrl } from '../../Component/Apibaseurl';
 
 const Editprofile = () => {
   const [formData, setFormData] = useState([]);
@@ -16,7 +17,7 @@ const Editprofile = () => {
 
   const navigate = useNavigate();
 
-  const apiUrl = 'https://sweetdevelopers.com/artist/api/artist';
+  const apiUrl = `${apibaseUrl}/artist`;
   const axiosConfig = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -133,7 +134,7 @@ const Editprofile = () => {
       }
 
       const response = await axios.post(
-        `https://sweetdevelopers.com/artist/api/artist-update/${user?.id}`,
+        `${apibaseUrl}/artist-update/${user?.id}`,
         formDataToSend,axiosConfig
         
       );
@@ -189,7 +190,7 @@ const Editprofile = () => {
     formData.append('subject_id', artworkData.subjectName);
     formData.append('image', artworkData.image);
     try {
-      const response = await axios.post('https://sweetdevelopers.com/artist/api/upload-artwork', formData, axiosConfig);
+      const response = await axios.post(`${apibaseUrl}/upload-artwork`, formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
        // Update ArtData after successful upload
     // setArtData(response.data.data.artworks);
@@ -246,7 +247,7 @@ const Editprofile = () => {
     formData.append('banner_image', bannerData.image,);
 
     try {
-      const response = await axios.post('https://sweetdevelopers.com/artist/api/upload-banner', formData, axiosConfig);
+      const response = await axios.post(`${apibaseUrl}/upload-banner`, formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
       // Handle success or reset form
       setbannerSucess(true);
@@ -272,11 +273,33 @@ const Editprofile = () => {
       // Handle error
     }
   };
+
+
+  // location setup
+  const artsupload = useRef(null);
+  const profileupdate = useRef(null);
+  const bannerimage = useRef(null);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === '#artsupload' && artsupload.current) {
+      artsupload.current.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    if (location.has === '#profileupdate' && profileupdate.current){
+      profileupdate.current.scrollIntoView({behavior : 'smooth'})
+    };
+    if(location.hash === '#bannerimage' && bannerimage.current){
+      bannerimage.current.scrollIntoView({behavior :'smooth'})
+    }
+
+  }, [location]);
   return (
     <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
       <div className="container">
-        <section className="bg-header breadcrumbs-custom">
-          <div className='frombg'>
+        <section className="bg-header breadcrumbs-custom" >
+          <div className='frombg' ref={profileupdate} id='#profileupdate'>
             <div className='row text-center'>
               <h4 class="page-title-1 " style={{ color: 'white' }}> Edit Your Personal Information </h4>
             </div>
@@ -285,7 +308,7 @@ const Editprofile = () => {
               <div className="row mb-3">
                 <div className="col-md-12 mt-3 text-center ">
                   <img
-                    src={userinfo.imagePreview || `https://sweetdevelopers.com/artist/storage/ProfileImage/${formData.profile_image}`}
+                    src={userinfo.imagePreview || `https://sweetdevelopers.com/artist/storage/ProfileImage/${formData.profile_image || 'noimg.jpg'}  `}
 
                     alt="Preview"
                     style={{ maxWidth: '200px%', height: '200px' }}
@@ -315,7 +338,6 @@ const Editprofile = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="name"
                     name="name"
                     placeholder="Enter your name"
                     value={userinfo.name || formData.name}
@@ -386,7 +408,6 @@ const Editprofile = () => {
                   <input
                     type="email"
                     className="form-control"
-                    id="email"
                     name="email"
                     placeholder="Enter your email"
                     value={userinfo.email || formData.email}
@@ -529,8 +550,8 @@ const Editprofile = () => {
                 <p className='sucess'>Profile Update Sucessfull</p>
               </div></>}
               <div className="row">
-                <div className="col-md-12 text-center" style={{ marginTop: '20px' }}>
-                  <button type="submit" className="btn btn-primary" style={{ width: '40%' }}>
+                <div className="col-md-12 text-center" style={{ marginTop: '20px' }} >
+                  <button type="submit" className="btn btn-primary" style={{ width: '40%' }} >
                     Submit
                   </button>
                 </div>
@@ -539,7 +560,7 @@ const Editprofile = () => {
             </form>
 
           </div>
-          <div className='frombg'>
+          <div className='frombg'  ref={artsupload} id="artsupload"  >
             <div className='row text-center'>
               <h4 class="page-title-1 " style={{ color: 'white' }}> Upload Your Arts </h4>
             </div>
@@ -549,16 +570,15 @@ const Editprofile = () => {
                   <label htmlFor="artistName">Artist Name:</label>
                   <input
                     type="text"
-                    id="artistName"
                     name="artistName"
                     className="form-control"
                     value={formData.name}
-                    onChange={handleArtInputChange} disabled
+                    disabled
                   />
 
                   <label htmlFor="placementName">Placement Name:</label>
                   {/* <label htmlFor="placementName">Placement Name:</label> */}
-                  <select
+                  <select required
                     name="placementName"
                     className="form-control"
                     value={artworkData.placementName}
@@ -571,7 +591,7 @@ const Editprofile = () => {
                   </select>
 
                   <label htmlFor="styleName">Style Name:</label>
-                  <select
+                  <select required
                     name="styleName"
                     className="form-control"
                     value={artworkData.styleName}
@@ -584,7 +604,7 @@ const Editprofile = () => {
                   </select>
 
                   <label htmlFor="subjectName">Subject Name:</label>
-                  <select
+                  <select required
                     name="subjectName"
                     className="form-control"
                     value={artworkData.subjectName}
@@ -600,7 +620,6 @@ const Editprofile = () => {
                   <label htmlFor="image">Attach the artwork image here:</label>
                   <input
                     type="file"
-                    id="image"
                     name="image"
                     accept="image/*"
                     className="form-control"
@@ -667,7 +686,7 @@ const Editprofile = () => {
             </div>
           </div>
 
-          <div className='frombg'>
+          <div className='frombg' ref={bannerimage} id='#bannerimage'>
             <div className='row text-center'>
               <h4 class="page-title-1 " style={{ color: 'white' }}> Upload Your Banner </h4>
             </div>
@@ -678,7 +697,6 @@ const Editprofile = () => {
                   <label htmlFor="image">Attach the Banner image here:(1024x1024)</label>
                   <input
                     type="file"
-                    id="image"
                     name="image"
                     accept="image/*"
                     className="form-control"

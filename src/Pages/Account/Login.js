@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { isAuthenticated, useUser } from './UserContext';
+import { apiProxybaseUrl } from '../../Component/Apibaseurl';
 
 const Login = () => {
     const { setToken, setUser } = useUser();
@@ -21,9 +22,9 @@ const Login = () => {
     e.preventDefault();
   
     try {
-      const proxyUrl = 'https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/login';
+      // const proxyUrl = `https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/login`;
   
-      const response = await axios.post(proxyUrl, {
+      const response = await axios.post(`${apiProxybaseUrl}/login`, {
         email,
         password,
       });
@@ -121,11 +122,19 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="col-sm-12">
-        <button type="submit" className="theme-button">
+      
+      <div className="col-lg-6" >
+      <button type="submit" className="theme-button">
           Login
         </button>
+        </div>
+        <div className="col-lg-6 text-right text-sm-center" >
+        <p>if you no account please <Link to='/register'>Register Now</Link> </p>
+
+      
+        
       </div>
+      
     </form>
         </div>
       </div>
