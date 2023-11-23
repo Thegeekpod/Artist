@@ -245,7 +245,7 @@ const Editprofile = () => {
     formData.append('banner_image', bannerData.image,);
 
     try {
-      const response = await axios.post('https://sweetdevelopers.com/artist/api/banner-artwork', formData, {
+      const response = await axios.post('https://sweetdevelopers.com/artist/api/upload-banner', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
