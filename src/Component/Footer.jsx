@@ -23,7 +23,7 @@ const Footer = () => {
                 <p className="template-author">
                   created With
                   <i className="rt-icon2-heart2" /> By
-                  <a href="#"> Akash</a>
+                  <a href="#"> singh</a>
                 </p>
               </div>
             </div>
