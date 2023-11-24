@@ -50,7 +50,7 @@ const Editprofile = () => {
 
 const fatchPlacement =async()=>{
   try{
-    const response = await axios.get(`${apibaseUrl}/styles`);
+    const response = await axios.get(`${apibaseUrl}/placements`);
     setPlacement(response.data.data);
 
   } catch(error){
@@ -322,7 +322,7 @@ const fatchPlacement =async()=>{
       artsupload.current.scrollIntoView({ behavior: 'smooth' });
     };
 
-    if (location.has === '#profileupdate' && profileupdate.current) {
+    if (location.hash === '#profileupdate' && profileupdate.current) {
       profileupdate.current.scrollIntoView({ behavior: 'smooth' })
     };
     if (location.hash === '#bannerimage' && bannerimage.current) {
@@ -641,8 +641,10 @@ const fatchPlacement =async()=>{
                     <option value="">Select Style</option>
                   {styledata && styledata.length ? (<>
                   {styledata.map((style)=>(
+                    <>
              <option value={style.id}>{style.title}</option>
-
+             {console.log(style)};
+</>
                   ))}
                   </>):(<>
                   <option value="">Select Style</option>
