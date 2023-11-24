@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import { isAuthenticated, useUser } from './UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { apibaseUrl } from '../../Component/Apibaseurl';
+import {  apibaseUrl } from '../../Component/Apibaseurl';
 
 const Editprofile = () => {
   const [formData, setFormData] = useState([]);
@@ -13,6 +13,10 @@ const Editprofile = () => {
   const [sucess, setSucess] = useState(false);
   const [sucessprofileinfo, setSucessprofileinfo] = useState(false);
   const [sucessbanner, setbannerSucess] = useState(false);
+  const [subjects, setSubjects] = useState([]);
+  const [styledata , setStyledata] = useState([]);
+  const[placement, setPlacement] = useState([]);
+
 
 
   const navigate = useNavigate();
@@ -26,15 +30,43 @@ const Editprofile = () => {
     },
   };
 
+  const fetchSubjectsData = async () => {
+    try {
+      const response = await axios.get(`${apibaseUrl}/subjects`);
+      setSubjects(response.data.data);
+    } catch (error) {
+      console.error('Error fetching subjects:', error);
+    }
+  };
+
+  const fetchStyleData = async () => {
+    try {
+      const response = await axios.get(`${apibaseUrl}/styles`);
+      setStyledata(response.data.data);
+    } catch (error) {
+      console.error('Error fetching subjects:', error);
+    }
+  };
+
+const fatchPlacement =async()=>{
+  try{
+    const response = await axios.get(`${apibaseUrl}/styles`);
+    setPlacement(response.data.data);
+
+  } catch(error){
+    console.error('Eroor fetching subjects:', error)
+  }
+}
   useEffect(() => {
-  
+
 
     // Check if the user is authenticated when the component mounts
     if (!isAuthenticated()) {
       navigate('/login');
       return;
     }
-    
+
+
     // Make the API call using Axios
     axios.get(apiUrl, axiosConfig)
       .then(response => {
@@ -48,6 +80,9 @@ const Editprofile = () => {
         console.error('Error fetching data:', error);
       });
     setFormData({ ...formData });
+    fetchSubjectsData();
+    fetchStyleData();
+    fatchPlacement();
   }, [token, isAuthenticated, navigate]);
 
   //Edit Your Personal Information
@@ -135,8 +170,8 @@ const Editprofile = () => {
 
       const response = await axios.post(
         `${apibaseUrl}/artist-update/${user?.id}`,
-        formDataToSend,axiosConfig
-        
+        formDataToSend, axiosConfig
+
       );
 
       console.log('Success:', response.data);
@@ -155,7 +190,7 @@ const Editprofile = () => {
 
 
   //Upload Your Arts
-  
+
   const [artworkData, setArtworkData] = useState({
     artistName: '',
     placementName: '',
@@ -192,29 +227,29 @@ const Editprofile = () => {
     try {
       const response = await axios.post(`${apibaseUrl}/upload-artwork`, formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
-       // Update ArtData after successful upload
-    // setArtData(response.data.data.artworks);
+      // Update ArtData after successful upload
+      // setArtData(response.data.data.artworks);
       // Handle success or reset form
       setSucess(true);
       setTimeout(() => {
         setSucess(false);
       }, 3000);
 
-      
+
       setArtworkData({
         ...artworkData,
         image: null,
         imagePreview: null,
       });
-      
-      axios.get(apiUrl, axiosConfig)
-      .then(response => {
-        setArtData(response.data.data.artworks);
 
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+      axios.get(apiUrl, axiosConfig)
+        .then(response => {
+          setArtData(response.data.data.artworks);
+
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
 
 
     } catch (error) {
@@ -255,19 +290,19 @@ const Editprofile = () => {
         setbannerSucess(false);
       }, 3000);
 
-      
+
       setBannerData({
         ...artworkData,
         image: null,
         imagePreview: null,
       });
       axios.get(apiUrl, axiosConfig)
-      .then(response => {
-        setBannerimageData(response.data.data.banner_images);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+        .then(response => {
+          setBannerimageData(response.data.data.banner_images);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
     } catch (error) {
       console.error('Error uploading file:', error);
       // Handle error
@@ -287,11 +322,11 @@ const Editprofile = () => {
       artsupload.current.scrollIntoView({ behavior: 'smooth' });
     };
 
-    if (location.has === '#profileupdate' && profileupdate.current){
-      profileupdate.current.scrollIntoView({behavior : 'smooth'})
+    if (location.has === '#profileupdate' && profileupdate.current) {
+      profileupdate.current.scrollIntoView({ behavior: 'smooth' })
     };
-    if(location.hash === '#bannerimage' && bannerimage.current){
-      bannerimage.current.scrollIntoView({behavior :'smooth'})
+    if (location.hash === '#bannerimage' && bannerimage.current) {
+      bannerimage.current.scrollIntoView({ behavior: 'smooth' })
     }
 
   }, [location]);
@@ -560,7 +595,7 @@ const Editprofile = () => {
             </form>
 
           </div>
-          <div className='frombg'  ref={artsupload} id="artsupload"  >
+          <div className='frombg' ref={artsupload} id="artsupload"  >
             <div className='row text-center'>
               <h4 class="page-title-1 " style={{ color: 'white' }}> Upload Your Arts </h4>
             </div>
@@ -585,8 +620,14 @@ const Editprofile = () => {
                     onChange={handleArtInputChange}
                   >
                     <option value="">Select Placement</option>
-                    <option value="1">Placement 1</option>
-                    <option value="2">Placement 2</option>
+                    {placement && placement.length ? (
+                      placement.map((placement)=>(
+                                              <option value={placement.id}>{placement.title}</option>)
+                      )
+                    )  :                    <option value="">Select Placement</option>
+                  }
+                    
+                   
                     {/* Add more options as needed */}
                   </select>
 
@@ -598,9 +639,15 @@ const Editprofile = () => {
                     onChange={handleArtInputChange}
                   >
                     <option value="">Select Style</option>
-                    <option value="1">Style 1</option>
-                    <option value="2">Style 2</option>
-                    {/* Add more options as needed */}
+                  {styledata && styledata.length ? (<>
+                  {styledata.map((style)=>(
+             <option value={style.id}>{style.title}</option>
+
+                  ))}
+                  </>):(<>
+                  <option value="">Select Style</option>
+                  
+                  </>)}
                   </select>
 
                   <label htmlFor="subjectName">Subject Name:</label>
@@ -611,8 +658,19 @@ const Editprofile = () => {
                     onChange={handleArtInputChange}
                   >
                     <option value="">Select Subject</option>
-                    <option value="1">Subject 1</option>
-                    <option value="2">Subject 2</option>
+
+                    {subjects && subjects.length ? (
+        <>
+          {subjects.map((subject) => (
+             <option value={subject.id}>{subject.title}</option>
+          ))}
+        </>
+      ) : (
+        <option value="">Select Style</option>
+
+      )}
+    
+
                     {/* Add more options as needed */}
                   </select>
                 </div>
@@ -710,8 +768,8 @@ const Editprofile = () => {
 
                       </div>
                       {sucessbanner && <><div>
-                <p className='sucess'>Profile Update Sucessfull</p>
-              </div></>}
+                        <p className='sucess'>Profile Update Sucessfull</p>
+                      </div></>}
                     </>
 
                   )}
