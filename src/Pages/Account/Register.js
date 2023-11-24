@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { isAuthenticated, useUser } from './UserContext';
-import { apiProxybaseUrl, apibaseUrl } from '../../Component/Apibaseurl';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -25,9 +24,9 @@ const Register = () => {
     e.preventDefault();
   
     try {
-      const proxyUrl = apibaseUrl;
+      // const proxyUrl = 'https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/register';
   
-      const response = await axios.post(proxyUrl, {
+      const response = await axios.post('https://sweetdevelopers.com/artist/api/register', {
         name,
         username,
         email,
