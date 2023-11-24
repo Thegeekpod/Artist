@@ -2,10 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { isAuthenticated, useUser } from './UserContext';
+import { apibaseUrl } from '../../Component/Apibaseurl';
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [name, setName] = useState('');
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
@@ -26,7 +28,7 @@ const Register = () => {
     try {
       // const proxyUrl = 'https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/register';
   
-      const response = await axios.post('https://sweetdevelopers.com/artist/api/register', {
+      const response = await axios.post(apibaseUrl, {
         name,
         username,
         email,
@@ -34,32 +36,34 @@ const Register = () => {
       });
   
       const data = response.data;
-  
       if (data.status === false) {
         // Handle incorrect ID or password scenario
         console.error('Incorrect ID or password');
         setError(true);
         setTimeout(() => {
-          setError(false); // Set error state to false after 5 seconds
+          setError(true);
         }, 5000);
         // You might want to update state, show an error message, etc.
       } else if (data.status === true) {
-        // Handle successful registration
         setSucess(true);
         setTimeout(() => {
-          setSucess(false); // Set success state to false after 5 seconds
-          navigate('/login');
-        }, 5000);
+            navigate('/login');
+          }, 5000);
         console.log(data.data);
+       
+        
       } else {
         // Handle other scenarios if needed
       }
+  
+  console.log(data)
+
+     
     } catch (error) {
       console.error('Error submitting form:', error);
       // Handle errors appropriately, update state, show error messages, etc.
     }
   };
-  
   
       
   return (
