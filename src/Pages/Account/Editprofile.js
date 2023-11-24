@@ -190,7 +190,7 @@ const fatchPlacement =async()=>{
 
 
   //Upload Your Arts
-
+console.log({'p':placement.id,'s':styledata})
   const [artworkData, setArtworkData] = useState({
     artistName: '',
     placementName: '',
@@ -225,7 +225,7 @@ const fatchPlacement =async()=>{
     formData.append('subject_id', artworkData.subjectName);
     formData.append('image', artworkData.image);
     try {
-      const response = await axios.post(`${apibaseUrl}/upload-artwork`, formData, axiosConfig);
+      const response = await axios.post(`https://sweetdevelopers.com/artist/api/upload-artwork`, formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
       // Update ArtData after successful upload
       // setArtData(response.data.data.artworks);
