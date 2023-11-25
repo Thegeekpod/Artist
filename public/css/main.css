@@ -8403,7 +8403,7 @@ a.color-icon.soc-pocket, a[class*="soc-"].soc-pocket:hover {
 }
 
 .links-wrap .p-view::before {
-	content: '\e7a7';
+	content: '\e725';
 	font-size: 28px;
 	line-height: 52px;
 }

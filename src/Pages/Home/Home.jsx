@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import axios from 'axios';
+import MGallery from './Gallery';
 
 const Home = () => {
   const settings = {
@@ -673,37 +674,15 @@ const Home = () => {
         <p>Loading...</p>
       ) : (
        <>
-          {data.map((item) => (
-           <div className="col-lg-4 " key={item.id}>
-           <div class="imgbox">
-           <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title}  />
- <div className='imgtitle'>
-             <h4 class="page-title-1 " style={{color:'white'}}>
-              {item.user.username}
-             </h4>
-             <div className="row d-flex">
-               
-               <div className="coll-6 text-left">
-               
-               <i class="fa fa-thumbs-up like" aria-hidden="true"> 100</i>
-                   
-                
-
-               </div>
-               <div className="coll-6 text-right">
-               <i class="fa fa-eye like" aria-hidden="true"> 200</i>
-               </div>
-             </div>
-             </div>
-           
-           </div>
-           </div>
-          ))}
+          <MGallery image={data}/>
       </>
       )}
+      
             </div>
         </div>
+        
       </div>
+   
 
 
     </>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { isAuthenticated, useUser } from './UserContext';
 import axios from 'axios';
 
@@ -17,7 +17,9 @@ import 'swiper/css/navigation';
 // import required modules
 import { EffectCoverflow, Pagination,Autoplay ,Mousewheel,Navigation} from 'swiper/modules';
 import { apibaseUrl } from '../../Component/Apibaseurl';
+import MGallery from '../Home/Gallery';
 const Profile = () => {
+  
   const { token } = useUser();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -562,32 +564,8 @@ const Profile = () => {
     <div className='row text-center'>
     {data && data.length? (
   <>
-        {data.map(item => (
-              <div className="col-lg-4 "  key={item.id}>
-              <div class="imgbox">
-              <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title}  />
- <div className='imgtitle'>
-                <h4 class="page-title-1 " style={{color:'white'}}>
-                {item.title} 
-                </h4>
-                <div className="row d-flex">
-                  
-                  <div className="coll-6 text-left">
-                  
-                  <i class="fa fa-thumbs-up like" aria-hidden="true"> 100</i>
-                      
-                   
-
-                  </div>
-                  <div className="coll-6 text-right">
-                  <i class="fa fa-eye like" aria-hidden="true"> 200</i>
-                  </div>
-                </div>
-                </div>
-              
-              </div>
-              </div>
-        ))}
+  <MGallery image={data}/>
+        
   </>
     ) : (
      <>
