@@ -309,7 +309,14 @@ console.log({'p':placement.id,'s':styledata})
     }
   };
 
-
+  const handleSetNull = () => {
+    // Function to set all values to null
+    setTimedata({
+      sunday_from: null,
+      sunday_to: null,
+      // ... other days
+    });
+  };
   // location setup
   const artsupload = useRef(null);
   const profileupdate = useRef(null);
@@ -468,6 +475,7 @@ console.log({'p':placement.id,'s':styledata})
                         value={timedata?.sunday_from || timedatavalue?.sunday_from}
                         onChange={(e) => handleTimeInputChange('sunday', 'from', e.target.value)}
                       />
+                      <button onClick={handleSetNull}>Close</button>
                     </td>
                     <td>
                       <input
