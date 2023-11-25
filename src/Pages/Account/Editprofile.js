@@ -475,7 +475,7 @@ console.log({'p':placement.id,'s':styledata})
                         value={timedata?.sunday_from || timedatavalue?.sunday_from}
                         onChange={(e) => handleTimeInputChange('sunday', 'from', e.target.value)}
                       />
-                      <button onClick={handleSetNull}>Close</button>
+                      <button onChange={handleSetNull}>Close</button>
                     </td>
                     <td>
                       <input
