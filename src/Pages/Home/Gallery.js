@@ -25,6 +25,17 @@ export default function MGallery({ image }) {
     );
   };
 
+  const generateSlidesFromCurrentImage = () => {
+    if (selectedImageIndex !== null && image.length > 0) {
+      const startIndex = selectedImageIndex;
+      const slicedImages = [...image.slice(startIndex), ...image.slice(0, startIndex)];
+      return slicedImages.map((item) => ({
+        src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`,
+      }));
+    }
+    return [];
+  };
+
   return (
     <>
       {image.map((item, index) => (
@@ -63,13 +74,10 @@ export default function MGallery({ image }) {
       ))}
       {selectedImageIndex !== null && (
         <Lightbox
-          selectedIndex={selectedImageIndex}
           open={true}
           close={closeLightbox}
-          slides={image.map((item) => ({
-            src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`,
-          }))}
-          showThumbnails={true}
+          slides={generateSlidesFromCurrentImage ()}
+          showThumbnails={false}
           showPrevNext={true}
           onClose={closeLightbox}
           onClickPrev={goToPrevious}
