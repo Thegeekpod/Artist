@@ -376,7 +376,7 @@ const Editprofile = () => {
 
           axios.get(apiUrl, axiosConfig)
           .then(response => {
-            setArtData(response.data.data.artworks);
+            setBannerimageData(response.data.data.banner_images);
   
           })
         } else {
