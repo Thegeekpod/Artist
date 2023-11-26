@@ -283,10 +283,12 @@ const Editprofile = () => {
 
     if (confirmed.isConfirmed) {
       try {
-        const response = await axios.delete(`https://sweetdevelopers.com/artist/api/delete-artwork/${idToDelete}`);
+        const response = await axios.delete(`https://sweetdevelopers.com/artist/api/delete-artwork/${idToDelete}`,axiosConfig);
 
         if (response.status === 200) {
           console.log(`Item with ID ${idToDelete} deleted`);
+
+
           axios.get(apiUrl, axiosConfig)
           .then(response => {
             setArtData(response.data.data.artworks);
