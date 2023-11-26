@@ -232,3 +232,7 @@ th {
   border-radius: 4px;
   text-align: center;
 }
+.spacebetween-arround {
+  display: flex;
+  justify-content: space-around;
+}

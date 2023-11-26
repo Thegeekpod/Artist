@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import { isAuthenticated, useUser } from './UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import {  apibaseUrl } from '../../Component/Apibaseurl';
+import { apibaseUrl } from '../../Component/Apibaseurl';
 
 const Editprofile = () => {
   const [formData, setFormData] = useState([]);
@@ -14,8 +14,8 @@ const Editprofile = () => {
   const [sucessprofileinfo, setSucessprofileinfo] = useState(false);
   const [sucessbanner, setbannerSucess] = useState(false);
   const [subjects, setSubjects] = useState([]);
-  const [styledata , setStyledata] = useState([]);
-  const[placement, setPlacement] = useState([]);
+  const [styledata, setStyledata] = useState([]);
+  const [placement, setPlacement] = useState([]);
 
 
 
@@ -48,15 +48,15 @@ const Editprofile = () => {
     }
   };
 
-const fatchPlacement =async()=>{
-  try{
-    const response = await axios.get(`${apibaseUrl}/placements`);
-    setPlacement(response.data.data);
+  const fatchPlacement = async () => {
+    try {
+      const response = await axios.get(`${apibaseUrl}/placements`);
+      setPlacement(response.data.data);
 
-  } catch(error){
-    console.error('Eroor fetching subjects:', error)
+    } catch (error) {
+      console.error('Eroor fetching subjects:', error)
+    }
   }
-}
   useEffect(() => {
 
 
@@ -136,11 +136,22 @@ const fatchPlacement =async()=>{
   };
 
   const handleTimeInputChange = (day, field, value) => {
-    setTimedata({
-      ...timedata,
-      [`${day}_${field}`]: value,
-    });
+    if (field === 'from_to') {
+      const [fromValue, toValue] = value.split('-');
+      setTimedata({
+        ...timedata,
+        [`${day}_from`]: fromValue,
+        [`${day}_to`]: toValue,
+      });
+    } else {
+      setTimedata({
+        ...timedata,
+        [`${day}_${field}`]: value,
+      });
+    }
   };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -190,7 +201,7 @@ const fatchPlacement =async()=>{
 
 
   //Upload Your Arts
-console.log({'p':placement.id,'s':styledata})
+
   const [artworkData, setArtworkData] = useState({
     artistName: '',
     placementName: '',
@@ -309,14 +320,7 @@ console.log({'p':placement.id,'s':styledata})
     }
   };
 
-  const handleSetNull = () => {
-    // Function to set all values to null
-    setTimedata({
-      sunday_from: null,
-      sunday_to: null,
-      // ... other days
-    });
-  };
+
   // location setup
   const artsupload = useRef(null);
   const profileupdate = useRef(null);
@@ -468,14 +472,48 @@ console.log({'p':placement.id,'s':styledata})
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Sun</td>
+                    <td className='spacebetween-arround'>
+                      <div>Sun</div> 
+                      <div>
+                      <select
+                      type="time"
+                      value={`${timedata.sunday_from}-${timedata.sunday_to}`}
+                      defaultValue={`${timedata.sunday_from}-${timedata.sunday_to}`}
+
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        handleTimeInputChange('sunday', 'from_to', value);
+                      }}
+                    >
+                      {/* Options for start time */}
+                    {!timedata.sunday_from === null ? (
+                        // If 'monday_from' is null, render this option
+<>
+                        <option value=":-:">close</option>
+                        <option value="10:00-18:00">open</option>
+                        </>
+                      ) : (
+                        <>
+                        {/* // If 'monday_from' is not null, render this option */}
+                        <option value="10:00-18:00">open</option>
+                        <option value=":-:">close</option>
+</>
+                      )}
+
+
+                      {/* Add more options as needed */}
+                    </select>
+                      </div>
+                     
+                     </td>
+
                     <td>
                       <input
                         type="time"
                         value={timedata?.sunday_from || timedatavalue?.sunday_from}
                         onChange={(e) => handleTimeInputChange('sunday', 'from', e.target.value)}
                       />
-                      <button onChange={handleSetNull}>Close</button>
+
                     </td>
                     <td>
                       <input
@@ -486,7 +524,37 @@ console.log({'p':placement.id,'s':styledata})
                     </td>
                   </tr>
                   <tr>
-                    <td>Mon</td>
+                  <td className='spacebetween-arround'>
+                      <div>Mon</div> 
+                      <div>
+                      <select
+                      type="time"
+                      value={`${timedatavalue.monday_from}-${timedata.monday_to}`}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        handleTimeInputChange('monday', 'from_to', value);
+                      }}
+                    >
+                      {timedatavalue.monday_from === null ? (
+                        // If 'monday_from' is null, render this option
+<>
+                        <option value=":-:">close</option>
+                        <option value="10:00-18:00">open</option>
+                        </>
+                      ) : (
+                        <>
+                        {/* // If 'monday_from' is not null, render this option  */}
+                        <option value="10:00-18:00">open</option>
+                        <option value=":-:">close</option>
+</>
+                      )}
+               
+
+
+                    </select>
+                      </div>
+                     
+                     </td>
                     <td>
                       <input
                         type="time"
@@ -503,7 +571,39 @@ console.log({'p':placement.id,'s':styledata})
                     </td>
                   </tr>
                   <tr>
-                    <td>Tue</td>
+                  <td className='spacebetween-arround'>
+                      <div>Tue</div> 
+                      <div>
+                      <select
+                      type="time"
+                      value={`${timedata.tuesday_from}-${timedata.tuesday_to}`}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        handleTimeInputChange('tuesday', 'from_to', value);
+                      }}
+                    >
+                      {/* Options for start time */}
+                    {timedatavalue.tuesday_from === null ? (
+                        // If 'monday_from' is null, render this option
+<>
+                        <option value=":-:">close</option>
+                        <option value="10:00-18:00">open</option>
+                        </>
+                      ) : (
+                        <>
+                        // If 'monday_from' is not null, render this option
+                        <option value="10:00-18:00">open</option>
+                        <option value=":-:">close</option>
+</>
+                      )}
+
+
+
+                      {/* Add more options as needed */}
+                    </select>
+                      </div>
+                     
+                     </td>
                     <td>
                       <input
                         type="time"
@@ -520,7 +620,38 @@ console.log({'p':placement.id,'s':styledata})
                     </td>
                   </tr>
                   <tr>
-                    <td>Wed</td>
+                  <td className='spacebetween-arround'>
+                      <div>Wed</div> 
+                      <div>
+                      <select
+                      type="time"
+                      value={`${timedata.wednesday_from}-${timedata.wednesday_to}`}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        handleTimeInputChange('wednesday', 'from_to', value);
+                      }}
+                    >
+                      {/* Options for start time */}
+                    {timedatavalue.wednesday_from === null ? (
+                        // If 'monday_from' is null, render this option
+<>
+                        <option value=":-:">close</option>
+                        <option value="10:00-18:00">open</option>
+                        </>
+                      ) : (
+                        <>
+                        // If 'monday_from' is not null, render this option
+                        <option value="10:00-18:00">open</option>
+                        <option value=":-:">close</option>
+</>
+                      )}
+
+
+                      {/* Add more options as needed */}
+                    </select>
+                      </div>
+                     
+                     </td>
                     <td>
                       <input
                         type="time"
@@ -537,7 +668,36 @@ console.log({'p':placement.id,'s':styledata})
                     </td>
                   </tr>
                   <tr>
-                    <td>Thu</td>
+                  <td className='spacebetween-arround'>
+                      <div>Thu</div> 
+                      <div>
+                      <select
+                      type="time"
+                      value={`${timedata.thrusday_from}-${timedata.thrusday_to}`}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        handleTimeInputChange('thrusday', 'from_to', value);
+                      }}
+                    >
+                      {/* Options for start time */}
+                    {timedatavalue.thrusday_from === null ? (
+                        // If 'monday_from' is null, render this option
+<>
+                        <option value=":-:">close</option>
+                        <option value="10:00-18:00">open</option>
+                        </>
+                      ) : (
+                        <>
+                        // If 'monday_from' is not null, render this option
+                        <option value="10:00-18:00">open</option>
+                        <option value=":-:">close</option>
+</>
+                      )}
+                      {/* Add more options as needed */}
+                    </select>
+                      </div>
+                     
+                     </td>
                     <td>
                       <input
                         type="time"
@@ -554,7 +714,37 @@ console.log({'p':placement.id,'s':styledata})
                     </td>
                   </tr>
                   <tr>
-                    <td>Fri</td>
+                  <td className='spacebetween-arround'>
+                      <div>Fri</div> 
+                      <div>
+                      <select
+                      type="time"
+                      value={`${timedata.friday_from}-${timedata.friday_to}`}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        handleTimeInputChange('friday', 'from_to', value);
+                      }}
+                    >
+                      {/* Options for start time */}
+                    {timedatavalue.friday_from === null ? (
+                        // If 'monday_from' is null, render this option
+<>
+                        <option value=":-:">close</option>
+                        <option value="10:00-18:00">open</option>
+                        </>
+                      ) : (
+                        <>
+                        // If 'monday_from' is not null, render this option
+                        <option value="10:00-18:00">open</option>
+                        <option value=":-:">close</option>
+</>
+                      )}
+
+                      {/* Add more options as needed */}
+                    </select>
+                      </div>
+                     
+                     </td>
                     <td>
                       <input
                         type="time"
@@ -571,7 +761,40 @@ console.log({'p':placement.id,'s':styledata})
                     </td>
                   </tr>
                   <tr>
-                    <td>Sat</td>
+                  <td className='spacebetween-arround'>
+                      <div>Sat</div> 
+                      <div>
+                      <select
+                      type="time"
+                      value={`${timedata.saterday_from}-${timedata.saterday_to}`}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        handleTimeInputChange('saterday', 'from_to', value);
+                      }}
+                    >
+                      {/* Options for start time */}
+                    {timedatavalue.saterday_from  === null ? (
+                            <>
+                              {/* Options for start time */}
+                              <option value=":-:">Close</option>
+                              <option value="10:00-18:00">Open</option>
+
+                            </>
+                          ) : (
+                            // If no data is available for Sunday
+                            <>
+                              <option value="10:00-18:00">Open</option>
+
+                              <option value=":-:">Close</option>
+                            </>)}
+
+
+
+                      {/* Add more options as needed */}
+                    </select>
+                      </div>
+                     
+                     </td>
                     <td>
                       <input
                         type="time"
@@ -629,13 +852,13 @@ console.log({'p':placement.id,'s':styledata})
                   >
                     <option value="">Select Placement</option>
                     {placement && placement.length ? (
-                      placement.map((placement)=>(
-                                              <option value={placement.id}>{placement.title}</option>)
+                      placement.map((placement) => (
+                        <option value={placement.id}>{placement.title}</option>)
                       )
-                    )  :                    <option value="">Select Placement</option>
-                  }
-                    
-                   
+                    ) : <option value="">Select Placement</option>
+                    }
+
+
                     {/* Add more options as needed */}
                   </select>
 
@@ -647,17 +870,17 @@ console.log({'p':placement.id,'s':styledata})
                     onChange={handleArtInputChange}
                   >
                     <option value="">Select Style</option>
-                  {styledata && styledata.length ? (<>
-                  {styledata.map((style)=>(
-                    <>
-             <option value={style.id}>{style.title}</option>
-             {console.log(style)};
-</>
-                  ))}
-                  </>):(<>
-                  <option value="">Select Style</option>
-                  
-                  </>)}
+                    {styledata && styledata.length ? (<>
+                      {styledata.map((style) => (
+                        <>
+                          <option value={style.id}>{style.title}</option>
+                          {console.log(style)};
+                        </>
+                      ))}
+                    </>) : (<>
+                      <option value="">Select Style</option>
+
+                    </>)}
                   </select>
 
                   <label htmlFor="subjectName">Subject Name:</label>
@@ -670,16 +893,16 @@ console.log({'p':placement.id,'s':styledata})
                     <option value="">Select Subject</option>
 
                     {subjects && subjects.length ? (
-        <>
-          {subjects.map((subject) => (
-             <option value={subject.id}>{subject.title}</option>
-          ))}
-        </>
-      ) : (
-        <option value="">Select Style</option>
+                      <>
+                        {subjects.map((subject) => (
+                          <option value={subject.id}>{subject.title}</option>
+                        ))}
+                      </>
+                    ) : (
+                      <option value="">Select Style</option>
 
-      )}
-    
+                    )}
+
 
                     {/* Add more options as needed */}
                   </select>
