@@ -69,7 +69,7 @@ export default function MGallery({ image }) {
           slides={image.map((item) => ({
             src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`,
           }))}
-          showThumbnails={false}
+          showThumbnails={true}
           showPrevNext={true}
           onClose={closeLightbox}
           onClickPrev={goToPrevious}
