@@ -531,13 +531,16 @@ const Editprofile = () => {
                       <div>
                       <select
                       type="time"
-                      value={`${timedatavalue.monday_from}-${timedata.monday_to}`}
+                      value={`${timedata.monday_from}-${timedata.monday_to}`}
+                      defaultValue={`${timedata.monday_from}-${timedata.monday_to}`}
+
                       onChange={(e) => {
                         const value = e.target.value;
                         handleTimeInputChange('monday', 'from_to', value);
                       }}
                     >
-                      {timedatavalue.monday_from === null ? (
+                      {/* Options for start time */}
+                    {!timedata.monday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
                         
@@ -546,15 +549,15 @@ const Editprofile = () => {
                         </>
                       ) : (
                         <>
-                        {/* // If 'monday_from' is not null, render this option  */}
+                        {/* // If 'monday_from' is not null, render this option */}
                         <option value="10:00-18:00">open</option>
                         
                               <option value="null-null">Close</option>
 </>
                       )}
-               
 
 
+                      {/* Add more options as needed */}
                     </select>
                       </div>
                      
