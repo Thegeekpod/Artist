@@ -13,6 +13,18 @@ export default function MGallery({ image }) {
     setSelectedImageIndex(null);
   };
 
+  const goToPrevious = () => {
+    setSelectedImageIndex((prevIndex) =>
+      prevIndex === 0 ? image.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToNext = () => {
+    setSelectedImageIndex((prevIndex) =>
+      prevIndex === image.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   return (
     <>
       {image.map((item, index) => (
@@ -22,7 +34,6 @@ export default function MGallery({ image }) {
               className="imgbo"
               src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`}
               alt={item.title}
-              
             />
             <div className="imgtitle">
               <h4 className="page-title-1" style={{ color: "white" }}>
@@ -55,11 +66,14 @@ export default function MGallery({ image }) {
           selectedIndex={selectedImageIndex}
           open={true}
           close={closeLightbox}
-          slides={[
-            {
-              src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${image[selectedImageIndex].image}`,
-            },
-          ]}
+          slides={image.map((item) => ({
+            src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`,
+          }))}
+          showThumbnails={false}
+          showPrevNext={true}
+          onClose={closeLightbox}
+          onClickPrev={goToPrevious}
+          onClickNext={goToNext}
         />
       )}
     </>
