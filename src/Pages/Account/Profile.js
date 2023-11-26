@@ -479,7 +479,7 @@ const Profile = () => {
 
                     </tr>
                     <tr>
-                      <td>Sat</td>{timedata?.saterday_from === 'null' || timedata?.saterday_from === 'null' ? (
+                      <td>Sat</td>{timedata?.saterday_from === null || timedata?.saterday_from === 'null' ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
