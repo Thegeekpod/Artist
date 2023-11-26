@@ -489,14 +489,16 @@ const Editprofile = () => {
                     {!timedata.sunday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
                         <>
                         {/* // If 'monday_from' is not null, render this option */}
                         <option value="10:00-18:00">open</option>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
 </>
                       )}
 
@@ -538,14 +540,16 @@ const Editprofile = () => {
                       {timedatavalue.monday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
                         <>
                         {/* // If 'monday_from' is not null, render this option  */}
                         <option value="10:00-18:00">open</option>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
 </>
                       )}
                
@@ -586,14 +590,16 @@ const Editprofile = () => {
                     {timedatavalue.tuesday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
                         <>
                         // If 'monday_from' is not null, render this option
                         <option value="10:00-18:00">open</option>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
 </>
                       )}
 
@@ -635,14 +641,16 @@ const Editprofile = () => {
                     {timedatavalue.wednesday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
                         <>
                         // If 'monday_from' is not null, render this option
                         <option value="10:00-18:00">open</option>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
 </>
                       )}
 
@@ -683,14 +691,16 @@ const Editprofile = () => {
                     {timedatavalue.thrusday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
                         <>
                         // If 'monday_from' is not null, render this option
                         <option value="10:00-18:00">open</option>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
 </>
                       )}
                       {/* Add more options as needed */}
@@ -729,14 +739,16 @@ const Editprofile = () => {
                     {timedatavalue.friday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
                         <>
                         // If 'monday_from' is not null, render this option
                         <option value="10:00-18:00">open</option>
-                        <option value=":-:">close</option>
+                        
+                              <option value="null-null">Close</option>
 </>
                       )}
 
@@ -776,7 +788,8 @@ const Editprofile = () => {
                     {timedatavalue.saterday_from  === null ? (
                             <>
                               {/* Options for start time */}
-                              <option value="''-''">Close</option>
+                              
+                              <option value="null-null">Close</option>
                               <option value="10:00-18:00">Open</option>
 
                             </>
@@ -785,7 +798,8 @@ const Editprofile = () => {
                             <>
                               <option value="10:00-18:00">Open</option>
 
-                              <option value=":-:">Close</option>
+                              
+                              <option value="null-null">Close</option>
                             </>)}
 
 
