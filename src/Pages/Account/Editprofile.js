@@ -776,7 +776,7 @@ const Editprofile = () => {
                     {timedatavalue.saterday_from  === null ? (
                             <>
                               {/* Options for start time */}
-                              <option value=":-:">Close</option>
+                              <option value="''-''">Close</option>
                               <option value="10:00-18:00">Open</option>
 
                             </>
