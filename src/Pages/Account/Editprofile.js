@@ -270,7 +270,7 @@ const Editprofile = () => {
     }
   };
 
-  const deleteItem = async (idToDelete) => {
+  const deleteArtItem = async (idToDelete) => {
     const confirmed = await Swal.fire({
       title: 'Are you sure?',
       text: 'This action cannot be undone',
@@ -355,7 +355,38 @@ const Editprofile = () => {
     }
   };
 
+  const deleteBannerItem = async (idToDelete) => {
+    const confirmed = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action cannot be undone',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+    });
 
+    if (confirmed.isConfirmed) {
+      try {
+        const response = await axios.delete(`https://sweetdevelopers.com/artist/api/delete-banner/${idToDelete}`,axiosConfig);
+
+        if (response.status === 200) {
+          console.log(`Item with ID ${idToDelete} deleted`);
+
+
+          axios.get(apiUrl, axiosConfig)
+          .then(response => {
+            setArtData(response.data.data.artworks);
+  
+          })
+        } else {
+          console.error('Failed to delete item');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  };
   // location setup
   const artsupload = useRef(null);
   const profileupdate = useRef(null);
@@ -1004,7 +1035,7 @@ const Editprofile = () => {
                           <h4 class="page-title-1 " style={{ color: 'white' }}>
                             {item.title}
                           </h4>
-                          <i className="fa fa-trash deletebutton" aria-hidden="true"  onClick={()=>{deleteItem(item.id)}}> Delete</i>
+                          <i className="fa fa-trash deletebutton" aria-hidden="true"  onClick={()=>{deleteArtItem(item.id)}}> Delete</i>
                           <div className="row d-flex">
                          
                             <div className="coll-6 text-left">
@@ -1077,7 +1108,12 @@ const Editprofile = () => {
                     <div className="col-lg-4 " key={item.id}>
                       <div class="imgbox">
                         <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/BannerImage/${item.banner_image}`} alt={item.banner_image} />
-
+                        <div className='imgtitle'>
+                        
+                        
+                        <i className="fa fa-trash deletebutton" aria-hidden="true"  onClick={()=>{deleteBannerItem(item.id)}}> Delete</i>
+                       
+                      </div>
 
                       </div>
                     </div>
