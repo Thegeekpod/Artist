@@ -401,41 +401,48 @@ const Profile = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Mon</td>{timedata.monday_from ?
-                        (<>
-                          <td>{timedata?.monday_from}</td>
-                          <td>{timedata?.monday_to}</td>
-                        </>) :
-                        (<>
-                          <td>Close</td>
-                          <td>Close</td>
-                        </>)
+                      <td>Mon</td>{timedata.monday_from === null || timedata.monday_from === 'null' ?
+                        (
+                          <>
+                            <td>Close</td>
+                            <td>Close</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{timedata.monday_from}</td>
+                            <td>{timedata.monday_to}</td>
+                          </>
+                        )
                       }
 
                     </tr>
                     <tr>
                       <td>Tue</td>{
-                        timedata.tuesday_from ? (
+                        timedata.tuesday_from === null || timedata.tuesday_from === 'null' ? (
                           <>
-                            <td>{timedata?.tuesday_from}</td>
-                            <td>{timedata?.tuesday_to}</td>
-                          </>) :
-                          (<>
                             <td>Close</td>
                             <td>Close</td>
-                          </>)
+                          </>
+                        ) : (
+                          <>
+                            <td>{timedata.tuesday_from}</td>
+                            <td>{timedata.tuesday_to}</td>
+                          </>
+                        )
                       }
 
                     </tr>
                     <tr>
                       <td>Wed</td>{
-                        timedata?.wednesday_from ? (<>
-                          <td>{timedata?.wednesday_from}</td>
-                          <td>{timedata?.wednesday_to}</td>
-                        </>) : (
+                        timedata.wednesday_from === null || timedata.wednesday_to === 'null' ? (
                           <>
                             <td>Close</td>
                             <td>Close</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{timedata?.wednesday_from}</td>
+                            <td>{timedata?.wednesday_from}</td>
                           </>
                         )
                       }
@@ -443,34 +450,62 @@ const Profile = () => {
                     </tr>
                     <tr>
                       <td>Thu</td>
-                      {timedata.thrusday_from ?
-                        (<><td>{timedata?.thrusday_from}</td>
-                          <td>{timedata?.thrusday_to}</td></>) : (<>
+                      {timedata.thrusday_from === null || timedata.thrusday_from === 'null' ?
+                        (
+                          <>
                             <td>Close</td>
-                            <td>Close</td></>)}
+                            <td>Close</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{timedata.thrusday_from}</td>
+                            <td>{timedata.thrusday_to}</td>
+                          </>
+                        )}
                     </tr>
                     <tr>
-                      <td>Fri</td>{timedata.friday_from ?
-                        (<>
-                          <td>{timedata?.friday_from}</td>
-                          <td>{timedata?.friday_to}</td></>) : (<>
+                      <td>Fri</td>{timedata.friday_from === null || timedata.friday_from === 'null' ?
+                        (
+                          <>
                             <td>Close</td>
-                            <td>Close</td></>)}
+                            <td>Close</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{timedata.friday_from}</td>
+                            <td>{timedata.friday_to}</td>
+                          </>
+                        )}
 
                     </tr>
                     <tr>
-                      <td>Sat</td>{timedata.saterday_from ? (<><td>{timedata?.saterday_from}</td>
-                        <td>{timedata?.saterday_to}</td></>) : (<>  <td>Close</td>
-                          <td>Close</td></>)}
+                      <td>Sat</td>{timedata.saterday_from === 'null' || timedata.saterday_from === 'null' ? (
+                        <>
+                          <td>Close</td>
+                          <td>Close</td>
+                        </>
+                      ) : (
+                        <>
+                          <td>{timedata.saterday_from}</td>
+                          <td>{timedata.saterday_to}</td>
+                        </>
+                      )}
 
                     </tr>
                     <tr>
                       <td>Sun</td>
-                      {(timedata.sunday_from ? (<>
-                        <td>{timedata?.sunday_from}</td>
-                        <td>{timedata?.sunday_to}</td></>) : (<>  
+                      {(timedata.sunday_from === null || timedata.sunday_from === 'null') ? (
+                        <>
                           <td>Close</td>
-                          <td>Close</td></>))}
+                          <td>Close</td>
+                        </>
+                      ) : (
+                        <>
+                          <td>{timedata.sunday_from}</td>
+                          <td>{timedata.sunday_to}</td>
+                        </>
+                      )}
+
 
                     </tr>
                   </tbody>
