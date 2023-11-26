@@ -15,12 +15,7 @@ const Home = () => {
     autoplay: true,
     autoplaySpeed: 2000, // Set autoplay speed to 2 seconds
   };
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = '/js/main.js';   //(This is external js url)
-    script.async = true;
-    document.body.appendChild(script);
-  }, [])
+
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);

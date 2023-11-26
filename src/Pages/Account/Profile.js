@@ -401,7 +401,7 @@ const Profile = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Mon</td>{timedata.monday_from === null || timedata.monday_from === 'null' ?
+                      <td>Mon</td>{timedata?.monday_from === null || timedata?.monday_from === 'null' ?
                         (
                           <>
                             <td>Close</td>
@@ -409,8 +409,8 @@ const Profile = () => {
                           </>
                         ) : (
                           <>
-                            <td>{timedata.monday_from}</td>
-                            <td>{timedata.monday_to}</td>
+                            <td>{timedata?.monday_from}</td>
+                            <td>{timedata?.monday_to}</td>
                           </>
                         )
                       }
@@ -418,15 +418,15 @@ const Profile = () => {
                     </tr>
                     <tr>
                       <td>Tue</td>{
-                        timedata.tuesday_from === null || timedata.tuesday_from === 'null' ? (
+                        timedata?.tuesday_from === null || timedata?.tuesday_from === 'null' ? (
                           <>
                             <td>Close</td>
                             <td>Close</td>
                           </>
                         ) : (
                           <>
-                            <td>{timedata.tuesday_from}</td>
-                            <td>{timedata.tuesday_to}</td>
+                            <td>{timedata?.tuesday_from}</td>
+                            <td>{timedata?.tuesday_to}</td>
                           </>
                         )
                       }
@@ -434,7 +434,7 @@ const Profile = () => {
                     </tr>
                     <tr>
                       <td>Wed</td>{
-                        timedata.wednesday_from === null || timedata.wednesday_to === 'null' ? (
+                        timedata?.wednesday_from === null || timedata?.wednesday_to === 'null' ? (
                           <>
                             <td>Close</td>
                             <td>Close</td>
@@ -450,7 +450,7 @@ const Profile = () => {
                     </tr>
                     <tr>
                       <td>Thu</td>
-                      {timedata.thrusday_from === null || timedata.thrusday_from === 'null' ?
+                      {timedata?.thrusday_from === null || timedata?.thrusday_from === 'null' ?
                         (
                           <>
                             <td>Close</td>
@@ -458,13 +458,13 @@ const Profile = () => {
                           </>
                         ) : (
                           <>
-                            <td>{timedata.thrusday_from}</td>
-                            <td>{timedata.thrusday_to}</td>
+                            <td>{timedata?.thrusday_from}</td>
+                            <td>{timedata?.thrusday_to}</td>
                           </>
                         )}
                     </tr>
                     <tr>
-                      <td>Fri</td>{timedata.friday_from === null || timedata.friday_from === 'null' ?
+                      <td>Fri</td>{timedata?.friday_from === null || timedata?.friday_from === 'null' ?
                         (
                           <>
                             <td>Close</td>
@@ -472,37 +472,37 @@ const Profile = () => {
                           </>
                         ) : (
                           <>
-                            <td>{timedata.friday_from}</td>
-                            <td>{timedata.friday_to}</td>
+                            <td>{timedata?.friday_from}</td>
+                            <td>{timedata?.friday_to}</td>
                           </>
                         )}
 
                     </tr>
                     <tr>
-                      <td>Sat</td>{timedata.saterday_from === 'null' || timedata.saterday_from === 'null' ? (
+                      <td>Sat</td>{timedata?.saterday_from === 'null' || timedata?.saterday_from === 'null' ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
                         </>
                       ) : (
                         <>
-                          <td>{timedata.saterday_from}</td>
-                          <td>{timedata.saterday_to}</td>
+                          <td>{timedata?.saterday_from}</td>
+                          <td>{timedata?.saterday_to}</td>
                         </>
                       )}
 
                     </tr>
                     <tr>
                       <td>Sun</td>
-                      {(timedata.sunday_from === null || timedata.sunday_from === 'null') ? (
+                      {(timedata?.sunday_from === null || timedata?.sunday_from === 'null') ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
                         </>
                       ) : (
                         <>
-                          <td>{timedata.sunday_from}</td>
-                          <td>{timedata.sunday_to}</td>
+                          <td>{timedata?.sunday_from}</td>
+                          <td>{timedata?.sunday_to}</td>
                         </>
                       )}
 

@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { isAuthenticated, useUser } from './UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { apibaseUrl } from '../../Component/Apibaseurl';
+import Swal from 'sweetalert2';
 
 const Editprofile = () => {
   const [formData, setFormData] = useState([]);
@@ -171,7 +172,7 @@ const Editprofile = () => {
       // Append updated timedata fields to formDataToSend
       for (const key in timedata) {
         if (
-          timedata.hasOwnProperty(key) &&
+          timedata?.hasOwnProperty(key) &&
           timedata[key] !== originalTimedata[key] &&
           timedata[key] !== null
         ) {
@@ -268,6 +269,38 @@ const Editprofile = () => {
       // Handle error
     }
   };
+
+  const deleteItem = async (idToDelete) => {
+    const confirmed = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action cannot be undone',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+    });
+
+    if (confirmed.isConfirmed) {
+      try {
+        const response = await axios.delete(`https://sweetdevelopers.com/artist/api/delete-artwork/${idToDelete}`);
+
+        if (response.status === 200) {
+          console.log(`Item with ID ${idToDelete} deleted`);
+          axios.get(apiUrl, axiosConfig)
+          .then(response => {
+            setArtData(response.data.data.artworks);
+  
+          })
+        } else {
+          console.error('Failed to delete item');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  };
+  
 
   //upload banner
   const [bannerData, setBannerData] = useState({
@@ -477,8 +510,8 @@ const Editprofile = () => {
                       <div>
                       <select
                       type="time"
-                      value={`${timedata.sunday_from}-${timedata.sunday_to}`}
-                      defaultValue={`${timedata.sunday_from}-${timedata.sunday_to}`}
+                      value={`${timedata?.sunday_from}-${timedata?.sunday_to}`}
+                      defaultValue={`${timedata?.sunday_from}-${timedata?.sunday_to}`}
 
                       onChange={(e) => {
                         const value = e.target.value;
@@ -486,7 +519,7 @@ const Editprofile = () => {
                       }}
                     >
                       {/* Options for start time */}
-                    {!timedata.sunday_from === null ? (
+                    {!timedata?.sunday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
                         
@@ -531,8 +564,8 @@ const Editprofile = () => {
                       <div>
                       <select
                       type="time"
-                      value={`${timedata.monday_from}-${timedata.monday_to}`}
-                      defaultValue={`${timedata.monday_from}-${timedata.monday_to}`}
+                      value={`${timedata?.monday_from}-${timedata?.monday_to}`}
+                      defaultValue={`${timedata?.monday_from}-${timedata?.monday_to}`}
 
                       onChange={(e) => {
                         const value = e.target.value;
@@ -540,7 +573,7 @@ const Editprofile = () => {
                       }}
                     >
                       {/* Options for start time */}
-                    {!timedata.monday_from === null ? (
+                    {!timedata?.monday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
                         
@@ -583,14 +616,14 @@ const Editprofile = () => {
                       <div>
                       <select
                       type="time"
-                      value={`${timedata.tuesday_from}-${timedata.tuesday_to}`}
+                      value={`${timedata?.tuesday_from}-${timedata?.tuesday_to}`}
                       onChange={(e) => {
                         const value = e.target.value;
                         handleTimeInputChange('tuesday', 'from_to', value);
                       }}
                     >
                       {/* Options for start time */}
-                    {timedatavalue.tuesday_from === null ? (
+                    {timedatavalue?.tuesday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
                         
@@ -634,14 +667,14 @@ const Editprofile = () => {
                       <div>
                       <select
                       type="time"
-                      value={`${timedata.wednesday_from}-${timedata.wednesday_to}`}
+                      value={`${timedata?.wednesday_from}-${timedata?.wednesday_to}`}
                       onChange={(e) => {
                         const value = e.target.value;
                         handleTimeInputChange('wednesday', 'from_to', value);
                       }}
                     >
                       {/* Options for start time */}
-                    {timedatavalue.wednesday_from === null ? (
+                    {timedatavalue?.wednesday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
                         
@@ -684,14 +717,14 @@ const Editprofile = () => {
                       <div>
                       <select
                       type="time"
-                      value={`${timedata.thrusday_from}-${timedata.thrusday_to}`}
+                      value={`${timedata?.thrusday_from}-${timedata?.thrusday_to}`}
                       onChange={(e) => {
                         const value = e.target.value;
                         handleTimeInputChange('thrusday', 'from_to', value);
                       }}
                     >
                       {/* Options for start time */}
-                    {timedatavalue.thrusday_from === null ? (
+                    {timedatavalue?.thrusday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
                         
@@ -732,14 +765,14 @@ const Editprofile = () => {
                       <div>
                       <select
                       type="time"
-                      value={`${timedata.friday_from}-${timedata.friday_to}`}
+                      value={`${timedata?.friday_from}-${timedata?.friday_to}`}
                       onChange={(e) => {
                         const value = e.target.value;
                         handleTimeInputChange('friday', 'from_to', value);
                       }}
                     >
                       {/* Options for start time */}
-                    {timedatavalue.friday_from === null ? (
+                    {timedatavalue?.friday_from === null ? (
                         // If 'monday_from' is null, render this option
 <>
                         
@@ -781,14 +814,14 @@ const Editprofile = () => {
                       <div>
                       <select
                       type="time"
-                      value={`${timedata.saterday_from}-${timedata.saterday_to}`}
+                      value={`${timedata?.saterday_from}-${timedata?.saterday_to}`}
                       onChange={(e) => {
                         const value = e.target.value;
                         handleTimeInputChange('saterday', 'from_to', value);
                       }}
                     >
                       {/* Options for start time */}
-                    {timedatavalue.saterday_from  === null ? (
+                    {timedatavalue?.saterday_from  === null ? (
                             <>
                               {/* Options for start time */}
                               
@@ -965,11 +998,13 @@ const Editprofile = () => {
                       <div class="imgbox">
                         <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title} />
                         <div className='imgtitle'>
+                        
                           <h4 class="page-title-1 " style={{ color: 'white' }}>
                             {item.title}
                           </h4>
+                          <i className="fa fa-trash deletebutton" aria-hidden="true"  onClick={()=>{deleteItem(item.id)}}> Delete</i>
                           <div className="row d-flex">
-
+                         
                             <div className="coll-6 text-left">
 
                               <i class="fa fa-thumbs-up like" aria-hidden="true"> 100</i>
@@ -979,10 +1014,10 @@ const Editprofile = () => {
                             </div>
                             <div className="coll-6 text-right">
                               <i class="fa fa-eye like" aria-hidden="true"> 200</i>
+
                             </div>
                           </div>
                         </div>
-
                       </div>
                     </div>
                   ))}
