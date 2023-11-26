@@ -490,7 +490,7 @@ const Editprofile = () => {
                         // If 'monday_from' is null, render this option
 <>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
@@ -498,7 +498,7 @@ const Editprofile = () => {
                         {/* // If 'monday_from' is not null, render this option */}
                         <option value="10:00-18:00">open</option>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
 </>
                       )}
 
@@ -541,7 +541,7 @@ const Editprofile = () => {
                         // If 'monday_from' is null, render this option
 <>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
@@ -549,7 +549,7 @@ const Editprofile = () => {
                         {/* // If 'monday_from' is not null, render this option  */}
                         <option value="10:00-18:00">open</option>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
 </>
                       )}
                
@@ -591,7 +591,7 @@ const Editprofile = () => {
                         // If 'monday_from' is null, render this option
 <>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
@@ -599,7 +599,7 @@ const Editprofile = () => {
                         // If 'monday_from' is not null, render this option
                         <option value="10:00-18:00">open</option>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
 </>
                       )}
 
@@ -642,7 +642,7 @@ const Editprofile = () => {
                         // If 'monday_from' is null, render this option
 <>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
@@ -650,7 +650,7 @@ const Editprofile = () => {
                         // If 'monday_from' is not null, render this option
                         <option value="10:00-18:00">open</option>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
 </>
                       )}
 
@@ -692,7 +692,7 @@ const Editprofile = () => {
                         // If 'monday_from' is null, render this option
 <>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
@@ -700,7 +700,7 @@ const Editprofile = () => {
                         // If 'monday_from' is not null, render this option
                         <option value="10:00-18:00">open</option>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
 </>
                       )}
                       {/* Add more options as needed */}
@@ -740,7 +740,7 @@ const Editprofile = () => {
                         // If 'monday_from' is null, render this option
 <>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
                         <option value="10:00-18:00">open</option>
                         </>
                       ) : (
@@ -748,7 +748,7 @@ const Editprofile = () => {
                         // If 'monday_from' is not null, render this option
                         <option value="10:00-18:00">open</option>
                         
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
 </>
                       )}
 
@@ -789,7 +789,7 @@ const Editprofile = () => {
                             <>
                               {/* Options for start time */}
                               
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
                               <option value="10:00-18:00">Open</option>
 
                             </>
@@ -799,7 +799,7 @@ const Editprofile = () => {
                               <option value="10:00-18:00">Open</option>
 
                               
-                              <option value="null-null">Close</option>
+                                <option value="-">Close</option>
                             </>)}
 
 
