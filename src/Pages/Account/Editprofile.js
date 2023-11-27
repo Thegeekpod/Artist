@@ -1001,7 +1001,7 @@ const Editprofile = () => {
                     onChange={handleArtInputChange}
                   />
                   
-                  <label htmlFor="subjectName">Country Name:</label>
+                  <label htmlFor="subjectName">Zipcode Name:</label>
                   <input required
                     name="zipcode"
                     className="form-control"
