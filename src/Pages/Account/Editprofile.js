@@ -208,8 +208,8 @@ const Editprofile = () => {
     placementName: '',
     styleName: '',
     subjectName: '',
-    country:'',
-    zipcode:'',
+    country: '',
+    zipcode: '',
     image: null,
     imagePreview: null,
     user_id: `${user?.id}`,
@@ -238,8 +238,8 @@ const Editprofile = () => {
     formData.append('style_id', artworkData.styleName);
     formData.append('subject_id', artworkData.subjectName);
     formData.append('image', artworkData.image);
-    formData.append('country',artworkData.country);
-    formData.append('zipcode',artworkData.zipcode);
+    formData.append('country', artworkData.country);
+    formData.append('zipcode', artworkData.zipcode);
     console.log('Artwork data:', artworkData);
     try {
       const response = await axios.post(`https://sweetdevelopers.com/artist/api/upload-artwork`, formData, axiosConfig);
@@ -289,17 +289,17 @@ const Editprofile = () => {
 
     if (confirmed.isConfirmed) {
       try {
-        const response = await axios.delete(`https://sweetdevelopers.com/artist/api/delete-artwork/${idToDelete}`,axiosConfig);
+        const response = await axios.delete(`https://sweetdevelopers.com/artist/api/delete-artwork/${idToDelete}`, axiosConfig);
 
         if (response.status === 200) {
           console.log(`Item with ID ${idToDelete} deleted`);
 
 
           axios.get(apiUrl, axiosConfig)
-          .then(response => {
-            setArtData(response.data.data.artworks);
-  
-          })
+            .then(response => {
+              setArtData(response.data.data.artworks);
+
+            })
         } else {
           console.error('Failed to delete item');
         }
@@ -308,7 +308,7 @@ const Editprofile = () => {
       }
     }
   };
-  
+
 
   //upload banner
   const [bannerData, setBannerData] = useState({
@@ -374,17 +374,17 @@ const Editprofile = () => {
 
     if (confirmed.isConfirmed) {
       try {
-        const response = await axios.delete(`https://sweetdevelopers.com/artist/api/delete-banner/${idToDelete}`,axiosConfig);
+        const response = await axios.delete(`https://sweetdevelopers.com/artist/api/delete-banner/${idToDelete}`, axiosConfig);
 
         if (response.status === 200) {
           console.log(`Item with ID ${idToDelete} deleted`);
 
 
           axios.get(apiUrl, axiosConfig)
-          .then(response => {
-            setBannerimageData(response.data.data.banner_images);
-  
-          })
+            .then(response => {
+              setBannerimageData(response.data.data.banner_images);
+
+            })
         } else {
           console.error('Failed to delete item');
         }
@@ -545,41 +545,41 @@ const Editprofile = () => {
                 <tbody>
                   <tr>
                     <td className='spacebetween-arround'>
-                      <div>Sun</div> 
+                      <div>Sun</div>
                       <div>
-                      <select
-                      type="time"
-                      value={`${timedata?.sunday_from}-${timedata?.sunday_to}`}
-                      defaultValue={`${timedata?.sunday_from}-${timedata?.sunday_to}`}
+                        <select
+                          type="time"
+                          value={`${timedata?.sunday_from}-${timedata?.sunday_to}`}
+                          defaultValue={`${timedata?.sunday_from}-${timedata?.sunday_to}`}
 
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        handleTimeInputChange('sunday', 'from_to', value);
-                      }}
-                    >
-                      {/* Options for start time */}
-                      {timedatavalue?.sunday_from === null || timedatavalue?.sunday_from === null ?(
-                        // If 'monday_from' is null, render this option
-<>
-                        
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            handleTimeInputChange('sunday', 'from_to', value);
+                          }}
+                        >
+                          {/* Options for start time */}
+                          {timedatavalue?.sunday_from === null || timedatavalue?.sunday_from === null ? (
+                            // If 'monday_from' is null, render this option
+                            <>
+
                               <option value="null-null">Close</option>
-                        <option value="10:00-18:00">open</option>
-                        </>
-                      ) : (
-                        <>
+                              <option value="10:00-18:00">open</option>
+                            </>
+                          ) : (
+                            <>
                         // If 'monday_from' is not null, render this option
-                        <option value="10:00-18:00">open</option>
-                        
+                              <option value="10:00-18:00">open</option>
+
                               <option value="null-null">Close</option>
-</>
-                      )}
+                            </>
+                          )}
 
 
-                      {/* Add more options as needed */}
-                    </select>
+                          {/* Add more options as needed */}
+                        </select>
                       </div>
-                     
-                     </td>
+
+                    </td>
 
                     <td>
                       <input
@@ -598,42 +598,42 @@ const Editprofile = () => {
                     </td>
                   </tr>
                   <tr>
-                  <td className='spacebetween-arround'>
-                      <div>Mon</div> 
+                    <td className='spacebetween-arround'>
+                      <div>Mon</div>
                       <div>
-                      <select
-                      type="time"
-                      value={`${timedata?.monday_from}-${timedata?.monday_to}`}
-                      defaultValue={`${timedata?.monday_from}-${timedata?.monday_to}`}
+                        <select
+                          type="time"
+                          value={`${timedata?.monday_from}-${timedata?.monday_to}`}
+                          defaultValue={`${timedata?.monday_from}-${timedata?.monday_to}`}
 
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        handleTimeInputChange('monday', 'from_to', value);
-                      }}
-                    >
-                      {/* Options for start time */}
-                      {timedatavalue?.monday_from === null || timedatavalue?.monday_from === 'null' ? (
-                        // If 'monday_from' is null, render this option
-<>
-                        
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            handleTimeInputChange('monday', 'from_to', value);
+                          }}
+                        >
+                          {/* Options for start time */}
+                          {timedatavalue?.monday_from === null || timedatavalue?.monday_from === 'null' ? (
+                            // If 'monday_from' is null, render this option
+                            <>
+
                               <option value="null-null">Close</option>
-                        <option value="10:00-18:00">open</option>
-                        </>
-                      ) : (
-                        <>
+                              <option value="10:00-18:00">open</option>
+                            </>
+                          ) : (
+                            <>
                         // If 'monday_from' is not null, render this option
-                        <option value="10:00-18:00">open</option>
-                        
+                              <option value="10:00-18:00">open</option>
+
                               <option value="null-null">Close</option>
-</>
-                      )}
+                            </>
+                          )}
 
 
-                      {/* Add more options as needed */}
-                    </select>
+                          {/* Add more options as needed */}
+                        </select>
                       </div>
-                     
-                     </td>
+
+                    </td>
                     <td>
                       <input
                         type="time"
@@ -650,41 +650,41 @@ const Editprofile = () => {
                     </td>
                   </tr>
                   <tr>
-                  <td className='spacebetween-arround'>
-                      <div>Tue</div> 
+                    <td className='spacebetween-arround'>
+                      <div>Tue</div>
                       <div>
-                      <select
-                      type="time"
-                      value={`${timedata?.tuesday_from}-${timedata?.tuesday_to}`}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        handleTimeInputChange('tuesday', 'from_to', value);
-                      }}
-                    >
-                      {/* Options for start time */}
-                    {timedatavalue?.tuesday_from === null || timedatavalue?.tuesday_from === 'null'  ? (
-                        // If 'monday_from' is null, render this option
-<>
-                        
+                        <select
+                          type="time"
+                          value={`${timedata?.tuesday_from}-${timedata?.tuesday_to}`}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            handleTimeInputChange('tuesday', 'from_to', value);
+                          }}
+                        >
+                          {/* Options for start time */}
+                          {timedatavalue?.tuesday_from === null || timedatavalue?.tuesday_from === 'null' ? (
+                            // If 'monday_from' is null, render this option
+                            <>
+
                               <option value="null-null">Close</option>
-                        <option value="10:00-18:00">open</option>
-                        </>
-                      ) : (
-                        <>
+                              <option value="10:00-18:00">open</option>
+                            </>
+                          ) : (
+                            <>
                         // If 'monday_from' is not null, render this option
-                        <option value="10:00-18:00">open</option>
-                        
+                              <option value="10:00-18:00">open</option>
+
                               <option value="null-null">Close</option>
-</>
-                      )}
+                            </>
+                          )}
 
 
 
-                      {/* Add more options as needed */}
-                    </select>
+                          {/* Add more options as needed */}
+                        </select>
                       </div>
-                     
-                     </td>
+
+                    </td>
                     <td>
                       <input
                         type="time"
@@ -701,40 +701,40 @@ const Editprofile = () => {
                     </td>
                   </tr>
                   <tr>
-                  <td className='spacebetween-arround'>
-                      <div>Wed</div> 
+                    <td className='spacebetween-arround'>
+                      <div>Wed</div>
                       <div>
-                      <select
-                      type="time"
-                      value={`${timedata?.wednesday_from}-${timedata?.wednesday_to}`}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        handleTimeInputChange('wednesday', 'from_to', value);
-                      }}
-                    >
-                      {/* Options for start time */}
-                    {timedatavalue?.wednesday_from === null || timedatavalue?.wednesday_from === 'null' ? (
-                        // If 'monday_from' is null, render this option
-<>
-                        
+                        <select
+                          type="time"
+                          value={`${timedata?.wednesday_from}-${timedata?.wednesday_to}`}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            handleTimeInputChange('wednesday', 'from_to', value);
+                          }}
+                        >
+                          {/* Options for start time */}
+                          {timedatavalue?.wednesday_from === null || timedatavalue?.wednesday_from === 'null' ? (
+                            // If 'monday_from' is null, render this option
+                            <>
+
                               <option value="null-null">Close</option>
-                        <option value="10:00-18:00">open</option>
-                        </>
-                      ) : (
-                        <>
+                              <option value="10:00-18:00">open</option>
+                            </>
+                          ) : (
+                            <>
                         // If 'monday_from' is not null, render this option
-                        <option value="10:00-18:00">open</option>
-                        
+                              <option value="10:00-18:00">open</option>
+
                               <option value="null-null">Close</option>
-</>
-                      )}
+                            </>
+                          )}
 
 
-                      {/* Add more options as needed */}
-                    </select>
+                          {/* Add more options as needed */}
+                        </select>
                       </div>
-                     
-                     </td>
+
+                    </td>
                     <td>
                       <input
                         type="time"
@@ -751,38 +751,38 @@ const Editprofile = () => {
                     </td>
                   </tr>
                   <tr>
-                  <td className='spacebetween-arround'>
-                      <div>Thu</div> 
+                    <td className='spacebetween-arround'>
+                      <div>Thu</div>
                       <div>
-                      <select
-                      type="time"
-                      value={`${timedata?.thrusday_from}-${timedata?.thrusday_to}`}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        handleTimeInputChange('thrusday', 'from_to', value);
-                      }}
-                    >
-                      {/* Options for start time */}
-                    {timedatavalue?.thrusday_from === null || timedatavalue?.thrusday_from === "null" ? (
-                        // If 'monday_from' is null, render this option
-<>
-                        
+                        <select
+                          type="time"
+                          value={`${timedata?.thrusday_from}-${timedata?.thrusday_to}`}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            handleTimeInputChange('thrusday', 'from_to', value);
+                          }}
+                        >
+                          {/* Options for start time */}
+                          {timedatavalue?.thrusday_from === null || timedatavalue?.thrusday_from === "null" ? (
+                            // If 'monday_from' is null, render this option
+                            <>
+
                               <option value="null-null">Close</option>
-                        <option value="10:00-18:00">open</option>
-                        </>
-                      ) : (
-                        <>
+                              <option value="10:00-18:00">open</option>
+                            </>
+                          ) : (
+                            <>
                         // If 'monday_from' is not null, render this option
-                        <option value="10:00-18:00">open</option>
-                        
+                              <option value="10:00-18:00">open</option>
+
                               <option value="null-null">Close</option>
-</>
-                      )}
-                      {/* Add more options as needed */}
-                    </select>
+                            </>
+                          )}
+                          {/* Add more options as needed */}
+                        </select>
                       </div>
-                     
-                     </td>
+
+                    </td>
                     <td>
                       <input
                         type="time"
@@ -799,39 +799,39 @@ const Editprofile = () => {
                     </td>
                   </tr>
                   <tr>
-                  <td className='spacebetween-arround'>
-                      <div>Fri</div> 
+                    <td className='spacebetween-arround'>
+                      <div>Fri</div>
                       <div>
-                      <select
-                      type="time"
-                      value={`${timedata?.friday_from}-${timedata?.friday_to}`}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        handleTimeInputChange('friday', 'from_to', value);
-                      }}
-                    >
-                      {/* Options for start time */}
-                    {timedatavalue?.friday_from === null || timedatavalue?.friday_from === 'null' ? (
-                        // If 'monday_from' is null, render this option
-<>
-                        
-                              <option value="null-null">Close</option>
-                        <option value="10:00-18:00">open</option>
-                        </>
-                      ) : (
-                        <>
-                        // If 'monday_from' is not null, render this option
-                        <option value="10:00-18:00">open</option>
-                        
-                              <option value="null-null">Close</option>
-</>
-                      )}
+                        <select
+                          type="time"
+                          value={`${timedata?.friday_from}-${timedata?.friday_to}`}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            handleTimeInputChange('friday', 'from_to', value);
+                          }}
+                        >
+                          {/* Options for start time */}
+                          {timedatavalue?.friday_from === null || timedatavalue?.friday_from === 'null' ? (
+                            // If 'monday_from' is null, render this option
+                            <>
 
-                      {/* Add more options as needed */}
-                    </select>
+                              <option value="null-null">Close</option>
+                              <option value="10:00-18:00">open</option>
+                            </>
+                          ) : (
+                            <>
+                        // If 'monday_from' is not null, render this option
+                              <option value="10:00-18:00">open</option>
+
+                              <option value="null-null">Close</option>
+                            </>
+                          )}
+
+                          {/* Add more options as needed */}
+                        </select>
                       </div>
-                     
-                     </td>
+
+                    </td>
                     <td>
                       <input
                         type="time"
@@ -848,22 +848,22 @@ const Editprofile = () => {
                     </td>
                   </tr>
                   <tr>
-                  <td className='spacebetween-arround'>
-                      <div>Sat</div> 
+                    <td className='spacebetween-arround'>
+                      <div>Sat</div>
                       <div>
-                      <select
-                      type="time"
-                      value={`${timedata?.saterday_from}-${timedata?.saterday_to}`}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        handleTimeInputChange('saterday', 'from_to', value);
-                      }}
-                    >
-                      {/* Options for start time */}
-                    {timedatavalue?.saterday_from  === null || timedatavalue?.saterday_from  === 'null' ? (
+                        <select
+                          type="time"
+                          value={`${timedata?.saterday_from}-${timedata?.saterday_to}`}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            handleTimeInputChange('saterday', 'from_to', value);
+                          }}
+                        >
+                          {/* Options for start time */}
+                          {timedatavalue?.saterday_from === null || timedatavalue?.saterday_from === 'null' ? (
                             <>
                               {/* Options for start time */}
-                              
+
                               <option value="null-null">Close</option>
                               <option value="10:00-18:00">Open</option>
 
@@ -873,17 +873,17 @@ const Editprofile = () => {
                             <>
                               <option value="10:00-18:00">Open</option>
 
-                              
+
                               <option value="null-null">Close</option>
                             </>)}
 
 
 
-                      {/* Add more options as needed */}
-                    </select>
+                          {/* Add more options as needed */}
+                        </select>
                       </div>
-                     
-                     </td>
+
+                    </td>
                     <td>
                       <input
                         type="time"
@@ -996,14 +996,23 @@ const Editprofile = () => {
                     {/* Add more options as needed */}
                   </select>
                   <label htmlFor="subjectName">Country Name:</label>
-                  <input required
+                  <select required
                     name="country"
-                    type='text'
                     className="form-control"
                     value={artworkData.country}
                     onChange={handleArtInputChange}
-                  />
-                  
+                  >
+                    <option value="">Select Country</option>
+
+
+                    <option value='United States of America'>United States of America</option>
+
+
+
+                    {/* Add more options as needed */}
+                  </select>
+
+
                   <label htmlFor="subjectName">Zipcode Name:</label>
                   <input required
                     name="zipcode"
@@ -1012,7 +1021,7 @@ const Editprofile = () => {
                     value={artworkData.zipcode}
                     onChange={handleArtInputChange}
                   />
-                   
+
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="image">Attach the artwork image here:</label>
@@ -1055,13 +1064,13 @@ const Editprofile = () => {
                       <div class="imgbox">
                         <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title} />
                         <div className='imgtitle'>
-                        
+
                           <h4 class="page-title-1 " style={{ color: 'white' }}>
                             {item.title}
                           </h4>
-                          <i className="fa fa-trash deletebutton" aria-hidden="true"  onClick={()=>{deleteArtItem(item.id)}}> Delete</i>
+                          <i className="fa fa-trash deletebutton" aria-hidden="true" onClick={() => { deleteArtItem(item.id) }}> Delete</i>
                           <div className="row d-flex">
-                         
+
                             <div className="coll-6 text-left">
 
                               <i class="fa fa-thumbs-up like" aria-hidden="true"> 100</i>
@@ -1133,11 +1142,11 @@ const Editprofile = () => {
                       <div class="imgbox">
                         <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/BannerImage/${item.banner_image}`} alt={item.banner_image} />
                         <div className='imgtitle'>
-                        
-                        
-                        <i className="fa fa-trash deletebutton" aria-hidden="true"  onClick={()=>{deleteBannerItem(item.id)}}> Delete</i>
-                       
-                      </div>
+
+
+                          <i className="fa fa-trash deletebutton" aria-hidden="true" onClick={() => { deleteBannerItem(item.id) }}> Delete</i>
+
+                        </div>
 
                       </div>
                     </div>
