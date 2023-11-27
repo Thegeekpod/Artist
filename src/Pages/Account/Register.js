@@ -65,10 +65,8 @@ const Register = () => {
 
         if (errorData && errorData.message) {
           // If a general message is provided
-          setErrorMessages({ general: errorData.message });
-        } else if (errorData && errorData.errors) {
-          // If specific field errors are provided
           setErrorMessages(errorData.errors);
+        
         } else {
           setErrorMessages({ general: 'Unknown 422 error occurred.' });
         }
@@ -107,7 +105,10 @@ const Register = () => {
         <div className="row">
         <form className="shop-register" onSubmit={handleFormSubmit}>
       <div className="col-sm-12">
-      {errorMessages.general && <p>Error: {errorMessages.general}</p>}
+       {/* {errorMessages.general && <p>Error: {errorMessages.general}</p>} */}
+      {errorMessages.username && <p>Username Error: {errorMessages.username[0]}</p>}
+      {errorMessages.email && <p>Email Error: {errorMessages.email[0]}</p>}
+      {errorMessages.password && <p>Password Error: {errorMessages.password[0]}</p>}
       
         {error && <p className='error'>Criteria does not match</p>}
         {sucess && <p className='sucess'>Registration Sucessfull Please login Now</p>}
@@ -138,8 +139,6 @@ const Register = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-                {errorMessages.username && <p className='error'> {errorMessages.username[0]}</p>}
-
         </div>
 
         <div className="form-group validate-required validate-email" id="billing_email_field">
@@ -155,8 +154,6 @@ const Register = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-                {errorMessages.email && <p className='error'> {errorMessages.email[0]}</p>}
-
         </div>
 
         <div className="form-group" id="billing_password_field">
@@ -172,8 +169,6 @@ const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-                {errorMessages.password && <p className='error'>{errorMessages.password[0]}</p>}
-
         </div>
       </div>
 
