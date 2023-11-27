@@ -240,12 +240,14 @@ const Editprofile = () => {
     formData.append('image', artworkData.image);
     formData.append('country',artworkData.country);
     formData.append('zipcode',artworkData.zip);
+    console.log('Artwork data:', artworkData);
     try {
       const response = await axios.post(`https://sweetdevelopers.com/artist/api/upload-artwork`, formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
       // Update ArtData after successful upload
       // setArtData(response.data.data.artworks);
       // Handle success or reset form
+      // console.log('Artwork data:', artworkData);
       setSucess(true);
       setTimeout(() => {
         setSucess(false);
@@ -506,7 +508,7 @@ const Editprofile = () => {
               <div className="row mb-3">
                 <div className="col-md-6">
                   <label htmlFor="zipcode" className="form-label">
-                    Zipcode
+                    Zipcode :
                   </label>
                   <input
                     type="number"
@@ -996,6 +998,7 @@ const Editprofile = () => {
                   <label htmlFor="subjectName">Country Name:</label>
                   <input required
                     name="country"
+                    type='text'
                     className="form-control"
                     value={artworkData.country}
                     onChange={handleArtInputChange}
@@ -1004,6 +1007,7 @@ const Editprofile = () => {
                   <label htmlFor="subjectName">Zipcode Name:</label>
                   <input required
                     name="zipcode"
+                    type='number'
                     className="form-control"
                     value={artworkData.zipcode}
                     onChange={handleArtInputChange}
