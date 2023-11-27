@@ -239,7 +239,7 @@ const Editprofile = () => {
     formData.append('subject_id', artworkData.subjectName);
     formData.append('image', artworkData.image);
     formData.append('country',artworkData.country);
-    formData.append('zipcode',artworkData.zip);
+    formData.append('zipcode',artworkData.zipcode);
     console.log('Artwork data:', artworkData);
     try {
       const response = await axios.post(`https://sweetdevelopers.com/artist/api/upload-artwork`, formData, axiosConfig);
