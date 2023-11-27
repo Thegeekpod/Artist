@@ -1025,7 +1025,7 @@ const Editprofile = () => {
                   />
                   {artworkData.imagePreview && (
                     <>
-                      <img src={artworkData.imagePreview} alt="Preview" style={{ Width: '155px', height: '155px', marginTop: '20px' }} />
+                      <img src={artworkData.imagePreview} alt="Preview" style={{ Width: '300px%', height: '300px', marginTop: '20px' }} />
                       <div style={{ marginTop: '20px', width: "100%" }}>
 
                         <button style={{ width: "100%" }} type="submit" className="btn btn-primary mt-3">Upload</button>
