@@ -238,8 +238,8 @@ const Editprofile = () => {
     formData.append('style_id', artworkData.styleName);
     formData.append('subject_id', artworkData.subjectName);
     formData.append('image', artworkData.image);
-    formData.append('country',artdata.country);
-    formData.append('zipcode',artdata.zip);
+    formData.append('country',artworkData.country);
+    formData.append('zipcode',artworkData.zip);
     try {
       const response = await axios.post(`https://sweetdevelopers.com/artist/api/upload-artwork`, formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
