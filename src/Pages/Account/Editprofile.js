@@ -208,6 +208,8 @@ const Editprofile = () => {
     placementName: '',
     styleName: '',
     subjectName: '',
+    country:'',
+    zipcode:'',
     image: null,
     imagePreview: null,
     user_id: `${user?.id}`,
@@ -236,6 +238,8 @@ const Editprofile = () => {
     formData.append('style_id', artworkData.styleName);
     formData.append('subject_id', artworkData.subjectName);
     formData.append('image', artworkData.image);
+    formData.append('country',artdata.country);
+    formData.append('zipcode',artdata.zip);
     try {
       const response = await axios.post(`https://sweetdevelopers.com/artist/api/upload-artwork`, formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
@@ -989,6 +993,22 @@ const Editprofile = () => {
 
                     {/* Add more options as needed */}
                   </select>
+                  <label htmlFor="subjectName">Country Name:</label>
+                  <input required
+                    name="country"
+                    className="form-control"
+                    value={artworkData.country}
+                    onChange={handleArtInputChange}
+                  />
+                  
+                  <label htmlFor="subjectName">Country Name:</label>
+                  <input required
+                    name="zipcode"
+                    className="form-control"
+                    value={artworkData.zipcode}
+                    onChange={handleArtInputChange}
+                  />
+                   
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="image">Attach the artwork image here:</label>
