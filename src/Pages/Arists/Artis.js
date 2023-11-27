@@ -1,7 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { apibaseUrl, apiimageurl } from '../../Component/Apibaseurl';
+import axios from 'axios';
 
 const Artis = () => {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${apibaseUrl}/all-artists`); // Replace with your API endpoint
+        setData(response.data.data);
+        console.log(data)
+      } catch (error) {
+        setError(error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array to run this effect only once (on mount)
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  // if (!data) {
+  //   return <div>Loading...</div>;
+  // }
+
   return (
 <>
 
@@ -38,20 +65,23 @@ const Artis = () => {
           </div>
         </div>
         <div className="row">
+        {data && data.length ? (
+        data.map((item, index) => (
+          <div key={index}>
           <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center">
-            <div className="team-item">
-              <figure className="team-item__img">
+            <div className="team-item text-center">
+              <figure className="team-item__img ">
                 <a href="#">
-                  <img src="images/team/img_team-01.jpg" alt="" />
+                  <img style={{width:'298px', height:'295px'}} src={`${apiimageurl}/ProfileImage/${item.profile_image || 'noimg.jpg'}`} alt="" />
                 </a>
               </figure>
-              <div className="team-item__content text-center">
+              <div className="team-item__content text-center pb-2">
                 <h5 className="team-item__title">
-                  <a href="#">Theodore Higgins</a>
+                  <a href="#">{item.name}</a>
                 </h5>
-                <p className="team-item__prof">Piercing master</p>
+                <p className="team-item__prof">{item.username}</p>
               </div>
-              <ul className="social-list text-center social-list--team">
+              {/* <ul className="social-list text-center social-list--team">
                 <li>
                   <a href="#">
                     <i className="fa fa-facebook" aria-hidden="true" />
@@ -72,197 +102,18 @@ const Artis = () => {
                     <i className="fa fa-google-plus" aria-hidden="true" />
                   </a>
                 </li>
-              </ul>
+              </ul> */}
             </div>
           </div>
-          <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center">
-            <div className="team-item">
-              <figure className="team-item__img">
-                <a href="#">
-                  <img src="images/team/img_team-02.jpg" alt="" />
-                </a>
-              </figure>
-              <div className="team-item__content text-center">
-                <h5 className="team-item__title">
-                  <a href="#">Adeline Roberson</a>
-                </h5>
-                <p className="team-item__prof">Henna master</p>
-              </div>
-              <ul className="social-list text-center social-list--team">
-                <li>
-                  <a href="#">
-                    <i className="fa fa-facebook" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-twitter" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-youtube-play" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-google-plus" aria-hidden="true" />
-                  </a>
-                </li>
-              </ul>
-            </div>
           </div>
-          <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center">
-            <div className="team-item">
-              <figure className="team-item__img">
-                <a href="#">
-                  <img src="images/team/img_team-03.jpg" alt="" />
-                </a>
-              </figure>
-              <div className="team-item__content text-center">
-                <h5 className="team-item__title">
-                  <a href="#">Della Payne</a>
-                </h5>
-                <p className="team-item__prof">Tattoo artist</p>
-              </div>
-              <ul className="social-list text-center social-list--team">
-                <li>
-                  <a href="#">
-                    <i className="fa fa-facebook" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-twitter" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-youtube-play" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-google-plus" aria-hidden="true" />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+        ))
+      ) : (
+        <div>No data available.</div>
+      )}
+          
+      
         </div>
-        <div className="row">
-          <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center">
-            <div className="team-item">
-              <figure className="team-item__img">
-                <a href="#">
-                  <img src="images/team/img_team-04.jpg" alt="" />
-                </a>
-              </figure>
-              <div className="team-item__content text-center">
-                <h5 className="team-item__title">
-                  <a href="#">Rosa Mack</a>
-                </h5>
-                <p className="team-item__prof">Tattoo artist</p>
-              </div>
-              <ul className="social-list text-center social-list--team">
-                <li>
-                  <a href="#">
-                    <i className="fa fa-facebook" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-twitter" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-youtube-play" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-google-plus" aria-hidden="true" />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center">
-            <div className="team-item">
-              <figure className="team-item__img">
-                <a href="#">
-                  <img src="images/team/img_team-05.jpg" alt="" />
-                </a>
-              </figure>
-              <div className="team-item__content text-center">
-                <h5 className="team-item__title">
-                  <a href="#">Alejandro Ferguson</a>
-                </h5>
-                <p className="team-item__prof">Manager</p>
-              </div>
-              <ul className="social-list text-center social-list--team">
-                <li>
-                  <a href="#">
-                    <i className="fa fa-facebook" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-twitter" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-youtube-play" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-google-plus" aria-hidden="true" />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center">
-            <div className="team-item">
-              <figure className="team-item__img">
-                <a href="#">
-                  <img src="images/team/img_team-06.jpg" alt="" />
-                </a>
-              </figure>
-              <div className="team-item__content text-center">
-                <h5 className="team-item__title">
-                  <a href="#">Mina Brock</a>
-                </h5>
-                <p className="team-item__prof">Tattoo artist</p>
-              </div>
-              <ul className="social-list text-center social-list--team">
-                <li>
-                  <a href="#">
-                    <i className="fa fa-facebook" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-twitter" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-youtube-play" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-google-plus" aria-hidden="true" />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+       
       </div>
     </div>
  
