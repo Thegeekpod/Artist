@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import Modal from 'react-modal';
 
 export default function MGallery({ image }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
@@ -35,12 +36,28 @@ export default function MGallery({ image }) {
     }
     return [];
   };
+  const [isOpen, setIsOpen] = useState(false);
 
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
     <>
       {image.map((item, index) => (
         <div className="col-lg-4" key={item.id}>
           <div className="imgbox">
+          <i
+                    className="fa fa-eye view"
+                    aria-hidden="true"
+                    onClick={() => handleImageClick(index)}
+                  >
+                    {" "}
+                    1
+                  </i>
             <img
               className="imgbo"
               src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`}
@@ -59,9 +76,9 @@ export default function MGallery({ image }) {
                 </div>
                 <div className="coll-6 text-right">
                   <i
-                    className="fa fa-eye like"
+                    className="fa fa-comment like"
                     aria-hidden="true"
-                    onClick={() => handleImageClick(index)}
+                    onClick={openModal}
                   >
                     {" "}
                     1
@@ -84,6 +101,36 @@ export default function MGallery({ image }) {
           onClickNext={goToNext}
         />
       )}
+    <Modal
+        isOpen={isOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        className="Modal" // Apply the Modal class
+        overlayClassName="Overlay" // Apply the Overlay class
+      >
+        <div className="row">
+          <div className="col-md-6">
+            Comments
+          </div>
+          <div className="col-md-6 text-right">
+            <i className="fa fa-close close"onClick={closeModal} ></i>
+
+            
+            </div>
+        </div>
+
+    <div className="adasds">
+    <div className="text-center" style={{width:'100%'}}>
+      <p>No Comments</p>
+    </div>
+
+    </div>
+    <form>
+    <input type="text" id="myInput" className="akls" placeholder="Enter something..."/>
+
+    <button type="submit" className="saikoihsaoP">Submit</button>
+</form>
+      </Modal>
     </>
   );
 }

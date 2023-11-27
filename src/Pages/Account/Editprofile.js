@@ -1073,13 +1073,13 @@ const Editprofile = () => {
 
                             <div className="coll-6 text-left">
 
-                              <i class="fa fa-thumbs-up like" aria-hidden="true"> 100</i>
+                              <i class="fa fa-thumbs-up like" aria-hidden="true"> 1</i>
 
 
 
                             </div>
                             <div className="coll-6 text-right">
-                              <i class="fa fa-eye like" aria-hidden="true"> 200</i>
+                              <i class="fa fa-eye like" aria-hidden="true"> 1</i>
 
                             </div>
                           </div>
