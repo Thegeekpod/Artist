@@ -153,6 +153,13 @@ button.theme-button.content-block-5__button::before  {
  .mcenter {
     text-align: center;
 }
+.akls{
+  width: 67% !important;
+}
+.saikoihsaoP
+  {
+    width: 30% !important;
+  }
 }
 
 
@@ -329,3 +336,27 @@ img.d-block.w-100 {
     padding: 3px 0 3px 0;
 }
 
+.space {
+  margin: 0 4px;
+}
+.commentchat{
+  background: #80808045;
+  padding: 2px 13px;
+  border-radius: 11px;
+  margin: 10px 0;
+  list-style: none;
+}
+.scrollable-div {
+ /* Define your preferred width */
+  height: 70%; /* Define your preferred height */
+  overflow: auto; /* Enable scrollbar when content exceeds div height */
+}
+.scrollable-div::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* For Firefox */
+.scrollable-div {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
