@@ -1069,20 +1069,20 @@ const Editprofile = () => {
                             {item.title}
                           </h4>
                           <i className="fa fa-trash deletebutton" aria-hidden="true" onClick={() => { deleteArtItem(item.id) }}> Delete</i>
-                          <div className="row d-flex">
+                          {/* <div className="row d-flex">
 
-                            {/* <div className="coll-6 text-left">
+                            <div className="coll-6 text-left">
 
                               <i class="fa fa-thumbs-up like" aria-hidden="true"> 1</i>
 
 
 
-                            </div> */}
+                            </div>
                             <div className="coll-6 text-right">
                               <i class="fa fa-eye like" aria-hidden="true"> 1</i>
 
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
