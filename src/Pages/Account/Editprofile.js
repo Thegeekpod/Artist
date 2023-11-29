@@ -1013,12 +1013,12 @@ const Editprofile = () => {
                   </select>
 
 
-                  <label htmlFor="subjectName">Zipcode Name:</label>
+                  <label htmlFor="subjectName">Zipcode :</label>
                   <input required
                     name="zipcode"
                     type='number'
                     className="form-control"
-                    value={artworkData.zipcode}
+                    value={artworkData.zipcode || formData.zipcode}
                     onChange={handleArtInputChange}
                   />
 
