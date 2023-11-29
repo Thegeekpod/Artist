@@ -1002,7 +1002,7 @@ const Editprofile = () => {
                     value={artworkData.country}
                     onChange={handleArtInputChange}
                   >
-                    <option value="">Select Country</option>
+                    
 
 
                     <option value='United States of America'>United States of America</option>

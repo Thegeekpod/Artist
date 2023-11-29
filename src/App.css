@@ -360,3 +360,10 @@ img.d-block.w-100 {
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
 }
+
+img.yarl__slide_image {
+  height: 1600px !important;
+  width: 1600px !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
