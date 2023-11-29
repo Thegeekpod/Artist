@@ -558,7 +558,7 @@ const Editprofile = () => {
                           }}
                         >
                           {/* Options for start time */}
-                          {timedatavalue?.sunday_from === null || timedatavalue?.sunday_from === null ? (
+                          {!timedatavalue?.sunday_from === null ? (
                             // If 'monday_from' is null, render this option
                             <>
 
@@ -612,7 +612,7 @@ const Editprofile = () => {
                           }}
                         >
                           {/* Options for start time */}
-                          {timedatavalue?.monday_from === null || timedatavalue?.monday_from === 'null' ? (
+                          {!timedatavalue?.monday_from === null? (
                             // If 'monday_from' is null, render this option
                             <>
 
@@ -662,7 +662,7 @@ const Editprofile = () => {
                           }}
                         >
                           {/* Options for start time */}
-                          {timedatavalue?.tuesday_from === null || timedatavalue?.tuesday_from === 'null' ? (
+                          {!timedatavalue?.tuesday_from === null ? (
                             // If 'monday_from' is null, render this option
                             <>
 
@@ -713,7 +713,7 @@ const Editprofile = () => {
                           }}
                         >
                           {/* Options for start time */}
-                          {timedatavalue?.wednesday_from === null || timedatavalue?.wednesday_from === 'null' ? (
+                          {!timedatavalue?.wednesday_from === null ? (
                             // If 'monday_from' is null, render this option
                             <>
 
@@ -763,7 +763,7 @@ const Editprofile = () => {
                           }}
                         >
                           {/* Options for start time */}
-                          {timedatavalue?.thrusday_from === null || timedatavalue?.thrusday_from === "null" ? (
+                          {!timedatavalue?.thrusday_from === null ? (
                             // If 'monday_from' is null, render this option
                             <>
 
@@ -811,7 +811,7 @@ const Editprofile = () => {
                           }}
                         >
                           {/* Options for start time */}
-                          {timedatavalue?.friday_from === null || timedatavalue?.friday_from === 'null' ? (
+                          {!timedatavalue?.friday_from === null  ? (
                             // If 'monday_from' is null, render this option
                             <>
 
@@ -860,7 +860,7 @@ const Editprofile = () => {
                           }}
                         >
                           {/* Options for start time */}
-                          {timedatavalue?.saterday_from === null || timedatavalue?.saterday_from === 'null' ? (
+                          {!timedatavalue?.saterday_from === null  ? (
                             <>
                               {/* Options for start time */}
 
@@ -1018,7 +1018,7 @@ const Editprofile = () => {
                     name="zipcode"
                     type='number'
                     className="form-control"
-                    value={artworkData.zipcode || formData.zipcode}
+                    value={artworkData.zipcode || formData.zipcode }
                     onChange={handleArtInputChange}
                   />
 
