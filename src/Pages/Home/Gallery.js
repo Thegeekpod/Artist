@@ -81,13 +81,7 @@ export default function MGallery({ image }) {
         artwork_id: artwork_id,
         user_id: user_id
       };
-      axios.get(`${apibaseUrl}/likes-list`).then(response=>{
-        console.log(response)
-      }).catch(error => {
-        // Handle error
-        console.error('Error storing like:', error);
-      });
-      // Making a POST request to store the like using Axios
+      
       axios.post(apiUrl, data,axiosConfig)
         .then(response => {
           // Handle success
