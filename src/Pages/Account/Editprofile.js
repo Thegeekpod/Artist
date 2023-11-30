@@ -4,7 +4,7 @@ import { isAuthenticated, useUser } from './UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { apibaseUrl } from '../../Component/Apibaseurl';
 import Swal from 'sweetalert2';
-
+import imageCompression from 'browser-image-compression';
 const Editprofile = () => {
   const [formData, setFormData] = useState([]);
   const [artdata, setArtData] = useState([]);
@@ -186,7 +186,7 @@ const Editprofile = () => {
 
       );
 
-      console.log('Success:', response.data);
+      // console.log('Success:', response.data);
       setSucessprofileinfo(true);
       setTimeout(() => {
         setSucessprofileinfo(false);
@@ -221,14 +221,34 @@ const Editprofile = () => {
       [name]: value,
     });
   };
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
-    setArtworkData({
-      ...artworkData,
-      image: file,
-      imagePreview: URL.createObjectURL(file),
-    });
+
+    try {
+      const options = {
+        maxSizeMB: 1, // Max size in megabytes
+        maxWidthOrHeight: 800, // Max width or height
+        useWebWorker: true, // Use web workers for faster compression
+      };
+
+      const compressedFile = await imageCompression(file, options);
+
+      // Convert the compressed image to WebP format
+      const convertedWebP = await imageCompression.getFilefromDataUrl(
+        await imageCompression.getDataUrlFromFile(compressedFile, 'image/webp')
+      );
+
+      // Now set the converted WebP image data in your state or wherever needed
+      setArtworkData({
+        ...artworkData,
+        image: convertedWebP,
+        imagePreview: URL.createObjectURL(convertedWebP),
+      });
+    } catch (error) {
+      console.error('Image compression error:', error);
+    }
   };
+
   const handleSubmitArt = async (event) => {
     event.preventDefault();
 
@@ -240,7 +260,7 @@ const Editprofile = () => {
     formData.append('image', artworkData.image);
     formData.append('country', artworkData.country);
     formData.append('zipcode', artworkData.zipcode);
-    console.log('Artwork data:', artworkData);
+    // console.log('Artwork data:', artworkData);
     try {
       const response = await axios.post(`https://sweetdevelopers.com/artist/api/upload-artwork`, formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
@@ -963,7 +983,7 @@ const Editprofile = () => {
                       {styledata.map((style) => (
                         <>
                           <option value={style.id}>{style.title}</option>
-                          {console.log(style)};
+                          {/* {console.log(style)}; */}
                         </>
                       ))}
                     </>) : (<>
