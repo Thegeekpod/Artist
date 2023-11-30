@@ -10,7 +10,7 @@ export default function MGallery({ image }) {
   const { user,token } = useUser();
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [likes, setLikes] = useState();
+  const [likes, setLikes] = useState({});
   const [view, setView] = useState(Array(image.length).fill(0));
   const [isOpen, setIsOpen] = useState(false);
   const [comments, setComments] = useState(Array.from({ length: image.length }, () => []));
@@ -87,6 +87,9 @@ export default function MGallery({ image }) {
         .then(response => {
           // Handle success, if needed
           console.log('Like stored successfully!', response.data);
+          const updatedLikes = { ...likes };
+        updatedLikes[artwork_id] = response.data.likes.length; // Assuming the response contains updated likes count
+        setLikes(updatedLikes);
         })
         .catch(error => {
           // Handle error
@@ -154,7 +157,7 @@ export default function MGallery({ image }) {
               aria-hidden="true"
               onClick={() => handleImageClick(index)}
             >
-              <span className="space">{item.views}</span>
+              <span className="space">{item.views.length}</span>
             </i>
             <img
               className="imgbo"
@@ -172,7 +175,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => likeHandler(item.id)}
                   >{''}
-                    <span className="space"> {item?.likes.length}</span>
+                    <span className="space">{likes[item.id] ?? item?.likes.length}</span>
                   </i>
                 </div>
                 <div className="coll-6 text-right">
@@ -181,7 +184,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(index)}
                   >{''}
-                    <span className="space">  {item.comments}</span>
+                    <span className="space">  {item.comments.length}</span>
                   </i>
                 </div>
               </div>
