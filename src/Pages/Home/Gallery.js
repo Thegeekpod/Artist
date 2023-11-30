@@ -85,7 +85,8 @@ export default function MGallery({ image }) {
       axios.post(apiUrl, data,axiosConfig)
         .then(response => {
           // Handle success
-    if (response.data.status.data === "Liked successfully") {
+          console.log(response.data.data);
+    if (response.data.data === "Liked successfully") {
               
           // Assume you have a state variable 'likes' and a function 'setLikes' to update it
           const updatedLikes = { ...likes };
