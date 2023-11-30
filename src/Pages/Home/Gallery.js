@@ -90,21 +90,41 @@ export default function MGallery({ image }) {
       // Making a POST request to store the like using Axios
       axios.post(apiUrl, data,axiosConfig)
         .then(response => {
-          // Handle success, if needed
-          console.log('Like stored successfully!', response.data.status.data);
+          // Handle success
+    if (response.data.status.data === "Liked successfully") {
+              
+          // Assume you have a state variable 'likes' and a function 'setLikes' to update it
+          const updatedLikes = { ...likes };
+    
+          // Increment the likes by 1 for the specified artwork_id
+          if (updatedLikes.hasOwnProperty(artwork_id)) {
+              updatedLikes[artwork_id]++;
+          } else {
+              updatedLikes[artwork_id] = 1; // If the artwork_id doesn't exist, initialize it to 1
+          }
           
+          // Update the likes state with the modified object
+          setLikes(updatedLikes);
+    } else if (response.data.status.data === "Unliked successfully") {
+               
           // Assume you have a state variable 'likes' and a function 'setLikes' to update it
     const updatedLikes = { ...likes };
     
     // Increment the likes by 1 for the specified artwork_id
     if (updatedLikes.hasOwnProperty(artwork_id)) {
-        updatedLikes[artwork_id]++;
+        updatedLikes[artwork_id]--;
     } else {
         updatedLikes[artwork_id] = 1; // If the artwork_id doesn't exist, initialize it to 1
     }
     
     // Update the likes state with the modified object
     setLikes(updatedLikes);
+    } else {
+      // Handle other cases or errors
+    }
+          // Handle success, if needed
+          console.log('Like stored successfully!', response.data.status.data);
+
         })
         .catch(error => {
           // Handle error
