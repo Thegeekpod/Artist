@@ -3,6 +3,8 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Modal from 'react-modal';
 import { useUser } from "../Account/UserContext";
+import { apibaseUrl } from "../../Component/Apibaseurl";
+import axios from "axios";
 
 export default function MGallery({ image }) {
   const { user } = useUser();
@@ -63,27 +65,30 @@ export default function MGallery({ image }) {
   }
   }, []);
 
-  const likeHandler = (index) => {
-    const newLikes = [...likes];
-    const lastLikeTime = localStorage.getItem(`lastLikeTime_${index}`);
-    const currentTime = Date.now();
-    const oneHour = 60 * 60 * 1000; // milliseconds in an hour
-
-    if (!lastLikeTime || currentTime - parseInt(lastLikeTime) >= oneHour) {
-      // If there's no previous like or if one hour has passed since the last like
-      newLikes[index] += 1;
-      setLikes(newLikes);
-
-      // Store newLikes in local storage
-      localStorage.setItem('likes', JSON.stringify(newLikes));
-
-      localStorage.setItem(`lastLikeTime_${index}`, currentTime);
-    } else {
-      // User has already liked within the last hour
-      console.log("You can only like once per hour.");
-      // You might want to show a message to the user indicating they can't like again yet.
-    }
-  };
+ 
+    const likeHandler = (artwork_id) => {
+      const user_id = user.id;
+  
+      // Your API endpoint to store a like
+      const apiUrl = `${apibaseUrl}/like`;
+  
+      // Data to be sent in the request body
+      const data = {
+        artwork_id: artwork_id,
+        user_id: user_id
+      };
+  
+      // Making a POST request to store the like using Axios
+      axios.post(apiUrl, data)
+        .then(response => {
+          // Handle success, if needed
+          console.log('Like stored successfully!', response.data);
+        })
+        .catch(error => {
+          // Handle error
+          console.error('Error storing like:', error);
+        });
+    };
 
 
 
@@ -145,7 +150,7 @@ export default function MGallery({ image }) {
               aria-hidden="true"
               onClick={() => handleImageClick(index)}
             >
-              <span className="space">{view[index]}</span>
+              <span className="space">{item.views}</span>
             </i>
             <img
               className="imgbo"
@@ -161,9 +166,9 @@ export default function MGallery({ image }) {
                   <i
                     className="fa fa-thumbs-up like"
                     aria-hidden="true"
-                    onClick={() => likeHandler(index)}
+                    onClick={() => likeHandler(item.id)}
                   >{''}
-                    <span className="space"> {likes[index]}</span>
+                    <span className="space"> {item?.likes}</span>
                   </i>
                 </div>
                 <div className="coll-6 text-right">
@@ -172,7 +177,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(index)}
                   >{''}
-                    <span className="space">  {comments[index]?.length || 0}</span>
+                    <span className="space">  {item.comments}</span>
                   </i>
                 </div>
               </div>
