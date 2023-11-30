@@ -55,10 +55,7 @@ export default function MGallery({ image }) {
   };
   useEffect(() => {
     // Retrieve likes data from local storage when the component mounts
-    const storedLikes = localStorage.getItem('likes');
-    if (storedLikes) {
-      setLikes(JSON.parse(storedLikes));
-    }
+  
     const storeviws = localStorage.getItem('views');
     if (storeviws) {
       setView(JSON.parse(storeviws));
@@ -187,7 +184,7 @@ export default function MGallery({ image }) {
               aria-hidden="true"
               onClick={() => handleImageClick(index)}
             >
-              <span className="space">{item.views?.length}</span>
+              <span className="space">{view[index] || item.views?.length}</span>
             </i>
             <img
               className="imgbo"
@@ -214,7 +211,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(index)}
                   >{''}
-                    <span className="space">  {item.comments?.length}</span>
+                    <span className="space">  {comments[index]?.length || 0 || item.comments?.length}</span>
                   </i>
                 </div>
               </div>
