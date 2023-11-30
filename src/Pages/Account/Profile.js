@@ -513,16 +513,23 @@ const Profile = () => {
 
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3313.3924725342317!2d-117.87323959999999!3d33.8537749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dcd68b71684c3f%3A0xc0b18d5029e17291!2s2769%20E%20Regal%20Park%20Dr%2C%20Anaheim%2C%20CA%2092806%2C%20USA!5e0!3m2!1sen!2sin!4v1699897960457!5m2!1sen!2sin"
-
-
-                  style={{ border: 0, width: '100%', height: '300px' }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-
+              <p className='map'>How to Upload your location <i class="fa fa-question-circle" aria-hidden="true"></i></p>
+<div class="instruction">
+<p><strong>Instructions:</strong></p>
+<p>Follow these steps to embed a Google Map on your Page:</p>
+<ol>
+  <li>Access Google Maps.</li>
+  <li>Search for your desired location.</li>
+  <li>Click the menu icon and select "Share or embed map."</li>
+  <li>Switch to the "Embed map" tab.</li>
+  <li>Customize the map size and settings if needed.</li>
+  <li>Copy the generated iframe code.</li>
+  <li>Paste the code into your profile address.</li>
+</ol>
+</div>
+<div  dangerouslySetInnerHTML={{
+        __html: user.address
+      }} />
               </div>
             </div>
 
@@ -662,7 +669,12 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
+      <style jsx>
+        {`th, td {
+    padding: 21px !important;
+    text-align: center;
+}`}
+      </style>
     </>
 
   )

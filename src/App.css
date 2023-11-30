@@ -367,3 +367,19 @@ img.yarl__slide_image {
   max-width: 100% !important;
   max-height: 100% !important;
 }
+.instruction {
+  position: absolute;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  top: 30px;
+}
+/* Hide the instruction initially */
+.instruction {
+  display: none;
+}
+
+/* Show the instruction when hovering over the question mark icon */
+.map:hover + .instruction {
+  display: block;
+}

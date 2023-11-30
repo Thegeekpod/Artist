@@ -1186,6 +1186,12 @@ const Editprofile = () => {
         </section>
 
       </div>
+      <style jsx>
+        {`th, td {
+    padding: 10px !important;
+    text-align: center;
+}`}
+      </style>
     </div>
   )
 }
