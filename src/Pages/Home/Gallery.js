@@ -7,17 +7,21 @@ import { apibaseUrl } from "../../Component/Apibaseurl";
 import axios from "axios";
 
 export default function MGallery({ image }) {
-  const { user } = useUser();
+  const { user,token } = useUser();
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const initialLikes = JSON.parse(localStorage.getItem('likes')) || [];
-  const initialViews = JSON.parse(localStorage.getItem('views')) || [];
-  const [likes, setLikes] = useState(Array(image.length).fill(0));
+  const [likes, setLikes] = useState();
   const [view, setView] = useState(Array(image.length).fill(0));
   const [isOpen, setIsOpen] = useState(false);
   const [comments, setComments] = useState(Array.from({ length: image.length }, () => []));
   const [inputValue, setInputValue] = useState('');
-
+  const axiosConfig = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
+      'Accept': 'application/json',
+    },
+  };
   const handleImageClick = (index) => {
     setSelectedImageIndex(index);
     viewHandler(index);
@@ -79,7 +83,7 @@ export default function MGallery({ image }) {
       };
   
       // Making a POST request to store the like using Axios
-      axios.post(apiUrl, data)
+      axios.post(apiUrl, data,axiosConfig)
         .then(response => {
           // Handle success, if needed
           console.log('Like stored successfully!', response.data);
