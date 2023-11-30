@@ -109,7 +109,7 @@ export default function MGallery({ image }) {
     if (updatedLikes.hasOwnProperty(artwork_id)) {
         updatedLikes[artwork_id]--;
     } else {
-        updatedLikes[artwork_id] = 1; // If the artwork_id doesn't exist, initialize it to 1
+        updatedLikes[artwork_id] = 0; // If the artwork_id doesn't exist, initialize it to 1
     }
     
     // Update the likes state with the modified object
