@@ -91,7 +91,7 @@ export default function MGallery({ image }) {
       axios.post(apiUrl, data,axiosConfig)
         .then(response => {
           // Handle success, if needed
-          console.log('Like stored successfully!', response.data);
+          console.log('Like stored successfully!', response.data.status.data);
           
           // Assume you have a state variable 'likes' and a function 'setLikes' to update it
     const updatedLikes = { ...likes };
@@ -172,7 +172,7 @@ export default function MGallery({ image }) {
               aria-hidden="true"
               onClick={() => handleImageClick(index)}
             >
-              <span className="space">{item.views.length}</span>
+              <span className="space">{item.views?.length}</span>
             </i>
             <img
               className="imgbo"
@@ -190,7 +190,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => likeHandler(item.id)}
                   >{''}
-                    <span className="space">{likes[item.id] ?? item?.likes.length}</span>
+                    <span className="space">{likes[item.id] ?? item.likes?.length}</span>
                   </i>
                 </div>
                 <div className="coll-6 text-right">
@@ -199,7 +199,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(index)}
                   >{''}
-                    <span className="space">  {item.comments.length}</span>
+                    <span className="space">  {item.comments?.length}</span>
                   </i>
                 </div>
               </div>
