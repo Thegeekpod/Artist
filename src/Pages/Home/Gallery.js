@@ -88,7 +88,8 @@ export default function MGallery({ image }) {
           // Handle success, if needed
           console.log('Like stored successfully!', response.data);
           const updatedLikes = { ...likes };
-        updatedLikes[artwork_id] = response.data.likes.length; // Assuming the response contains updated likes count
+        updatedLikes[artwork_id] = response.data.likes.length; 
+        console.log(updatedLikes)// Assuming the response contains updated likes count
         setLikes(updatedLikes);
         })
         .catch(error => {
