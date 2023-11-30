@@ -238,11 +238,16 @@ const Editprofile = () => {
         await imageCompression.getDataUrlFromFile(compressedFile, 'image/webp')
       );
 
+      // Create a new file with the correct file type
+      const webPFile = new File([convertedWebP], 'compressed_image.webp', {
+        type: 'image/webp',
+      });
+
       // Now set the converted WebP image data in your state or wherever needed
       setArtworkData({
         ...artworkData,
-        image: convertedWebP,
-        imagePreview: URL.createObjectURL(convertedWebP),
+        image: webPFile,
+        imagePreview: URL.createObjectURL(webPFile),
       });
     } catch (error) {
       console.error('Image compression error:', error);
