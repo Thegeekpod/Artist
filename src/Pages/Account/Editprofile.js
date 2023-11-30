@@ -4,7 +4,7 @@ import { isAuthenticated, useUser } from './UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { apibaseUrl } from '../../Component/Apibaseurl';
 import Swal from 'sweetalert2';
-
+import imageCompression from 'image-compressor.js';
 const Editprofile = () => {
   const [formData, setFormData] = useState([]);
   const [artdata, setArtData] = useState([]);
@@ -221,13 +221,23 @@ const Editprofile = () => {
       [name]: value,
     });
   };
-  const handleImageChange = (event) => {
+  const handleImageChange = async(event) => {
     const file = event.target.files[0];
-    setArtworkData({
-      ...artworkData,
-      image: file,
-      imagePreview: URL.createObjectURL(file),
-    });
+    const options = {
+      maxSizeMB: 1, // Set the maximum size for the compressed image
+      maxWidthOrHeight: 800, // Set the maximum width or height for the compressed image
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(file, options);
+      setArtworkData({
+        ...artworkData,
+        image: compressedFile,
+        imagePreview: URL.createObjectURL(compressedFile),
+      });
+    } catch (error) {
+      console.error('Error compressing the image:', error);
+    }
   };
   const handleSubmitArt = async (event) => {
     event.preventDefault();
