@@ -100,7 +100,7 @@ export default function MGallery({ image }) {
           
           // Update the likes state with the modified object
           setLikes(updatedLikes);
-    } else if (response.data.status.data === "Unliked successfully") {
+    } else if (response.data.data === "Unliked successfully") {
                
           // Assume you have a state variable 'likes' and a function 'setLikes' to update it
     const updatedLikes = { ...likes };
