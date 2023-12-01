@@ -178,8 +178,9 @@ export default function MGallery({ image }) {
   
         // Log the comment data received from the response
         console.log('Newly added comment:', response.data.data);
-       axios.get(`${apibaseUrl}/comment-list/${artwork_id}`, axiosConfig).then(response=>{
+       axios.get(`${apibaseUrl}/comment-list/${data.artwork_id}`, axiosConfig).then(response=>{
         console.log(response);
+        setComments(response.data.data)
        })
       
         setInputValue('');
@@ -234,7 +235,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(item.id)}
                   >{''}
-                   <span className="space">{(item.comments ? item.comments.length : 0) + (comments[index] ? comments[index].length : 0)}</span>
+                   <span className="space">{comments.length || item.comments.length || 0 }</span>
                   </i>
                 </div>
               </div>
