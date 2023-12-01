@@ -269,7 +269,7 @@ export default function MGallery({ image }) {
                   <li className="comment" key={commentIndex}>
 
                     <span style={{ color: 'black' }}>{comment.comment}</span><br />
-                    <strong>{comment.user.name}</strong>
+                    <strong>{comment.user?.name}</strong>
 
 
 
