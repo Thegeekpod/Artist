@@ -11,7 +11,7 @@ export default function MGallery({ image }) {
   const [images, setImages] = useState(image)
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [likes, setLikes] = useState({});
+  const [likes, setLikes] = useState(Array(images.length).fill(0));
   const [view, setView] = useState(Array(images.length).fill(0));
   const [isOpen, setIsOpen] = useState(false);
   const [comments, setComments] = useState({});
@@ -54,18 +54,18 @@ export default function MGallery({ image }) {
     }
     return [];
   };
-  useEffect(() => {
-    // Retrieve likes data from local storage when the component mounts
+  // useEffect(() => {
+  //   // Retrieve likes data from local storage when the component mounts
 
-    const storeviws = localStorage.getItem('views');
-    if (storeviws) {
-      setView(JSON.parse(storeviws));
-    }
-    //   const storedComments = localStorage.getItem('comments');
-    // if (storedComments) {
-    //   setComments(JSON.parse(storedComments));
-    // }
-  }, []);
+  //   const storeviws = localStorage.getItem('views');
+  //   if (storeviws) {
+  //     setView(JSON.parse(storeviws));
+  //   }
+  //   //   const storedComments = localStorage.getItem('comments');
+  //   // if (storedComments) {
+  //   //   setComments(JSON.parse(storedComments));
+  //   // }
+  // }, []);
 
 
   const likeHandler = (index) => {
