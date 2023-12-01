@@ -49,7 +49,7 @@ export default function MGallery({ image }) {
       const startIndex = selectedImageIndex;
       const slicedImages = [...images.slice(startIndex), ...images.slice(0, startIndex)];
       return slicedImages.map((item) => ({
-        src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.images}`,
+        src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`,
       }));
     }
     return [];
