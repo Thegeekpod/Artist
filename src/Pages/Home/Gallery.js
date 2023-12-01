@@ -152,6 +152,7 @@ export default function MGallery({ image }) {
   const openModal = (index) => {
     setIsOpen(true);
     setSelectedIndex(index);
+    fetchCommentsForArtwork(index);
   };
 
   const closeModal = () => {
@@ -279,23 +280,27 @@ export default function MGallery({ image }) {
         </div>
         <div className="scrollable-div">
           {/* Display both existing and new comments */}
-          {comments[selectedIndex] && comments[selectedIndex].length > 0 ? (
+          {comments.length > 0 ? (
             <div className="text-center">
               <ul className="text-left" style={{ padding: '0' }}>
-                {/* Render existing comments */}
-                {comments[selectedIndex].map((comment, commentIndex) => (
-                  <li className="comment" key={commentIndex}>
-                    <span>{comment.comment}</span>
-                    <strong>{comment.user_id}</strong>
-                  </li>
-                ))}
-              </ul>
+              {comments.map((comment, commentIndex) => (
+                <li className="comment" key={commentIndex}>
+                  
+                  {comment.comment}<br/>                  
+                  <strong>{comment.user_id}</strong>
+                  
+                  
+
+                </li>
+              ))}
+            </ul>
             </div>
           ) : (
             <div className="text-center">
               <p>No Comments</p>
             </div>
           )}
+
         </div>
         <div>
           {/* Input for adding comments */}
