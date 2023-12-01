@@ -7,7 +7,7 @@ import { apiProxybaseUrl, apibaseUrl } from "../../Component/Apibaseurl";
 import axios from "axios";
 
 export default function MGallery({ image }) {
-  const { user,token } = useUser();
+  const { user, token } = useUser();
   const [images, setImages] = useState(image)
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -56,100 +56,77 @@ export default function MGallery({ image }) {
   };
   useEffect(() => {
     // Retrieve likes data from local storage when the component mounts
-  
+
     const storeviws = localStorage.getItem('views');
     if (storeviws) {
       setView(JSON.parse(storeviws));
     }
-  //   const storedComments = localStorage.getItem('comments');
-  // if (storedComments) {
-  //   setComments(JSON.parse(storedComments));
-  // }
+    //   const storedComments = localStorage.getItem('comments');
+    // if (storedComments) {
+    //   setComments(JSON.parse(storedComments));
+    // }
   }, []);
 
- 
-    const likeHandler = (artwork_id) => {
-      const user_id = user.id;
-  
-      // Your API endpoint to store a like
-      const apiUrl = `${apibaseUrl}/like`;
-  
-      // Data to be sent in the request body
-      const data = {
-        artwork_id: artwork_id,
-        user_id: user_id
-      };
-      
-      axios.post(apiUrl, data,axiosConfig)
-        .then(response => {
-          // Handle success
-          console.log(response.data.data);
-    if (response.data.data === "Liked successfully") {
-              
-          // Assume you have a state variable 'likes' and a function 'setLikes' to update it
-          const updatedLikes = { ...likes };
-    
-          // Increment the likes by 1 for the specified artwork_id
-          if (updatedLikes.hasOwnProperty(artwork_id)) {
-              updatedLikes[artwork_id]++;
-          } else {
-              updatedLikes[artwork_id] = 1; // If the artwork_id doesn't exist, initialize it to 1
-          }
-          
-          // Update the likes state with the modified object
-          setLikes(updatedLikes);
-    } else if (response.data.data === "Unliked successfully") {
-               
-          // Assume you have a state variable 'likes' and a function 'setLikes' to update it
-    const updatedLikes = { ...likes };
-    
-    // Increment the likes by 1 for the specified artwork_id
-    if (updatedLikes.hasOwnProperty(artwork_id)) {
-        updatedLikes[artwork_id]--;
-    } else {
-        updatedLikes[artwork_id] = 0; // If the artwork_id doesn't exist, initialize it to 1
-    }
-    
-    // Update the likes state with the modified object
-    setLikes(updatedLikes);
-    } else {
-      // Handle other cases or errors
-    }
-          // Handle success, if needed
-          console.log('Like stored successfully!', response.data.status.data);
 
-        })
-        .catch(error => {
-          // Handle error
-          console.error('Error storing like:', error);
-        });
+  const likeHandler = (index) => {
+    const user_id = user.id;
+
+    // Your API endpoint to store a like
+    const apiUrl = `${apibaseUrl}/like`;
+
+    // Data to be sent in the request body
+    const data = {
+      artwork_id: index,
+      user_id: user_id
     };
+
+    axios.post(apiUrl, data, axiosConfig)
+      .then(response => {
+        // Handle success
+        console.log(response.data.data);
+        const updatedlikes = [...likes];
+        updatedlikes[index] = response.data.data; // Assuming response.data.data contains the updated view count
+
+        // Update the view state with the modified array
+        setLikes(updatedlikes);
+
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error storing like:', error);
+      });
+  };
 
 
 
   const viewHandler = (index) => {
     const user_id = user.id;
-  
-      // Your API endpoint to store a like
-      const apiUrl = `${apibaseUrl}/view`;
-  
-      // Data to be sent in the request body
-      const data = {
-        artwork_id: index,
-        user_id: user_id
-      };
-      
-      axios.post(apiUrl, data,axiosConfig)
-        .then(response => {
-          // Handle success
-          console.log(response.data.data);
 
+    // Your API endpoint to store a like
+    const apiUrl = `${apibaseUrl}/view`;
 
-        })
-        .catch(error => {
-          // Handle error
-          console.error('Error storing like:', error);
-        });
+    // Data to be sent in the request body
+    const data = {
+      artwork_id: index,
+      user_id: user_id
+    };
+
+    axios.post(apiUrl, data, axiosConfig)
+      .then(response => {
+        // Handle success
+        // console.log(response.data.data);
+        // Handle success
+        const updatedViews = [...view];
+        updatedViews[index] = response.data.data; // Assuming response.data.data contains the updated view count
+
+        // Update the view state with the modified array
+        setView(updatedViews);
+
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error storing like:', error);
+      });
 
   };
 
@@ -167,7 +144,7 @@ export default function MGallery({ image }) {
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
- 
+
 
   const handleAddComment = async () => {
     const data = {
@@ -185,7 +162,7 @@ export default function MGallery({ image }) {
 
         // Fetch updated comments for the specific artwork
         fetchCommentsForArtwork(data.artwork_id);
-        
+
         setInputValue('');
       } else {
         console.error('Failed to upload comment');
@@ -205,10 +182,10 @@ export default function MGallery({ image }) {
     }
   };
 
-  
 
-  
-  
+
+
+
 
 
   return (
@@ -221,7 +198,7 @@ export default function MGallery({ image }) {
               aria-hidden="true"
               onClick={() => handleImageClick(item.id)}
             >
-              <span className="space">{view[index] || item.views?.length}</span>
+              <span className="space">{view[item.id] || item.views?.length}</span>
             </i>
             <img
               className="imgbo"
@@ -239,7 +216,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => likeHandler(item.id)}
                   >{''}
-                    <span className="space">{likes[item.id] ?? item.likes?.length}</span>
+                    <span className="space">{likes[item.id] || item.likes?.length}</span>
                   </i>
                 </div>
                 <div className="coll-6 text-right">
@@ -248,7 +225,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(item.id)}
                   >{''}
-                   <span className="space"> {(Array.isArray(comments) ? comments.filter(comment => comment.artwork_id === item.id)?.length : 0) || item.comments?.length}</span>
+                    <span className="space"> {(Array.isArray(comments) ? comments.filter(comment => comment.artwork_id === item.id)?.length : 0) || item.comments?.length}</span>
                   </i>
                 </div>
               </div>
@@ -288,17 +265,17 @@ export default function MGallery({ image }) {
           {comments.length > 0 ? (
             <div className="text-center">
               <ul className="text-left" style={{ padding: '0' }}>
-              {comments.map((comment, commentIndex) => (
-                <li className="comment" key={commentIndex}>
-                  
-                  <span style={{color:'black'}}>{comment.comment}</span><br/>                  
-                  <strong>{comment.user.name}</strong>
-                  
-                  
+                {comments.map((comment, commentIndex) => (
+                  <li className="comment" key={commentIndex}>
 
-                </li>
-              ))}
-            </ul>
+                    <span style={{ color: 'black' }}>{comment.comment}</span><br />
+                    <strong>{comment.user.name}</strong>
+
+
+
+                  </li>
+                ))}
+              </ul>
             </div>
           ) : (
             <div className="text-center">
