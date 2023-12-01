@@ -222,7 +222,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(item.id)}
                   >{''}
-                    <span className="space">  {comments[item.id]?.length || 0 || item.comments?.length}</span>
+                    <span className="space">  {item.comments?.length}</span>
                   </i>
                 </div>
               </div>
