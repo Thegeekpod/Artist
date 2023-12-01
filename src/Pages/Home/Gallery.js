@@ -172,22 +172,28 @@ export default function MGallery({ image }) {
     try {
       const response = await axios.post(`${apibaseUrl}/comment`, data, axiosConfig);
   
-      if (response.status === 200) {
-        // Handle success
-        console.log('Comment uploaded successfully!');
-  
+      if (response.status === 200 && response.data.status) {
+        console.log(response.data.data); // Logging the success message
+        
         // Update comments in the images array
-        const updatedImage = [...images]; // Create a copy of the images array
+        const updatedImage = [...images];
         const selectedArtwork = updatedImage[selectedIndex];
   
-        // Check if comments array exists, if not initialize it
+        // Ensure the selected artwork exists and create an empty comments array if it doesn't exist
+        if (!selectedArtwork) {
+          console.error('Selected artwork does not exist.');
+          return; // Exit function if the selected artwork doesn't exist
+        }
+  
         if (!selectedArtwork.comments) {
           selectedArtwork.comments = [];
         }
   
-        // Add the new comment to the comments array
+        // Assuming the comment ID is not returned by the server, you might need to create or manage it here
+        const commentId = generateCommentId(); // Implement your own function to generate a comment ID
+  
         selectedArtwork.comments.push({
-          id: response.data.commentId, // Assuming your API returns a comment ID
+          id: commentId,
           user_id: user.id,
           comment: inputValue,
         });
@@ -195,17 +201,16 @@ export default function MGallery({ image }) {
         // Update the state with the modified images array
         setImage(updatedImage);
   
-        // Clear the input value or perform any other actions if needed
+        // Clear the input value after adding the comment
         setInputValue('');
-  
       } else {
-        // Handle error
         console.error('Failed to upload comment');
       }
     } catch (error) {
       console.error('Error uploading comment:', error);
     }
   };
+  
   
 
 
