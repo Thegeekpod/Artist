@@ -128,23 +128,28 @@ export default function MGallery({ image }) {
 
 
   const viewHandler = (index) => {
-    const newViews = [...view];
-    const lastViewTime = localStorage.getItem(`lastViewTime_${index}`);
-    const currentTime = Date.now();
-    const oneHour = 60 * 60 * 1000; // milliseconds in an hour
+    const user_id = user.id;
+  
+      // Your API endpoint to store a like
+      const apiUrl = `${apibaseUrl}/view`;
+  
+      // Data to be sent in the request body
+      const data = {
+        artwork_id: index,
+        user_id: user_id
+      };
+      
+      axios.post(apiUrl, data,axiosConfig)
+        .then(response => {
+          // Handle success
+          console.log(response.data.data);
 
-    if (!lastViewTime || currentTime - parseInt(lastViewTime) >= oneHour) {
-      // If there's no previous view or if one hour has passed since the last view
-      newViews[index] += 1;
-      setView(newViews);
-      localStorage.setItem('views', JSON.stringify(newViews));
 
-      localStorage.setItem(`lastViewTime_${index}`, currentTime);
-    } else {
-      // User has already viewed within the last hour
-      console.log("You can only view once per hour.");
-      // You might want to show a message to the user indicating they can't view again yet.
-    }
+        })
+        .catch(error => {
+          // Handle error
+          console.error('Error storing like:', error);
+        });
 
   };
 
@@ -214,7 +219,7 @@ export default function MGallery({ image }) {
             <i
               className="fa fa-eye view"
               aria-hidden="true"
-              onClick={() => handleImageClick(index)}
+              onClick={() => handleImageClick(item.id)}
             >
               <span className="space">{view[index] || item.views?.length}</span>
             </i>
@@ -234,7 +239,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => likeHandler(item.id)}
                   >{''}
-                    <span className="space">{likes[item.id] || item.likes?.length}</span>
+                    <span className="space">{likes[item.id] ?? item.likes?.length}</span>
                   </i>
                 </div>
                 <div className="coll-6 text-right">
