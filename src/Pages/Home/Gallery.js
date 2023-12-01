@@ -234,7 +234,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => likeHandler(item.id)}
                   >{''}
-                    <span className="space">{likes[item.id] ?? item.likes?.length}</span>
+                    <span className="space">{likes[item.id] || item.likes?.length}</span>
                   </i>
                 </div>
                 <div className="coll-6 text-right">
