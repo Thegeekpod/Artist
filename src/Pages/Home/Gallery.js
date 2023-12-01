@@ -169,20 +169,17 @@ export default function MGallery({ image }) {
       user_id: user.id,
       comment: inputValue,
     };
-  
+
     try {
       const response = await axios.post(`${apibaseUrl}/comment`, data, axiosConfig);
-  
+
       if (response.status === 200 && response.data.status) {
         // Assuming the comment was added successfully
-  
-        // Log the comment data received from the response
         console.log('Newly added comment:', response.data.data);
-       axios.get(`${apibaseUrl}/comment-list/${data.artwork_id}`, axiosConfig).then(response=>{
-        console.log(response);
-        setComments(response.data.data)
-       })
-      
+
+        // Fetch updated comments for the specific artwork
+        fetchCommentsForArtwork(data.artwork_id);
+        
         setInputValue('');
       } else {
         console.error('Failed to upload comment');
@@ -191,7 +188,17 @@ export default function MGallery({ image }) {
       console.error('Error uploading comment:', error);
     }
   };
-  
+
+  // Function to fetch comments for a specific artwork
+  const fetchCommentsForArtwork = async (artworkId) => {
+    try {
+      const response = await axios.get(`${apibaseUrl}/comment-list/${artworkId}`, axiosConfig);
+      setComments(response.data.data || []);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    }
+  };
+
   
 
   
@@ -235,7 +242,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(item.id)}
                   >{''}
-                   <span className="space">{comments.length || item.comments.length || 0 }</span>
+                   <span className="space"> {(Array.isArray(comments) ? comments.filter(comment => comment.artwork_id === item.id).length : 0) || item.comments.length}</span>
                   </i>
                 </div>
               </div>
