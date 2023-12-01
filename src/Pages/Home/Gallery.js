@@ -8,12 +8,13 @@ import axios from "axios";
 
 export default function MGallery({ image }) {
   const { user,token } = useUser();
+  const [images, setImage] = useState(image)
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [likes, setLikes] = useState({});
-  const [view, setView] = useState(Array(image.length).fill(0));
+  const [view, setView] = useState(Array(images.length).fill(0));
   const [isOpen, setIsOpen] = useState(false);
-  const [comments, setComments] = useState(Array.from({ length: image.length }, () => []));
+  const [comments, setComments] = useState({});
   const [inputValue, setInputValue] = useState('');
   const axiosConfig = {
     headers: {
@@ -33,22 +34,22 @@ export default function MGallery({ image }) {
 
   const goToPrevious = () => {
     setSelectedImageIndex((prevIndex) =>
-      prevIndex === 0 ? image.length - 1 : prevIndex - 1
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
 
   const goToNext = () => {
     setSelectedImageIndex((prevIndex) =>
-      prevIndex === image.length - 1 ? 0 : prevIndex + 1
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const generateSlidesFromCurrentImage = () => {
-    if (selectedImageIndex !== null && image.length > 0) {
+    if (selectedImageIndex !== null && images.length > 0) {
       const startIndex = selectedImageIndex;
-      const slicedImages = [...image.slice(startIndex), ...image.slice(0, startIndex)];
+      const slicedImages = [...images.slice(startIndex), ...images.slice(0, startIndex)];
       return slicedImages.map((item) => ({
-        src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`,
+        src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.images}`,
       }));
     }
     return [];
@@ -166,15 +167,37 @@ export default function MGallery({ image }) {
       artwork_id: selectedIndex,
       user_id: user.id,
       comment: inputValue,
-    }
-    try {
+    };
   
+    try {
       const response = await axios.post(`${apibaseUrl}/comment`, data, axiosConfig);
   
       if (response.status === 200) {
         // Handle success
         console.log('Comment uploaded successfully!');
-        // You might want to perform further actions after a successful upload
+  
+        // Update comments in the images array
+        const updatedImage = [...images]; // Create a copy of the images array
+        const selectedArtwork = updatedImage[selectedIndex];
+  
+        // Check if comments array exists, if not initialize it
+        if (!selectedArtwork.comments) {
+          selectedArtwork.comments = [];
+        }
+  
+        // Add the new comment to the comments array
+        selectedArtwork.comments.push({
+          id: response.data.commentId, // Assuming your API returns a comment ID
+          user_id: user.id,
+          comment: inputValue,
+        });
+  
+        // Update the state with the modified images array
+        setImage(updatedImage);
+  
+        // Clear the input value or perform any other actions if needed
+        setInputValue('');
+  
       } else {
         // Handle error
         console.error('Failed to upload comment');
@@ -183,11 +206,12 @@ export default function MGallery({ image }) {
       console.error('Error uploading comment:', error);
     }
   };
+  
 
 
   return (
     <>
-      {image.map((item, index) => (
+      {images.map((item, index) => (
         <div className="col-lg-4" key={item.id}>
           <div className="imgbox">
             <i
@@ -222,7 +246,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(item.id)}
                   >{''}
-                    <span className="space">  {item.comments?.length}</span>
+                    <span className="space">  {item.comments ? item.comments.length : 0}</span>
                   </i>
                 </div>
               </div>
