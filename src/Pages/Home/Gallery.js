@@ -178,27 +178,10 @@ export default function MGallery({ image }) {
   
         // Log the comment data received from the response
         console.log('Newly added comment:', response.data.data);
-  
-        // Update comment count in state for the corresponding artwork
-        const updatedImage = images.map((item, index) => {
-          if (index === selectedIndex) {
-            return {
-              ...item,
-              comments: [...(item.comments || []), { user_id: user.id, comment: inputValue }],
-              comment_count: (item.comment_count || 0) + 1,
-            };
-          }
-          return item;
-        });
-  
-        setImages(updatedImage); // Update image state with new comment count
-  
-        // Update comments state
-        setComments({
-          ...comments,
-          [selectedIndex]: [...(comments[selectedIndex] || []), { user_id: user.id, comment: inputValue }],
-        });
-  
+       axios.get(`${apibaseUrl}/comment-list/${artwork_id}`, axiosConfig).then(response=>{
+        console.log(response);
+       })
+      
         setInputValue('');
       } else {
         console.error('Failed to upload comment');
