@@ -168,10 +168,10 @@ export default function MGallery({ image }) {
       comment: inputValue,
     }
     try {
-      // Assuming you have an API endpoint to upload the comment
-      const response = await fetch(`${apibaseUrl}/comment`, axiosConfig,data);
-
-      if (response.ok) {
+  
+      const response = await axios.post(`${apibaseUrl}/comment`, data, axiosConfig);
+  
+      if (response.status === 200) {
         // Handle success
         console.log('Comment uploaded successfully!');
         // You might want to perform further actions after a successful upload
