@@ -243,7 +243,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(item.id)}
                   >{''}
-                   <span className="space"> {(Array.isArray(comments) ? comments.filter(comment => comment.artwork_id === item.id).length : 0) || item.comments.length}</span>
+                   <span className="space"> {(Array.isArray(comments) ? comments.filter(comment => comment.artwork_id === item.id)?.length : 0) || item.comments?.length}</span>
                   </i>
                 </div>
               </div>
@@ -286,8 +286,8 @@ export default function MGallery({ image }) {
               {comments.map((comment, commentIndex) => (
                 <li className="comment" key={commentIndex}>
                   
-                  {comment.comment}<br/>                  
-                  <strong>{comment.user_id}</strong>
+                  <span style={{color:'black'}}>{comment.comment}</span><br/>                  
+                  <strong>{comment.user.name}</strong>
                   
                   
 
