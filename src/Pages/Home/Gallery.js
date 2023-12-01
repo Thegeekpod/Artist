@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function MGallery({ image }) {
   const { user,token } = useUser();
-  const [images, setImage] = useState(image)
+  const [images, setImages] = useState(image)
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [likes, setLikes] = useState({});
@@ -161,9 +161,7 @@ export default function MGallery({ image }) {
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
-  const generateCommentId = () => {
-    return '_' + Math.random().toString(36).substr(2, 9);
-  };
+ 
 
   const handleAddComment = async () => {
     const data = {
@@ -171,17 +169,19 @@ export default function MGallery({ image }) {
       user_id: user.id,
       comment: inputValue,
     };
-
+  
     try {
       const response = await axios.post(`${apibaseUrl}/comment`, data, axiosConfig);
-
+  
       if (response.status === 200 && response.data.status) {
         // Assuming the comment was added successfully
-
+  
+        // Log the comment data received from the response
+        console.log('Newly added comment:', response.data.data);
+  
         // Update comment count in state for the corresponding artwork
         const updatedImage = images.map((item, index) => {
           if (index === selectedIndex) {
-            // Update comment count for the selected artwork
             return {
               ...item,
               comments: [...(item.comments || []), { user_id: user.id, comment: inputValue }],
@@ -190,11 +190,15 @@ export default function MGallery({ image }) {
           }
           return item;
         });
-
-        // Update the state with the modified images array
-        setImage(updatedImage);
-
-        // Clear the input value after adding the comment
+  
+        setImages(updatedImage); // Update image state with new comment count
+  
+        // Update comments state
+        setComments({
+          ...comments,
+          [selectedIndex]: [...(comments[selectedIndex] || []), { user_id: user.id, comment: inputValue }],
+        });
+  
         setInputValue('');
       } else {
         console.error('Failed to upload comment');
@@ -203,6 +207,8 @@ export default function MGallery({ image }) {
       console.error('Error uploading comment:', error);
     }
   };
+  
+  
 
   
   
@@ -245,7 +251,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(item.id)}
                   >{''}
-                    <span className="space">  { item.comment_count  || item.comments.length || 0}</span>
+                   <span className="space">{(item.comments ? item.comments.length : 0) + (comments[index] ? comments[index].length : 0)}</span>
                   </i>
                 </div>
               </div>
@@ -272,7 +278,6 @@ export default function MGallery({ image }) {
         className="Modal"
         overlayClassName="Overlay"
       >
-
         <div className="row">
           <div className="col-md-6">
             Comments
@@ -282,19 +287,17 @@ export default function MGallery({ image }) {
           </div>
         </div>
         <div className="scrollable-div">
-        <div className="text-center">
+          {/* Display both existing and new comments */}
           {comments[selectedIndex] && comments[selectedIndex].length > 0 ? (
             <div className="text-center">
               <ul className="text-left" style={{ padding: '0' }}>
-                {/* {comments[selectedIndex].map((comment, index) => (
-                  <li className='commentchat' key={index}>
-
-
-                   <span style={{lineHeight:'30px',  color:'black'}}>{comment}</span> <br />
-                 <strong>{user?.name}</strong>   
-
+                {/* Render existing comments */}
+                {comments[selectedIndex].map((comment, commentIndex) => (
+                  <li className="comment" key={commentIndex}>
+                    <span>{comment.comment}</span>
+                    <strong>{comment.user_id}</strong>
                   </li>
-                ))} */}
+                ))}
               </ul>
             </div>
           ) : (
@@ -303,21 +306,19 @@ export default function MGallery({ image }) {
             </div>
           )}
         </div>
+        <div>
+          {/* Input for adding comments */}
+          <input
+            className="akls"
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="Enter your comment"
+          />
+          <button type="button" className="saikoihsaoP" onClick={handleAddComment}>
+            Submit
+          </button>
         </div>
-     <div>
-     <input
-          className="akls"
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Enter your comment"
-        />
-        <button type="button" className="saikoihsaoP" onClick={handleAddComment}>
-          Submit
-        </button>
-      </div> 
-       
-
       </Modal>
     </>
   );
