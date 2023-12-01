@@ -60,10 +60,10 @@ export default function MGallery({ image }) {
     if (storeviws) {
       setView(JSON.parse(storeviws));
     }
-    const storedComments = localStorage.getItem('comments');
-  if (storedComments) {
-    setComments(JSON.parse(storedComments));
-  }
+  //   const storedComments = localStorage.getItem('comments');
+  // if (storedComments) {
+  //   setComments(JSON.parse(storedComments));
+  // }
   }, []);
 
  
@@ -161,18 +161,29 @@ export default function MGallery({ image }) {
     setInputValue(e.target.value);
   };
 
-  const handleAddComment = () => {
-    if (inputValue.trim() !== '' && selectedIndex !== null) {
-      const updatedComments = [...comments];
-      updatedComments[selectedIndex] = [
-        ...updatedComments[selectedIndex],
-        inputValue,
-      ];
-      setComments(updatedComments);
-      setInputValue('');
-      localStorage.setItem('comments', JSON.stringify(updatedComments));
+  const handleAddComment = async () => {
+    const data = {
+      artwork_id: selectedIndex,
+      user_id: user.id,
+      comment: inputValue,
+    }
+    try {
+      // Assuming you have an API endpoint to upload the comment
+      const response = await fetch(`${apibaseUrl}/comment`, axiosConfig,data);
+
+      if (response.ok) {
+        // Handle success
+        console.log('Comment uploaded successfully!');
+        // You might want to perform further actions after a successful upload
+      } else {
+        // Handle error
+        console.error('Failed to upload comment');
+      }
+    } catch (error) {
+      console.error('Error uploading comment:', error);
     }
   };
+
 
   return (
     <>
@@ -209,9 +220,9 @@ export default function MGallery({ image }) {
                   <i
                     className="fa fa-comment like"
                     aria-hidden="true"
-                    onClick={() => openModal(index)}
+                    onClick={() => openModal(item.id)}
                   >{''}
-                    <span className="space">  {comments[index]?.length || 0 || item.comments?.length}</span>
+                    <span className="space">  {comments[item.id]?.length || 0 || item.comments?.length}</span>
                   </i>
                 </div>
               </div>
@@ -252,7 +263,7 @@ export default function MGallery({ image }) {
           {comments[selectedIndex] && comments[selectedIndex].length > 0 ? (
             <div className="text-center">
               <ul className="text-left" style={{ padding: '0' }}>
-                {comments[selectedIndex].map((comment, index) => (
+                {/* {comments[selectedIndex].map((comment, index) => (
                   <li className='commentchat' key={index}>
 
 
@@ -260,7 +271,7 @@ export default function MGallery({ image }) {
                  <strong>{user?.name}</strong>   
 
                   </li>
-                ))}
+                ))} */}
               </ul>
             </div>
           ) : (
