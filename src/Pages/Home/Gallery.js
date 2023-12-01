@@ -161,6 +161,9 @@ export default function MGallery({ image }) {
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
+  const generateCommentId = () => {
+    return '_' + Math.random().toString(36).substr(2, 9);
+  };
 
   const handleAddComment = async () => {
     const data = {
