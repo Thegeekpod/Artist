@@ -171,39 +171,29 @@ export default function MGallery({ image }) {
       user_id: user.id,
       comment: inputValue,
     };
-  
+
     try {
       const response = await axios.post(`${apibaseUrl}/comment`, data, axiosConfig);
-  
+
       if (response.status === 200 && response.data.status) {
-        console.log(response.data.data); // Logging the success message
-        
-        // Update comments in the images array
-        const updatedImage = [...images];
-        const selectedArtwork = updatedImage[selectedIndex];
-  
-        // Ensure the selected artwork exists and create an empty comments array if it doesn't exist
-        if (!selectedArtwork) {
-          console.error('Selected artwork does not exist.');
-          return; // Exit function if the selected artwork doesn't exist
-        }
-  
-        if (!selectedArtwork.comments) {
-          selectedArtwork.comments = [];
-        }
-  
-        // Assuming the comment ID is not returned by the server, you might need to create or manage it here
-        const commentId = generateCommentId(); // Implement your own function to generate a comment ID
-  
-        selectedArtwork.comments.push({
-          id: commentId,
-          user_id: user.id,
-          comment: inputValue,
+        // Assuming the comment was added successfully
+
+        // Update comment count in state for the corresponding artwork
+        const updatedImage = images.map((item, index) => {
+          if (index === selectedIndex) {
+            // Update comment count for the selected artwork
+            return {
+              ...item,
+              comments: [...(item.comments || []), { user_id: user.id, comment: inputValue }],
+              comment_count: (item.comment_count || 0) + 1,
+            };
+          }
+          return item;
         });
-  
+
         // Update the state with the modified images array
         setImage(updatedImage);
-  
+
         // Clear the input value after adding the comment
         setInputValue('');
       } else {
@@ -213,6 +203,7 @@ export default function MGallery({ image }) {
       console.error('Error uploading comment:', error);
     }
   };
+
   
   
 
@@ -254,7 +245,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => openModal(item.id)}
                   >{''}
-                    <span className="space">  {item.comments ? item.comments.length : 0}</span>
+                    <span className="space">  { item.comments.length || 0}</span>
                   </i>
                 </div>
               </div>
