@@ -11,7 +11,7 @@ export default function MGallery({ image }) {
   const [images, setImages] = useState(image)
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [likes, setLikes] = useState({});
+  const [likes, setLikes] = useState(Array(images.length).fill(0));
   const [view, setView] = useState(Array(images.length).fill(0));
   const [isOpen, setIsOpen] = useState(false);
   const [comments, setComments] = useState({});
@@ -54,21 +54,21 @@ export default function MGallery({ image }) {
     }
     return [];
   };
-  useEffect(() => {
-    // Retrieve likes data from local storage when the component mounts
+  // useEffect(() => {
+  //   // Retrieve likes data from local storage when the component mounts
 
-    const storeviws = localStorage.getItem('views');
-    if (storeviws) {
-      setView(JSON.parse(storeviws));
-    }
-    //   const storedComments = localStorage.getItem('comments');
-    // if (storedComments) {
-    //   setComments(JSON.parse(storedComments));
-    // }
-  }, []);
+  //   const storeviws = localStorage.getItem('views');
+  //   if (storeviws) {
+  //     setView(JSON.parse(storeviws));
+  //   }
+  //   //   const storedComments = localStorage.getItem('comments');
+  //   // if (storedComments) {
+  //   //   setComments(JSON.parse(storedComments));
+  //   // }
+  // }, []);
 
 
-  const likeHandler = (artwork_id) => {
+  const likeHandler = (index) => {
     const user_id = user.id;
 
     // Your API endpoint to store a like
@@ -76,7 +76,7 @@ export default function MGallery({ image }) {
 
     // Data to be sent in the request body
     const data = {
-      artwork_id: artwork_id,
+      artwork_id: index,
       user_id: user_id
     };
 
@@ -84,39 +84,11 @@ export default function MGallery({ image }) {
       .then(response => {
         // Handle success
         console.log(response.data.data);
-        if (response.data.data === "Liked successfully") {
+        const updatedlikes = [...likes];
+        updatedlikes[index] = response.data.data; // Assuming response.data.data contains the updated view count
 
-          // Assume you have a state variable 'likes' and a function 'setLikes' to update it
-          const updatedLikes = { ...likes };
-
-          // Increment the likes by 1 for the specified artwork_id
-          if (updatedLikes.hasOwnProperty(artwork_id)) {
-            updatedLikes[artwork_id]++;
-          } else {
-            updatedLikes[artwork_id] = 1; // If the artwork_id doesn't exist, initialize it to 1
-          }
-
-          // Update the likes state with the modified object
-          setLikes(updatedLikes);
-        } else if (response.data.data === "Unliked successfully") {
-
-          // Assume you have a state variable 'likes' and a function 'setLikes' to update it
-          const updatedLikes = { ...likes };
-
-          // Increment the likes by 1 for the specified artwork_id
-          if (updatedLikes.hasOwnProperty(artwork_id)) {
-            updatedLikes[artwork_id]--;
-          } else {
-            updatedLikes[artwork_id] = 0; // If the artwork_id doesn't exist, initialize it to 1
-          }
-
-          // Update the likes state with the modified object
-          setLikes(updatedLikes);
-        } else {
-          // Handle other cases or errors
-        }
-        // Handle success, if needed
-        console.log('Like stored successfully!', response.data.status.data);
+        // Update the view state with the modified array
+        setLikes(updatedlikes);
 
       })
       .catch(error => {
@@ -244,7 +216,7 @@ export default function MGallery({ image }) {
                     aria-hidden="true"
                     onClick={() => likeHandler(item.id)}
                   >{''}
-                    <span className="space">{likes[item.id] ?? item.likes?.length}</span>
+                    <span className="space">{likes[item.id] || item.likes?.length}</span>
                   </i>
                 </div>
                 <div className="coll-6 text-right">
