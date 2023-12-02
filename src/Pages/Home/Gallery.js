@@ -195,7 +195,7 @@ export default function MGallery({ image,ussername }) {
         console.log('delete comment sucess full:');
 
         // Fetch updated comments for the specific artwork
-        fetchCommentsForArtwork();
+        fetchCommentsForArtwork(selectedIndex);
 
         setInputValue('');
       } else {
