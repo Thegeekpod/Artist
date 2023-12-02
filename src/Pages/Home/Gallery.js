@@ -5,9 +5,10 @@ import Modal from 'react-modal';
 import { useUser } from "../Account/UserContext";
 import { apiProxybaseUrl, apibaseUrl } from "../../Component/Apibaseurl";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-export default function MGallery({ image }) {
-  const { user, token } = useUser();
+export default function MGallery({ image,ussername }) {
+  const {user, token } = useUser();
   const [images, setImages] = useState(image)
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -183,7 +184,27 @@ export default function MGallery({ image }) {
   };
 
 
+ const delecomment = async () => {
+    
 
+    try {
+      const response = await axios.delete(`${apibaseUrl}/delete-comment/${selectedIndex}`, axiosConfig);
+
+      if (response.status === 200) {
+        // Assuming the comment was added successfully
+        console.log('delete comment sucess full:');
+
+        // Fetch updated comments for the specific artwork
+        fetchCommentsForArtwork();
+
+        setInputValue('');
+      } else {
+        console.error('Failed to upload comment');
+      }
+    } catch (error) {
+      console.error('Error uploading comment:', error);
+    }
+  };
 
 
 
@@ -207,7 +228,7 @@ export default function MGallery({ image }) {
             />
             <div className="imgtitle">
               <h4 className="page-title-1" style={{ color: "white" }}>
-                {item.user?.username || item.title}
+               <Link to = {`/artists/${item.user?.username || ussername }`}>{item.user?.username || item.title}</Link> 
               </h4>
               <div className="row d-flex">
                 <div className="coll-6 text-left">
@@ -266,10 +287,19 @@ export default function MGallery({ image }) {
             <div className="text-center">
               <ul className="text-left" style={{ padding: '0' }}>
                 {comments.map((comment, commentIndex) => (
-                  <li className="comment" key={commentIndex}>
-
-                    <span style={{ color: 'black' }}>{comment.comment}</span><br />
+                  <li className="commentchat" key={commentIndex}>
+<div className="row delediv">
+  <div className="col-md-11">
+  <span style={{ color: 'black' }}>{comment.comment}</span><br />
                     <strong>{comment.user?.name}</strong>
+  </div>
+  <div className="col-md-1">
+  {comment.user.username === user?.username ? <button className="delete" onClick={delecomment}>delete</button> : ''}
+    
+    </div>
+</div>
+                    
+                    
 
 
 

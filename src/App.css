@@ -383,3 +383,16 @@ img.yarl__slide_image {
 .map:hover + .instruction {
   display: block;
 }
+.delediv{
+  display: flex;
+  align-items: center;
+}
+button.delete {
+  background: red;
+  border: navajowhite;
+  border-radius: 5px;
+  color: white;
+  /* margin: 2px; */
+  padding: 2px 9px;
+  font-size: 12px;
+}

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { apibaseUrl, apiimageurl } from '../../Component/Apibaseurl';
 import axios from 'axios';
 
 const Artis = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-
+const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,7 +19,7 @@ const Artis = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array to run this effect only once (on mount)
+  }, [navigate]); // Empty dependency array to run this effect only once (on mount)
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -42,7 +42,7 @@ const Artis = () => {
           <div className="col-lg-4 col-md-4 col-sm-4 text-left text-sm-center">
             <ul className="breadcrumbs-list">
               <li>
-                <a href="https://html.modernwebtemplates.com/">Main page</a>
+                <Link to="/">Home</Link>
               </li>
               <li className="active">Artists</li>
             </ul>
@@ -68,16 +68,14 @@ const Artis = () => {
         {data && data.length ? (
         data.map((item, index) => (
           <div key={index}>
-          <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center">
+          <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center" onClick={()=>{navigate(`/artists/${item.username}`)}}>
             <div className="team-item text-center">
               <figure className="team-item__img ">
-                <a href="#">
                   <img style={{width:'298px', height:'295px'}} src={`${apiimageurl}/ProfileImage/${item.profile_image || 'noimg.jpg'}`} alt="" />
-                </a>
               </figure>
               <div className="team-item__content text-center pb-2">
                 <h5 className="team-item__title">
-                  <a href="#">{item.name}</a>
+                  <Link to={`/artists/${item.username}`}>{item.name}</Link>
                 </h5>
                 <p className="team-item__prof">{item.username}</p>
               </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { isAuthenticated, useUser } from './UserContext';
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { isAuthenticated, useUser } from '../Account/UserContext';
 import axios from 'axios';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -18,7 +18,7 @@ import 'swiper/css/navigation';
 import { EffectCoverflow, Pagination, Autoplay, Mousewheel, Navigation } from 'swiper/modules';
 import { apibaseUrl } from '../../Component/Apibaseurl';
 import MGallery from '../Home/Gallery';
-const Profile = () => {
+const Artistabout = () => {
 
   const { token } = useUser();
   const navigate = useNavigate();
@@ -26,43 +26,32 @@ const Profile = () => {
   const [user, setUserData] = useState([]);
   const [timedata, setTimedata] = useState([null]);
   const [bannerImagedata, setBannerimageData] = useState([]);
-
+  const {slug} = useParams()
   useEffect(() => {
-    const apiUrl = `${apibaseUrl}/artist`;
-
-    // Check if the user is authenticated when the component mounts
-    if (!isAuthenticated()) {
-      navigate('/login');
-      return;
-    }
-    // // Ensure that there is a valid token before making the API call
-    // if (!token) {
-    //   console.error('No token available.');
-    //   navigate('/login');
-    //   return;
-    // }
-    // Axios request configuration with the bearer token in the headers
+    const apiUrl = `${apibaseUrl}/artist/${slug}`;
     const axiosConfig = {
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json', // Adjust content type based on your API requirements
+        'Content-Type': 'application/json',
       },
     };
-
-    // Make the API call using Axios
+  
     axios.get(apiUrl, axiosConfig)
       .then(response => {
-        setData(response.data.data.artworks);
-        setUserData(response.data.data);
-        setTimedata(response.data.data.time_data);
-        setBannerimageData(response.data.data.banner_images);
-        // console.log(response.data.data.artworks);
+        if (response.data.status === false) {
+          navigate('/artistnotfound'); // Redirect to your 404 page
+        } else {
+          setData(response.data.data.artworks);
+          setUserData(response.data.data);
+          setTimedata(response.data.data.time_data);
+          setBannerimageData(response.data.data.banner_images);
+        }
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, [token, isAuthenticated, navigate]);
-
+  }, [token, navigate, slug]);
+  
 
   return (
     <>
@@ -96,14 +85,14 @@ const Profile = () => {
                             </h4>
                             <div className="row text-center">
 
-                              <button type="button" class="btn btn-info" onClick={() => { navigate('/editprofile#profileupdate') }}>Upload Now</button>
+                              {/* <button type="button" class="btn btn-info" onClick={() => { navigate('/editprofile#profileupdate') }}>Upload Now</button> */}
                             </div>
                           </div>
 
                         </div>
                       }
 
-                      <button type="button" class="btn btn-success" style={{ width: '100%' }} onClick={() => { navigate('/editprofile') }}>Edit Profile</button>
+                      {/* <button type="button" class="btn btn-success" style={{ width: '100%' }} onClick={() => { navigate('/editprofile') }}>Edit Profile</button> */}
                     </div>
 
 
@@ -127,7 +116,7 @@ const Profile = () => {
                     </dt>
                     <dd>
 
-                      <ul className="list-inline offset-top-34 pt-2" >
+                      {/* <ul className="list-inline offset-top-34 pt-2" >
                         <li><a
                           className="h4 text-regular text-middle text-lightener"
                           href="mailto:#"
@@ -152,7 +141,7 @@ const Profile = () => {
                         <li>
                           <i class="fa fa-google-plus" aria-hidden="true"></i>
                         </li>
-                      </ul>
+                      </ul> */}
                     </dd>
                   </dl>
                   <img src='/images/Screenshot-2023-09-03-160739.png' style={{ width: '80%' }} />
@@ -253,7 +242,7 @@ const Profile = () => {
                         </h4>
                         <div className="row text-center">
 
-                          <button type="button" class="btn btn-info" onClick={() => { navigate('/editprofile#bannerimage') }}>Upload Now</button>
+                          {/* <button type="button" class="btn btn-info" onClick={() => { navigate('/editprofile#bannerimage') }}>Upload Now</button> */}
                         </div>
                       </div>
 
@@ -644,7 +633,7 @@ const Profile = () => {
           <div className='row text-center'>
             {data && data.length ? (
               <>
-                <MGallery image={data} ussername={user?.username} />
+                <MGallery image={data} />
 
               </>
             ) : (
@@ -658,7 +647,7 @@ const Profile = () => {
                       </h4>
                       <div className="row text-center">
 
-                        <button type="button" class="btn btn-info" onClick={() => { navigate('/editprofile#artsupload') }}>Upload Now</button>
+                        {/* <button type="button" class="btn btn-info" onClick={() => { navigate('/editprofile#artsupload') }}>Upload Now</button> */}
                       </div>
                     </div>
 
@@ -680,4 +669,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Artistabout

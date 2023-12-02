@@ -7,6 +7,8 @@ import Login from './Pages/Account/Login';
 import Profile from './Pages/Account/Profile';
 import Editprofile from './Pages/Account/Editprofile';
 import Register from './Pages/Account/Register';
+import Artistabout from './Pages/Arists/Artistabout';
+import ArtistNotfound from './Pages/Arists/ArtistNotfound';
 function App() {
   const router = createBrowserRouter([
     {
@@ -19,6 +21,14 @@ function App() {
       {
         path:'/artists',
         element:<Artis/>
+      },
+      {
+        path:'/artists/:slug',
+        element:<Artistabout/>
+      },
+      {
+        path:'/artistnotfound',
+        element:<ArtistNotfound/>
       },
   //     {
   //       path:'/:artist',
