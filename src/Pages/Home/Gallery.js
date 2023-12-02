@@ -294,7 +294,7 @@ export default function MGallery({ image,ussername }) {
                     <strong>{comment.user?.name}</strong>
   </div>
   <div className="col-md-1">
-  {comment.user.username === user?.username ? <button className="delete" onClick={delecomment(comment.id)}>delete</button> : ''}
+  {comment.user.username === user?.username ? <button className="delete" onClick={()=>{delecomment(comment.id)}}>delete</button> : ''}
     
     </div>
 </div>
