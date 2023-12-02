@@ -633,7 +633,7 @@ const Artistabout = () => {
           <div className='row text-center'>
             {data && data.length ? (
               <>
-                <MGallery image={data} />
+                <MGallery image={data} ussername={user?.username} />
 
               </>
             ) : (
