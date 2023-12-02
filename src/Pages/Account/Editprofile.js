@@ -199,10 +199,9 @@ const Editprofile = () => {
 
 
 
-
+const zip = formData.zipcode;
 
   //Upload Your Arts
-
   const [artworkData, setArtworkData] = useState({
     artistName: '',
     placementName: '',
@@ -246,6 +245,9 @@ const Editprofile = () => {
       // Now set the converted WebP image data in your state or wherever needed
       setArtworkData({
         ...artworkData,
+      zipcode : formData.zipcode,
+      country :'United States of America',
+
         image: webPFile,
         imagePreview: URL.createObjectURL(webPFile),
       });
@@ -1021,29 +1023,26 @@ const Editprofile = () => {
                     {/* Add more options as needed */}
                   </select>
                   <label htmlFor="subjectName">Country Name:</label>
-                  <select required
+                  <input required
                     name="country"
                     className="form-control"
                     value={artworkData.country}
                     onChange={handleArtInputChange}
-                  >
+                    disabled
+                  />
                     
 
 
-                    <option value='United States of America'>United States of America</option>
-
-
-
-                    {/* Add more options as needed */}
-                  </select>
+                  
 
 
                   <label htmlFor="subjectName">Zipcode :</label>
                   <input required
+                  disabled
                     name="zipcode"
                     type='number'
                     className="form-control"
-                    value={artworkData.zipcode || formData.zipcode }
+                    value={artworkData.zipcode }
                     onChange={handleArtInputChange}
                   />
 
