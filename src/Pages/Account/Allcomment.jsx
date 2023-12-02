@@ -49,25 +49,29 @@ const Allcomment = () => {
     
   }, [token, isAuthenticated, navigate]);
   const delecomment = async (id) => {
-    
-
     try {
       const response = await axios.delete(`${apibaseUrl}/delete-comment/${id}`, axiosConfig);
-
+  
       if (response.status === 200) {
-        // Assuming the comment was added successfully
-        console.log('delete comment sucess full:');
-
-        const updatedData = commentdata.filter(comment => comment.id !== id);
-      setCommentdata(updatedData);
-
+        // Assuming the comment was deleted successfully
+        console.log('Delete comment successful');
+  
+        // Update the comment data state
+        setCommentdata(prevCommentData => {
+          const updatedData = prevCommentData.map(item => ({
+            ...item,
+            comments: item.comments.filter(comment => comment.id !== id)
+          }));
+          return updatedData;
+        });
       } else {
-        console.error('Failed to upload comment');
+        console.error('Failed to delete comment');
       }
     } catch (error) {
-      console.error('Error uploading comment:', error);
+      console.error('Error deleting comment:', error);
     }
   };
+  
  
   return (
     <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
