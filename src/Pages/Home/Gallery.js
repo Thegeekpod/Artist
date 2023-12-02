@@ -228,7 +228,7 @@ export default function MGallery({ image,ussername }) {
             />
             <div className="imgtitle">
               <h4 className="page-title-1" style={{ color: "white" }}>
-               <Link to = {`/artists/${item.user?.username || ussername }`}>{item.user?.username || item.title}</Link> 
+               <Link to = {`/artists/${item.user?.username || ussername }`} style={{color:'white'}}>{item.user?.username || item.title}</Link> 
               </h4>
               <div className="row d-flex">
                 <div className="coll-6 text-left">
