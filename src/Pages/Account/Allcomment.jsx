@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import { isAuthenticated, useUser } from './UserContext';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { apibaseUrl } from '../../Component/Apibaseurl';
 import Swal from 'sweetalert2';
 import imageCompression from 'browser-image-compression';
@@ -93,7 +93,29 @@ const Allcomment = () => {
   };
 
 
-  return (
+  return (<>
+  
+    <div className="page_breadcrumbs breadcrumbs-type-1">
+    <div className="container">
+      <div className="row">
+        <div className="col-lg-12"></div>
+      </div>
+      <div className="row">
+        <div className="col-lg-4 col-md-4 col-sm-4 text-left text-sm-center">
+          <ul className="breadcrumbs-list">
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li className="active">All Comments</li>
+          </ul>
+        </div>
+        <div className="col-lg-4 col-md-4 col-sm-4 text-center">
+          <h3 className="breadcrumbs-title">All Comments</h3>
+        </div>
+        <div className="col-lg-4 col-md-4 col-sm-4" />
+      </div>
+    </div>
+  </div>
     <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
       <div className="container">
         <section className="bg-header breadcrumbs-custom" >
@@ -167,6 +189,7 @@ const Allcomment = () => {
 
       </style>
     </div>
+    </>
   )
 }
 
