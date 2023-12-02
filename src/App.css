@@ -396,3 +396,37 @@ button.delete {
   padding: 2px 9px;
   font-size: 12px;
 }
+.comments-container {
+  max-height: 400px;
+  overflow-y: auto;
+  border: solid  white;
+  border-width: 1px 0px 0px 0px ;
+    margin: 20px 0px;
+
+}
+
+/* Customize scrollbar for Webkit browsers */
+.comments-container::-webkit-scrollbar {
+  width: 5px; /* Set your desired width here */
+}
+
+/* Set the scrollbar track (background) color */
+.comments-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Change to your preferred color */
+}
+
+/* Set the scrollbar thumb (handle) color */
+.comments-container::-webkit-scrollbar-thumb {
+  background-color: rgb(0, 0, 0); /* Change to your preferred color */
+}
+
+.commp {
+  color: #1fbad6;
+  padding: 0;
+  margin: 4px 0 10px;
+  background: white;
+  border-radius: 5px;
+}
+.comcom {
+  color: white;
+}

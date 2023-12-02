@@ -58,7 +58,8 @@ const Allcomment = () => {
         // Assuming the comment was added successfully
         console.log('delete comment sucess full:');
 
-        // Fetch updated comments for the specific artwork
+        const updatedData = commentdata.filter(comment => comment.id !== id);
+      setCommentdata(updatedData);
 
       } else {
         console.error('Failed to upload comment');
@@ -76,24 +77,59 @@ const Allcomment = () => {
         {commentdata && commentdata.length > 0 ? (
   <>
     {commentdata.map((item) => (
-      <div key={item.id}>
-        <div>{item.id}</div>
-        {item.comments && item.comments.length > 0 ? (
-          item.comments.map((comment) => (
-            <>
-            <h1 key={comment.id}>{comment.id}</h1>
-            <button className='delete' onClick={()=>delecomment(comment.id)}>delete</button>
-            </>
-          ))
-        ) : (
-          <div>No nested comments</div>
-        )}
+      <div key={item.id} className='comdiv'>
+        <div className='row'>
+          <div className='col-lg-12'>
+            <div className="comments-container">
+              <table style={{ width: '100%' }}>
+                <colgroup>
+                  <col style={{ width: '20%' }} /> {/* Adjust the widths as needed */}
+                  <col style={{ width: '40%' }} />
+                  <col style={{ width: '20%' }} />
+                  <col style={{ width: '20%' }} />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Comment</th>
+                    <th>User Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {item.comments && item.comments.length > 0 ? (
+                    item.comments.map((comment) => (
+                      <tr key={comment.id}>
+                        <td>
+                        <p className='commp'>{item.title}</p>
+                          <img style={{ width: '80px' }} src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title} />
+                         
+                        </td>
+                        <td><p className='comcom'>{comment.comment}</p></td>
+                        <td><p className='comcom'>{comment.user_id}</p></td>
+                        <td>
+                          <button className='delete' onClick={() => delecomment(comment.id)}>Delete</button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="4">No nested comments</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     ))}
   </>
 ) : (
   'No comments'
 )}
+
+
 
 
         </section>
