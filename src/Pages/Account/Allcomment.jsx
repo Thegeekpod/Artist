@@ -155,7 +155,7 @@ const Allcomment = () => {
 
                                 </td>
                                 <td><p className='comcom'>{comment.comment}</p></td>
-                                <td><p className='comcom'>{comment.user_id}</p></td>
+                                <td><p className='comcom'>{comment.username || comment.user_id}</p></td>
                                 <td>
                                   <button className='delete' onClick={() => delecomment(comment.id)}>Delete</button>
                                 </td>
