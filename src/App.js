@@ -9,6 +9,7 @@ import Editprofile from './Pages/Account/Editprofile';
 import Register from './Pages/Account/Register';
 import Artistabout from './Pages/Arists/Artistabout';
 import ArtistNotfound from './Pages/Arists/ArtistNotfound';
+import Allcomment from './Pages/Account/Allcomment';
 function App() {
   const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ function App() {
       {
         path:'/editprofile',
         element:<Editprofile/>
+      },
+      {
+        path:'/allcomment',
+        element:<Allcomment/>
       }
     ]
 
