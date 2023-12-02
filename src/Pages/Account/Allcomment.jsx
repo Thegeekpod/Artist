@@ -49,27 +49,47 @@ const Allcomment = () => {
     
   }, [token, isAuthenticated, navigate]);
   const delecomment = async (id) => {
-    try {
-      const response = await axios.delete(`${apibaseUrl}/delete-comment/${id}`, axiosConfig);
+    // Show a confirmation dialog before deletion
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You are about to delete this comment.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axios.delete(`${apibaseUrl}/delete-comment/${id}`, axiosConfig);
   
-      if (response.status === 200) {
-        // Assuming the comment was deleted successfully
-        console.log('Delete comment successful');
+          if (response.status === 200) {
+            // Assuming the comment was deleted successfully
+            console.log('Delete comment successful');
   
-        // Update the comment data state
-        setCommentdata(prevCommentData => {
-          const updatedData = prevCommentData.map(item => ({
-            ...item,
-            comments: item.comments.filter(comment => comment.id !== id)
-          }));
-          return updatedData;
-        });
-      } else {
-        console.error('Failed to delete comment');
+            // Update the comment data state
+            setCommentdata(prevCommentData => {
+              const updatedData = prevCommentData.map(item => ({
+                ...item,
+                comments: item.comments.filter(comment => comment.id !== id)
+              }));
+              return updatedData;
+            });
+  
+            // Show a success message
+            Swal.fire('Deleted!', 'Your comment has been deleted.', 'success');
+          } else {
+            console.error('Failed to delete comment');
+            // Show an error message
+            Swal.fire('Error!', 'Failed to delete the comment.', 'error');
+          }
+        } catch (error) {
+          console.error('Error deleting comment:', error);
+          // Show an error message
+          Swal.fire('Error!', 'An error occurred while deleting the comment.', 'error');
+        }
       }
-    } catch (error) {
-      console.error('Error deleting comment:', error);
-    }
+    });
   };
   
  

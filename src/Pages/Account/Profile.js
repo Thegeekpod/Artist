@@ -102,9 +102,12 @@ const Profile = () => {
 
                         </div>
                       }
-
-                      <button type="button" class="btn btn-success" style={{ width: '100%' }} onClick={() => { navigate('/editprofile') }}>Edit Profile</button>
-                    </div>
+                      <div className=' d-flex'>
+                      <button type="button" class="btn btn-success" style={{ width: '50%' ,margin:'0 10px 0 0'}} onClick={() => { navigate('/allcomment') }}>View All Comments</button>
+                      <button type="button" class="btn btn-success" style={{ width: '50%' }} onClick={() => { navigate('/editprofile') }}>Edit Profile</button>
+           
+                      </div>
+                              </div>
 
 
 
