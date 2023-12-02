@@ -184,11 +184,11 @@ export default function MGallery({ image,ussername }) {
   };
 
 
- const delecomment = async () => {
+ const delecomment = async (id) => {
     
 
     try {
-      const response = await axios.delete(`${apibaseUrl}/delete-comment/${selectedIndex}`, axiosConfig);
+      const response = await axios.delete(`${apibaseUrl}/delete-comment/${id}`, axiosConfig);
 
       if (response.status === 200) {
         // Assuming the comment was added successfully
@@ -294,7 +294,7 @@ export default function MGallery({ image,ussername }) {
                     <strong>{comment.user?.name}</strong>
   </div>
   <div className="col-md-1">
-  {comment.user.username === user?.username ? <button className="delete" onClick={delecomment}>delete</button> : ''}
+  {comment.user.username === user?.username ? <button className="delete" onClick={delecomment(comment.id)}>delete</button> : ''}
     
     </div>
 </div>
