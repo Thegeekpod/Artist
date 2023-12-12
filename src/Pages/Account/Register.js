@@ -176,7 +176,7 @@ const Register = () => {
                   </select>
                   {errorMessages.email && <p className='error'> {errorMessages.email[0]}</p>}
                 </div>
-
+<h1>Hello</h1>
                 <div className="form-group" id="billing_password_field">
                   <label htmlFor="billing_password" className="control-label">
                     <span className="grey">Password</span>
