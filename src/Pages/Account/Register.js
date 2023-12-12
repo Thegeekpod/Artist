@@ -161,7 +161,7 @@ const Register = () => {
 
                 <div className="form-group validate-required validate-email" id="billing_email_field">
                   <label htmlFor="profile" className="control-label">
-                    <span className="grey">Please Choose Your Profile </span>
+                    <span className="grey">Register as a </span>
                     <span className="required">*</span>
                   </label>
                   <select required
@@ -170,13 +170,12 @@ const Register = () => {
                   id="type"
                   value={type}
                   onChange={(e) => setType(e.target.value)}>
-                    <option></option>
+                    <option>Select</option>
                     <option value="Artist">I am an Artist</option>
                     <option value="Customer">I am a Customer</option>
                   </select>
                   {errorMessages.email && <p className='error'> {errorMessages.email[0]}</p>}
                 </div>
-<h1>Hello</h1>
                 <div className="form-group" id="billing_password_field">
                   <label htmlFor="billing_password" className="control-label">
                     <span className="grey">Password</span>
