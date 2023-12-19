@@ -430,3 +430,16 @@ button.delete {
 .comcom {
   color: white;
 }
+
+/* Poulami */
+.styling{
+  list-style: none;
+  text-decoration: none;
+  margin: 10px;
+  display: flex;
+}
+
+.gapping{
+  gap: 10px;
+}
+
