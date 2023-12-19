@@ -69,9 +69,10 @@ const Artistabout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(tatto )
     try {
       // Send form data using Axios POST request to your API endpoint
-      const response = await axios.post(`${apibaseUrl}/quote`, axiosConfig,tatto);
+      const response = await axios.post(`${apibaseUrl}/quote`, axiosConfig , tatto);
 
       // Display success message if the request was successful
       if (response.status === 200) {
