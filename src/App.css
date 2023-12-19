@@ -436,10 +436,25 @@ button.delete {
   list-style: none;
   text-decoration: none;
   margin: 10px;
-  display: flex;
+  /* display: flex; */
+  width: calc(29.33% - -14px);
+  margin: 4px;
 }
-
+button.closee {
+  color: red;
+  position: absolute;
+  top: 19px;
+  margin-right: 17px;
+}
 .gapping{
   gap: 10px;
 }
 
+.sizze
+  {
+    display: flex;
+    flex-wrap: wrap;
+}
+textarea.form-controls {
+  height: 100px;
+}

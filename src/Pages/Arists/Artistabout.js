@@ -18,6 +18,7 @@ import 'swiper/css/navigation';
 import { EffectCoverflow, Pagination, Autoplay, Mousewheel, Navigation } from 'swiper/modules';
 import { apibaseUrl } from '../../Component/Apibaseurl';
 import MGallery from '../Home/Gallery';
+import Swal from 'sweetalert2';
 const Artistabout = () => {
 
   const { token } = useUser();
@@ -28,30 +29,16 @@ const Artistabout = () => {
   const [bannerImagedata, setBannerimageData] = useState([]);
   const { slug } = useParams()
 
-  const [tatto,setTatto] = useState({
-    size:"Palm Sized", description:"", color:"Black & Grey"})
-  const handleChange =(e)=>{
-    const { name, value, checked } = e.target;
-    const newValue = e.target.type === 'radio' ? checked : value;
-   
-    setTatto((prevTatto) => ({
-      ...prevTatto,
-      [name]: newValue,
-    }));
-    console.log(newValue)
-    }
-  const handleClick =()=>{
-
-  }
+  const axiosConfig = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
 
   useEffect(() => {
     const apiUrl = `${apibaseUrl}/artist/${slug}`;
-    const axiosConfig = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    };
+   
 
     axios.get(apiUrl, axiosConfig)
       .then(response => {
@@ -69,6 +56,47 @@ const Artistabout = () => {
       });
   }, [token, navigate, slug]);
 
+  const [tatto, setTatto] = useState({
+    size: 'Credit Card',
+    description: '',
+    color: 'Color'
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTatto({ ...tatto, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Send form data using Axios POST request to your API endpoint
+      const response = await axios.post(`${apibaseUrl}/quote`, axiosConfig,tatto);
+
+      // Display success message if the request was successful
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Tattoo details submitted!',
+          text: 'Your tattoo information has been submitted successfully.',
+        });
+        // Optionally, you can reset the form after submission
+        setTatto({
+          size: 'Credit Card',
+          description: '',
+          color: 'Color'
+        });
+      }
+    } catch (error) {
+      // Handle error scenarios here
+      console.error('Error occurred:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+    }
+  };
 
   return (
     <>
@@ -109,80 +137,159 @@ const Artistabout = () => {
                       }
 
                       {/* <button type="button" className="btn btn-success" style={{ width: '100%' }} onClick={() => { navigate('/editprofile') }}>Edit Profile</button> */}
-
+{isAuthenticated() ? (
                       <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">Get A Free Quote</button>
+
+) :'' }
 
                       <div className="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div className="modal-dialog">
                           <div className="modal-content">
                             <div className="modal-header">
-                              <h5 className="modal-title" id="staticBackdropLabel"></h5>
-                              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                              <h5 className="modal-title" id="staticBackdropLabel">Quote Now</h5>
+                              <button type="button" className="close closee" data-dismiss="modal" aria-label="Close">
+                               X
                               </button>
                             </div>
                             <div className="modal-body">
-                              <fieldset>
-                                <h6 className='text-left'>How big would you like the tattoo?</h6>
-                                <ul>
-                                  <div className='d-flex'>
-                                    <li className='styling'>
-                                      <label className='d-flex gapping'>
-                                        <input name="size" type="radio" className="radio" value="Credit Card" checked={tatto.size === "Credit Card"} onChange={handleChange}/>Size of a Credit Card
-                                      </label>
-                                    </li>
-                                    <li className='styling'>
-                                      <label className='d-flex gapping'>
-                                        <input name="size" type="radio" className="radio" value="Palm Sized" onChange={handleChange} checked={tatto.size === "Palm Sized"}/>Palm Sized
-                                      </label>
-                                    </li>
-                                    <li className='styling'>
-                                      <label className='d-flex gapping'>
-                                        <input name="size" type="radio" className="radio" value="Hand Sized" onChange={handleChange} checked={tatto.size === "Hand Sized"}/>Hand Sized
-                                      </label>
-                                    </li>
-                                  </div>
-                                  <div className='d-flex'>
-                                    <li className='styling'>
-                                      <label className='d-flex gapping'>
-                                        <input name="size" type="radio" className="radio" value="Larger Sized" onChange={handleChange} checked={tatto.size === "Larger Sized"}/>Half-Sleeve or Larger
-                                      </label>
-                                    </li>
-                                    <li className='styling'>
-                                      <label className='d-flex gapping'>
-                                        <input name="size" type="radio" className="radio" value="Not Decided" onChange={handleChange} checked={tatto.size === "Not Decided"}/>Haven't Decided
-                                      </label>
-                                    </li>
-                                  </div>
-                                </ul>
-                                <h6 className='text-left'>Describe your tattoo idea and where you’d like the tattoo to be on your body.</h6>
-                                <input className='form-control' type='text' value={tatto.description} onChange={handleChange} maxlength="100" minlength="10" placeholder='Describe your text here...' />
-                                <h6 className='text-left'>Would you like your tattoo to have color or only black & grey ink?</h6>
-                                <ul>
-                                  <div className='d-flex'>
-                                    <li className='styling'>
-                                      <label className='d-flex gapping'>
-                                        <input name="color" type="radio" value="Color" onChange={handleChange} className="radio" checked={tatto.color === "Color"}/>Color
-                                      </label>
-                                    </li>
-                                    <li className='styling'>
-                                      <label className='d-flex gapping'>
-                                        <input name="color" type="radio" value="Black & Grey" onChange={handleChange} className="radio" checked={tatto.color === "Black & Grey"} />Black & Grey
-                                      </label>
-                                    </li>
-                                    <li className='styling'>
-                                      <label className='d-flex gapping'>
-                                        <input name="color" type="radio" value="Not Decided" onChange={handleChange} className="radio" checked={tatto.color === "Not Decided"}/>Haven't Decided
-                                      </label>
-                                    </li>
-                                  </div>
-                                </ul>
-                              </fieldset>
+                            <form onSubmit={handleSubmit}>
+      <h5 className='text-left'>How big would you like the tattoo?</h5>
+      <ul>
+        <div className='sizze'>
+          <li className='styling'>
+            <label className='d-flex gapping'>
+              <input
+                name="size"
+                type="radio"
+                className="radio"
+                value="Credit Card"
+                checked={tatto.size === "Credit Card"}
+                onChange={handleChange}
+              />
+              Size of a Credit Card
+            </label>
+          </li>
+          <li className='styling'>
+            <label className='d-flex gapping'>
+              <input
+                name="size"
+                type="radio"
+                className="radio"
+                value="Palm Sized"
+                checked={tatto.size === "Palm Sized"}
+                onChange={handleChange}
+              />
+              Palm Sized
+            </label>
+          </li>
+          <li className='styling'>
+            <label className='d-flex gapping'>
+              <input
+                name="size"
+                type="radio"
+                className="radio"
+                value="Hand Sized"
+                checked={tatto.size === "Hand Sized"}
+                onChange={handleChange}
+              />
+              Hand Sized
+            </label>
+          </li>
+          <li className='styling'>
+            <label className='d-flex gapping'>
+              <input
+                name="size"
+                type="radio"
+                className="radio"
+                value="Larger Sized"
+                checked={tatto.size === "Larger Sized"}
+                onChange={handleChange}
+              />
+              Half-Sleeve or Larger
+            </label>
+          </li>
+          <li className='styling'>
+            <label className='d-flex gapping'>
+              <input
+                name="size"
+                type="radio"
+                className="radio"
+                value="Not Decided"
+                checked={tatto.size === "Not Decided"}
+                onChange={handleChange}
+              />
+              Haven't Decided
+            </label>
+          </li>
+        </div>
+      </ul>
+
+   
+
+      <h5 className='text-left'>Would you like your tattoo to have color or only black & grey ink?</h5>
+      <ul>
+        <div className='d-flex'>
+          <li className='styling'>
+            <label className='d-flex gapping'>
+              <input
+                name="color"
+                type="radio"
+                value="Color"
+                onChange={handleChange}
+                className="radio"
+                checked={tatto.color === "Color"}
+              />
+              Color
+            </label>
+          </li>
+          <li className='styling'>
+            <label className='d-flex gapping'>
+              <input
+                name="color"
+                type="radio"
+                value="Black & Grey"
+                onChange={handleChange}
+                className="radio"
+                checked={tatto.color === "Black & Grey"}
+              />
+              Black & Grey
+            </label>
+          </li>
+        
+          <li className='styling'>
+            <label className='d-flex gapping'>
+              <input
+                name="color"
+                type="radio"
+                value="Not Decided"
+                onChange={handleChange}
+                className="radio"
+                checked={tatto.color === "Not Decided"}
+              />
+              Haven't Decided
+            </label>
+          </li>
+        </div>
+      </ul>
+      <h5 className='text-left'>Describe your tattoo idea and where you’d like the tattoo to be on your body.</h5>
+      <textarea
+        className='form-control form-controls'
+        type='text'
+        name='description'
+        value={tatto.description}
+        onChange={handleChange}
+        maxLength="100"
+        minLength="10"
+        placeholder='Describe your text here...'
+      />
+      <div className="modal-footer">
+                              <button type="submit" className="btn btn-primary" >Get Quote</button>
                             </div>
-                            <div className="modal-footer">
-                              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="button" className="btn btn-primary" onClick={handleClick}>Get Quote</button>
+
+      {/* <button type="submit">Submit</button> */}
+    </form>
                             </div>
+                            
                           </div>
                         </div>
                       </div>
