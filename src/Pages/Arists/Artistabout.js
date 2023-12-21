@@ -54,22 +54,33 @@ const Artistabout = () => {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
+      
   }, [token, navigate, slug]);
-
+const id = user.id
   const [tatto, setTatto] = useState({
     size: 'Credit Card',
     description: '',
     color: 'Color',
-    artist_id: user.id,
-  });
+    artist_id:  user.id
 
+  });
+  useEffect(() => {
+    // Update artist_id in tatto whenever user.id changes
+    setTatto(prevTatto => ({
+      ...prevTatto,
+      artist_id: user.id
+    }));
+  }, [user.id]);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setTatto({ ...tatto, [name]: value });
+    setTatto({ ...tatto, [name]: value ,
+    
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('dd',id);
     console.log(tatto )
     try {
       // Send form data using Axios POST request to your API endpoint
