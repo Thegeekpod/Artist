@@ -59,7 +59,8 @@ const Artistabout = () => {
   const [tatto, setTatto] = useState({
     size: 'Credit Card',
     description: '',
-    color: 'Color'
+    color: 'Color',
+    artist_id: user.id,
   });
 
   const handleChange = (e) => {
@@ -98,7 +99,7 @@ const Artistabout = () => {
       });
     }
   };
-
+// console.log('kk',user.id);
   return (
     <>
       <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
