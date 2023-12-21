@@ -29,17 +29,17 @@ const Artistabout = () => {
   const [bannerImagedata, setBannerimageData] = useState([]);
   const { slug } = useParams()
 
-  const axiosConfig = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-  };
 
   useEffect(() => {
     const apiUrl = `${apibaseUrl}/artist/${slug}`;
    
 
+    const axiosConfig = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    };
     axios.get(apiUrl, axiosConfig)
       .then(response => {
         if (response.data.status === false) {
@@ -73,7 +73,16 @@ const Artistabout = () => {
     console.log(tatto )
     try {
       // Send form data using Axios POST request to your API endpoint
-      const response = await axios.post(`${apibaseUrl}/quote`, axiosConfig , tatto);
+      const response = await axios.post(
+        `${apibaseUrl}/quote`,
+        tatto, // This should be the data you want to send in the request body
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       // Display success message if the request was successful
       if (response.status === 200) {
