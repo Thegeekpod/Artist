@@ -1,180 +1,170 @@
-
-
-  .svgicon {
-    fill: white;
-
+.svgicon {
+  fill: white;
 }
 
 svg.e-font-icon-svg {
-    width: 38px;
+  width: 38px;
 }
 /* Apply Flexbox to the row */
 .rowflex {
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Make each box flex and take up equal space */
-  .col-sm-12 {
-    flex: 1;
-    align-self: stretch;
-  }
-  
-  /* Optional: Add some margin or padding to the boxes */
-  .box {
-    margin: 10px;
-    padding: 15px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-  }
-  
-  .box:hover {
-    background: black;
+  display: flex;
+  align-items: center;
+}
+
+/* Make each box flex and take up equal space */
+.col-sm-12 {
+  flex: 1;
+  align-self: stretch;
+}
+
+/* Optional: Add some margin or padding to the boxes */
+.box {
+  margin: 10px;
+  padding: 15px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+}
+
+.box:hover {
+  background: black;
 }
 .box:hover p {
-    color: white; /* Change this to the desired text color */
+  color: white; /* Change this to the desired text color */
 }
 
-.contitems{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+.contitems {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
-
 
 .hourly {
-    background: white;
-    padding: 3px;
-    border-radius: 60px;
+  background: white;
+  padding: 3px;
+  border-radius: 60px;
 }
 
 button.theme-button.content-block-5__button {
-    padding: 14px;
-    /* height: 37px; */
-    border-radius: 33px;
+  padding: 14px;
+  /* height: 37px; */
+  border-radius: 33px;
 }
-button.theme-button.content-block-5__button::before  {
-    padding: 14px;
-    /* height: 37px; */
-    border-radius: 33px;
+button.theme-button.content-block-5__button::before {
+  padding: 14px;
+  /* height: 37px; */
+  border-radius: 33px;
 }
 /* imgbox */
 
 .imgbox {
- 
-    position: relative;
-    overflow: hidden;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
-    transition: all 0.3s linear;
-    margin: 15px 0px
-  }
-  
-  .imgtitle {
-    background: #000000a6;
-    color: white;
-    position: absolute;
-    bottom: 0;
-    /* left: 50%; */
-    margin-left: 5px;
-    margin-bottom: -40px;
-    width: 350px;
-    /* height: 30px; */
-    /* line-height: 30px; */
-    text-align: center;
-    opacity: 0;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
-    transition: all 0.3s linear;
-    padding: 26px 25px;
-  }
-  
- 
- 
-  .imgbox:hover .imgtitle {
-    opacity: 1;
-    margin-bottom: 0px;
-  }
-  .imgbo{
-    width: 350px !important;
-    height: 250px !important;
-  }
-  /* like view  */
-  .like{
-    background: black;
-    padding: 9px;
-    border-radius: 23px;
-    font-size: 15px;
+  position: relative;
+  overflow: hidden;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  margin: 15px 0px;
+}
+
+.imgtitle {
+  background: #000000a6;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  /* left: 50%; */
+  margin-left: 5px;
+  margin-bottom: -40px;
+  width: 350px;
+  /* height: 30px; */
+  /* line-height: 30px; */
+  text-align: center;
+  opacity: 0;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  padding: 26px 25px;
+}
+
+.imgbox:hover .imgtitle {
+  opacity: 1;
+  margin-bottom: 0px;
+}
+.imgbo {
+  width: 350px !important;
+  height: 250px !important;
+}
+/* like view  */
+.like {
+  background: black;
+  padding: 9px;
+  border-radius: 23px;
+  font-size: 15px;
 }
 
 .coll-6 {
-    width: 50%;
+  width: 50%;
 }
-.d-flex{
-    display: flex;
+.d-flex {
+  display: flex;
 }
-.d-md-none{
-    display: none;
+.d-md-none {
+  display: none;
 }
 /* mobile  */
-.m-none{
-    display: block;
+.m-none {
+  display: block;
 }
-.white{
-    color: white;
+.white {
+  color: white;
 }
 @media only screen and (max-width: 768px) {
-  .list-inline>li {
+  .list-inline > li {
     display: inline-block;
     padding-right: 8px;
     padding-left: 8px;
-}
-    .m-padding-0{
-        padding: 0px;
-    }
-    .d-md-none{
-        display: block;
-    }
-    .m-none{
-        display: none;
-    }
-    .rowflex {
-        display: block;
+  }
+  .m-padding-0 {
+    padding: 0px;
+  }
+  .d-md-none {
+    display: block;
+  }
+  .m-none {
+    display: none;
+  }
+  .rowflex {
+    display: block;
   }
   .imgtitle {
-   
     /* left: 50%; */
     margin-left: -10px;
   }
- .mcenter {
+  .mcenter {
     text-align: center;
-}
-.akls{
-  width: 67% !important;
-}
-.saikoihsaoP
-  {
+  }
+  .akls {
+    width: 67% !important;
+  }
+  .saikoihsaoP {
     width: 30% !important;
   }
 }
-
-
-
-
 
 table {
   width: 100%;
   margin-bottom: 20px;
   border-collapse: collapse;
 }
-table, th, td {
+table,
+th,
+td {
   border: 1px solid #ddd;
 }
-th, td {
+th,
+td {
   padding: 15px;
   text-align: center;
 }
@@ -199,37 +189,34 @@ th {
   display: block;
   width: 100%;
 }
-.logout{
+.logout {
   width: auto !important;
 
   right: -5px !important;
   padding: 5px !important;
-  
 }
-.error{
+.error {
   background: red;
   color: wheat;
   text-align: center;
   padding: 2px;
 }
-.frombg{
+.frombg {
   background: #042127;
   padding: 20px;
   border-radius: 8px;
   margin: 40px 0px;
 }
-.timeinput{
-  
+.timeinput {
   width: 30%;
 }
-.selectampm{
+.selectampm {
   width: 20%;
   padding: 1.8px 0;
 }
-.timedis{
+.timedis {
   justify-content: space-between;
   display: flex;
-  
 }
 .sucess {
   background: #3aab3a;
@@ -262,20 +249,18 @@ th {
 img.d-block.w-100 {
   width: 100%;
 }
-.deletebutton
-  {
-    color: red;
-    font-size: 20px;
-    background: white;
-    padding: 5px;
-    border-radius: 5px;
+.deletebutton {
+  color: red;
+  font-size: 20px;
+  background: white;
+  padding: 5px;
+  border-radius: 5px;
 }
-.view
-  {
-    position: absolute;
-    /* margin-top: 5px; */
-    background: black;
-    padding: 10px;
+.view {
+  position: absolute;
+  /* margin-top: 5px; */
+  background: black;
+  padding: 10px;
 }
 /* comment model */
 /* Modal styles */
@@ -288,7 +273,7 @@ img.d-block.w-100 {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
- width: 70%;
+  width: 70%;
   height: 70%;
 }
 
@@ -313,8 +298,7 @@ img.d-block.w-100 {
   opacity: 0.6;
 }
 .close ::before {
- 
-  opacity:1;
+  opacity: 1;
 }
 .adasds {
   /* text-align: center; */
@@ -323,23 +307,22 @@ img.d-block.w-100 {
   height: 70%;
   width: 100%;
 }
-.akls{
+.akls {
   width: 86%;
   margin-right: 2%;
 }
-.saikoihsaoP
-  {
-    width: 10%;
-    background: black;
-    color: white;
-    border-radius: 5px;
-    padding: 3px 0 3px 0;
+.saikoihsaoP {
+  width: 10%;
+  background: black;
+  color: white;
+  border-radius: 5px;
+  padding: 3px 0 3px 0;
 }
 
 .space {
   margin: 0 4px;
 }
-.commentchat{
+.commentchat {
   background: #80808045;
   padding: 2px 13px;
   border-radius: 11px;
@@ -347,7 +330,7 @@ img.d-block.w-100 {
   list-style: none;
 }
 .scrollable-div {
- /* Define your preferred width */
+  /* Define your preferred width */
   height: 70%; /* Define your preferred height */
   overflow: auto; /* Enable scrollbar when content exceeds div height */
 }
@@ -383,7 +366,7 @@ img.yarl__slide_image {
 .map:hover + .instruction {
   display: block;
 }
-.delediv{
+.delediv {
   display: flex;
   align-items: center;
 }
@@ -399,10 +382,9 @@ button.delete {
 .comments-container {
   max-height: 400px;
   overflow-y: auto;
-  border: solid  white;
-  border-width: 1px 0px 0px 0px ;
-    margin: 30px 0px;
-
+  border: solid white;
+  border-width: 1px 0px 0px 0px;
+  margin: 30px 0px;
 }
 
 /* Customize scrollbar for Webkit browsers */
@@ -432,7 +414,7 @@ button.delete {
 }
 
 /* Poulami */
-.styling{
+.styling {
   list-style: none;
   text-decoration: none;
   margin: 10px;
@@ -446,14 +428,13 @@ button.closee {
   top: 19px;
   margin-right: 17px;
 }
-.gapping{
+.gapping {
   gap: 10px;
 }
 
-.sizze
-  {
-    display: flex;
-    flex-wrap: wrap;
+.sizze {
+  display: flex;
+  flex-wrap: wrap;
 }
 textarea.form-controls {
   height: 100px;

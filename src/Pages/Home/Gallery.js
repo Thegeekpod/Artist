@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import Modal from 'react-modal';
+import Modal from "react-modal";
 import { useUser } from "../Account/UserContext";
 import { apiProxybaseUrl, apibaseUrl } from "../../Component/Apibaseurl";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function MGallery({ image,ussername }) {
-  const {user, token } = useUser();
-  const [images, setImages] = useState(image)
+export default function MGallery({ image, ussername }) {
+  const { user, token } = useUser();
+  const [images, setImages] = useState(image);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [likes, setLikes] = useState(Array(images.length).fill(0));
   const [view, setView] = useState(Array(images.length).fill(0));
   const [isOpen, setIsOpen] = useState(false);
   const [comments, setComments] = useState({});
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const axiosConfig = {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data',
-      'Accept': 'application/json',
+      "Content-Type": "multipart/form-data",
+      Accept: "application/json",
     },
   };
   const handleImageClick = (index) => {
@@ -48,7 +48,10 @@ export default function MGallery({ image,ussername }) {
   const generateSlidesFromCurrentImage = () => {
     if (selectedImageIndex !== null && images.length > 0) {
       const startIndex = selectedImageIndex;
-      const slicedImages = [...images.slice(startIndex), ...images.slice(0, startIndex)];
+      const slicedImages = [
+        ...images.slice(startIndex),
+        ...images.slice(0, startIndex),
+      ];
       return slicedImages.map((item) => ({
         src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`,
       }));
@@ -68,7 +71,6 @@ export default function MGallery({ image,ussername }) {
   //   // }
   // }, []);
 
-
   const likeHandler = (index) => {
     const user_id = user.id;
 
@@ -78,11 +80,12 @@ export default function MGallery({ image,ussername }) {
     // Data to be sent in the request body
     const data = {
       artwork_id: index,
-      user_id: user_id
+      user_id: user_id,
     };
 
-    axios.post(apiUrl, data, axiosConfig)
-      .then(response => {
+    axios
+      .post(apiUrl, data, axiosConfig)
+      .then((response) => {
         // Handle success
         console.log(response.data.data);
         const updatedlikes = [...likes];
@@ -90,15 +93,12 @@ export default function MGallery({ image,ussername }) {
 
         // Update the view state with the modified array
         setLikes(updatedlikes);
-
       })
-      .catch(error => {
+      .catch((error) => {
         // Handle error
-        console.error('Error storing like:', error);
+        console.error("Error storing like:", error);
       });
   };
-
-
 
   const viewHandler = (index) => {
     const user_id = user.id;
@@ -109,11 +109,12 @@ export default function MGallery({ image,ussername }) {
     // Data to be sent in the request body
     const data = {
       artwork_id: index,
-      user_id: user_id
+      user_id: user_id,
     };
 
-    axios.post(apiUrl, data, axiosConfig)
-      .then(response => {
+    axios
+      .post(apiUrl, data, axiosConfig)
+      .then((response) => {
         // Handle success
         // console.log(response.data.data);
         // Handle success
@@ -122,15 +123,12 @@ export default function MGallery({ image,ussername }) {
 
         // Update the view state with the modified array
         setView(updatedViews);
-
       })
-      .catch(error => {
+      .catch((error) => {
         // Handle error
-        console.error('Error storing like:', error);
+        console.error("Error storing like:", error);
       });
-
   };
-
 
   const openModal = (index) => {
     setIsOpen(true);
@@ -146,7 +144,6 @@ export default function MGallery({ image,ussername }) {
     setInputValue(e.target.value);
   };
 
-
   const handleAddComment = async () => {
     const data = {
       artwork_id: selectedIndex,
@@ -155,59 +152,63 @@ export default function MGallery({ image,ussername }) {
     };
 
     try {
-      const response = await axios.post(`${apibaseUrl}/comment`, data, axiosConfig);
+      const response = await axios.post(
+        `${apibaseUrl}/comment`,
+        data,
+        axiosConfig
+      );
 
       if (response.status === 200 && response.data.status) {
         // Assuming the comment was added successfully
-        console.log('Newly added comment:', response.data.data);
+        console.log("Newly added comment:", response.data.data);
 
         // Fetch updated comments for the specific artwork
         fetchCommentsForArtwork(data.artwork_id);
 
-        setInputValue('');
+        setInputValue("");
       } else {
-        console.error('Failed to upload comment');
+        console.error("Failed to upload comment");
       }
     } catch (error) {
-      console.error('Error uploading comment:', error);
+      console.error("Error uploading comment:", error);
     }
   };
 
   // Function to fetch comments for a specific artwork
   const fetchCommentsForArtwork = async (artworkId) => {
     try {
-      const response = await axios.get(`${apibaseUrl}/comment-list/${artworkId}`, axiosConfig);
+      const response = await axios.get(
+        `${apibaseUrl}/comment-list/${artworkId}`,
+        axiosConfig
+      );
       setComments(response.data.data || []);
     } catch (error) {
-      console.error('Error fetching comments:', error);
+      console.error("Error fetching comments:", error);
     }
   };
 
-
- const delecomment = async (id) => {
-    
-
+  const delecomment = async (id) => {
     try {
-      const response = await axios.delete(`${apibaseUrl}/delete-comment/${id}`, axiosConfig);
+      const response = await axios.delete(
+        `${apibaseUrl}/delete-comment/${id}`,
+        axiosConfig
+      );
 
       if (response.status === 200) {
         // Assuming the comment was added successfully
-        console.log('delete comment sucess full:');
+        console.log("delete comment sucess full:");
 
         // Fetch updated comments for the specific artwork
         fetchCommentsForArtwork(selectedIndex);
 
-        setInputValue('');
+        setInputValue("");
       } else {
-        console.error('Failed to upload comment');
+        console.error("Failed to upload comment");
       }
     } catch (error) {
-      console.error('Error uploading comment:', error);
+      console.error("Error uploading comment:", error);
     }
   };
-
-
-
 
   return (
     <>
@@ -219,7 +220,9 @@ export default function MGallery({ image,ussername }) {
               aria-hidden="true"
               onClick={() => handleImageClick(item.id)}
             >
-              <span className="space">{view[item.id] || item.views?.length}</span>
+              <span className="space">
+                {view[item.id] || item.views?.length}
+              </span>
             </i>
             <img
               className="imgbo"
@@ -228,7 +231,12 @@ export default function MGallery({ image,ussername }) {
             />
             <div className="imgtitle">
               <h4 className="page-title-1" style={{ color: "white" }}>
-               <Link to = {`/artists/${item.user?.username || ussername }`} style={{color:'white'}}>{item.user?.username || item.title}</Link> 
+                <Link
+                  to={`/artists/${item.user?.username || ussername}`}
+                  style={{ color: "white" }}
+                >
+                  {item.user?.username || item.title}
+                </Link>
               </h4>
               <div className="row d-flex">
                 <div className="coll-6 text-left">
@@ -236,8 +244,11 @@ export default function MGallery({ image,ussername }) {
                     className="fa fa-thumbs-up like"
                     aria-hidden="true"
                     onClick={() => likeHandler(item.id)}
-                  >{''}
-                    <span className="space">{likes[item.id] || item.likes?.length}</span>
+                  >
+                    {""}
+                    <span className="space">
+                      {likes[item.id] || item.likes?.length}
+                    </span>
                   </i>
                 </div>
                 <div className="coll-6 text-right">
@@ -245,8 +256,16 @@ export default function MGallery({ image,ussername }) {
                     className="fa fa-comment like"
                     aria-hidden="true"
                     onClick={() => openModal(item.id)}
-                  >{''}
-                    <span className="space"> {(Array.isArray(comments) ? comments.filter(comment => comment.artwork_id === item.id)?.length : 0) || item.comments?.length}</span>
+                  >
+                    {""}
+                    <span className="space">
+                      {" "}
+                      {(Array.isArray(comments)
+                        ? comments.filter(
+                            (comment) => comment.artwork_id === item.id
+                          )?.length
+                        : 0) || item.comments?.length}
+                    </span>
                   </i>
                 </div>
               </div>
@@ -274,9 +293,7 @@ export default function MGallery({ image,ussername }) {
         overlayClassName="Overlay"
       >
         <div className="row">
-          <div className="col-md-6">
-            Comments
-          </div>
+          <div className="col-md-6">Comments</div>
           <div className="col-md-6 text-right">
             <i className="fa fa-close close" onClick={closeModal}></i>
           </div>
@@ -285,24 +302,32 @@ export default function MGallery({ image,ussername }) {
           {/* Display both existing and new comments */}
           {comments.length > 0 ? (
             <div className="text-center">
-              <ul className="text-left" style={{ padding: '0' }}>
+              <ul className="text-left" style={{ padding: "0" }}>
                 {comments.map((comment, commentIndex) => (
                   <li className="commentchat" key={commentIndex}>
-<div className="row delediv">
-  <div className="col-md-11">
-  <span style={{ color: 'black' }}>{comment.comment}</span><br />
-                    <strong>{comment.user?.name}</strong>
-  </div>
-  <div className="col-md-1">
-  {comment.user.username === user?.username ? <button className="delete" onClick={()=>{delecomment(comment.id)}}>delete</button> : ''}
-    
-    </div>
-</div>
-                    
-                    
-
-
-
+                    <div className="row delediv">
+                      <div className="col-md-11">
+                        <span style={{ color: "black" }}>
+                          {comment.comment}
+                        </span>
+                        <br />
+                        <strong>{comment.user?.name}</strong>
+                      </div>
+                      <div className="col-md-1">
+                        {comment.user.username === user?.username ? (
+                          <button
+                            className="delete"
+                            onClick={() => {
+                              delecomment(comment.id);
+                            }}
+                          >
+                            delete
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -312,7 +337,6 @@ export default function MGallery({ image,ussername }) {
               <p>No Comments</p>
             </div>
           )}
-
         </div>
         <div>
           {/* Input for adding comments */}
@@ -323,7 +347,11 @@ export default function MGallery({ image,ussername }) {
             onChange={handleInputChange}
             placeholder="Enter your comment"
           />
-          <button type="button" className="saikoihsaoP" onClick={handleAddComment}>
+          <button
+            type="button"
+            className="saikoihsaoP"
+            onClick={handleAddComment}
+          >
             Submit
           </button>
         </div>
