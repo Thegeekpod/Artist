@@ -308,12 +308,12 @@ const Header = () => {
                       </li>
 
                       <li>
-                        <a
-                          href="#"
+                        <Link
+                          to="/search"
                           className="search_modal_button serach-button"
                         >
                           <i className="fa fa-search" aria-hidden="true" />
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>
