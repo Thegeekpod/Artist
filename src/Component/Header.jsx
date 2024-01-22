@@ -61,32 +61,6 @@ const Header = () => {
   };
   return (
     <>
-      <div
-        className="modal"
-        tabIndex={-1}
-        aria-labelledby="search_modal"
-        id="search_modal"
-      >
-        <div className="header-search">
-          <form
-            method="get"
-            className="searchform form-inline"
-            action="https://html.modernwebtemplates.com/"
-          >
-            <input
-              type="text"
-              defaultValue=""
-              name="search"
-              className="form-control header-search"
-              placeholder="Search keyword"
-              id="modal-search-input"
-            />
-            <button type="submit" className="s_theme-button">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
       {/* Logo: contains logo in various header layouts */}
       <div className="ds page_toplogo">
         <div className="container">
@@ -235,9 +209,9 @@ const Header = () => {
                 )}
 
                 <li>
-                  <a href="#" className="search_modal_button serach-button">
+                  <Link to="/search" className="search_modal_button serach-button">
                     <i className="fa fa-search" aria-hidden="true" />
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

@@ -10,6 +10,7 @@ import Register from "./Pages/Account/Register";
 import Artistabout from "./Pages/Arists/Artistabout";
 import ArtistNotfound from "./Pages/Arists/ArtistNotfound";
 import Allcomment from "./Pages/Account/Allcomment";
+import Search from "./Pages/Search/Search";
 function App() {
   const router = createBrowserRouter([
     {
@@ -61,6 +62,11 @@ function App() {
         {
           path: "/allcomment",
           element: <Allcomment />,
+        },
+        ,
+        {
+          path: "/search",
+          element: <Search />,
         },
       ],
     },
