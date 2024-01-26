@@ -24,6 +24,10 @@ export default function MGallery({ image, ussername }) {
       Accept: "application/json",
     },
   };
+  useEffect(() => {
+    setImages(image);
+    // other logic
+  }, [image]);
   const handleImageClick = (index) => {
     setSelectedImageIndex(index);
     viewHandler(index);
