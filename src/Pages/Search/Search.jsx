@@ -63,10 +63,16 @@ const Search = () => {
   };
 
   const handleArtInputChange = (e) => {
+    const selectedDate = e.target.value;
+    const dateObject = new Date(selectedDate);
+    const dayName = dateObject.toLocaleDateString('en-US', { weekday: 'long' });
     setArtworkData({
       ...artworkData,
+      
       [e.target.name]: e.target.value,
+      date : dayName,
     });
+    // console.log("Selected day:", artworkData.date);
   };
 
   const handleSubmit = async (e) => {

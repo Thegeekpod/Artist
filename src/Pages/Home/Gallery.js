@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Modal from "react-modal";
-import { useUser } from "../Account/UserContext";
+import { useUser,isAuthenticated } from "../Account/UserContext";
 import { apiProxybaseUrl, apibaseUrl } from "../../Component/Apibaseurl";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function MGallery({ image, ussername }) {
   const { user, token } = useUser();
@@ -17,6 +17,7 @@ export default function MGallery({ image, ussername }) {
   const [isOpen, setIsOpen] = useState(false);
   const [comments, setComments] = useState({});
   const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
   const axiosConfig = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -30,7 +31,12 @@ export default function MGallery({ image, ussername }) {
   }, [image]);
   const handleImageClick = (index) => {
     setSelectedImageIndex(index);
-    viewHandler(index);
+    if(isAuthenticated){
+      navigate('/login')
+    }else{
+      viewHandler(index);
+   
+    }
   };
 
   const closeLightbox = () => {
@@ -76,35 +82,41 @@ export default function MGallery({ image, ussername }) {
   // }, []);
 
   const likeHandler = (index) => {
-    const user_id = user.id;
+    if(isAuthenticated){
+      navigate('/login')
+    }else{
+      const user_id = user.id;
 
-    // Your API endpoint to store a like
-    const apiUrl = `${apibaseUrl}/like`;
-
-    // Data to be sent in the request body
-    const data = {
-      artwork_id: index,
-      user_id: user_id,
-    };
-
-    axios
-      .post(apiUrl, data, axiosConfig)
-      .then((response) => {
-        // Handle success
-        console.log(response.data.data);
-        const updatedlikes = [...likes];
-        updatedlikes[index] = response.data.data; // Assuming response.data.data contains the updated view count
-
-        // Update the view state with the modified array
-        setLikes(updatedlikes);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error("Error storing like:", error);
-      });
+      // Your API endpoint to store a like
+      const apiUrl = `${apibaseUrl}/like`;
+  
+      // Data to be sent in the request body
+      const data = {
+        artwork_id: index,
+        user_id: user_id,
+      };
+  
+      axios
+        .post(apiUrl, data, axiosConfig)
+        .then((response) => {
+          // Handle success
+          console.log(response.data.data);
+          const updatedlikes = [...likes];
+          updatedlikes[index] = response.data.data; // Assuming response.data.data contains the updated view count
+  
+          // Update the view state with the modified array
+          setLikes(updatedlikes);
+        })
+        .catch((error) => {
+          // Handle error
+          console.error("Error storing like:", error);
+        });
+    }
+   
   };
 
   const viewHandler = (index) => {
+
     const user_id = user.id;
 
     // Your API endpoint to store a like
