@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SVGPath = ({ d, stroke, strokeLinecap, dataKey }) => {
+const SVGPath = ({ d, stroke, strokeLinecap, dataKey,onClick }) => {
   const [fillColor, setFillColor] = useState("currentColor");
 
   const handleMouseEnter = () => {
@@ -20,6 +20,7 @@ const SVGPath = ({ d, stroke, strokeLinecap, dataKey }) => {
       fill={fillColor}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={onClick}
     />
   );
 };
