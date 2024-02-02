@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { isAuthenticated, useUser } from "../Account/UserContext";
+import { useUser } from "../Account/UserContext";
 import axios from "axios";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,7 +25,7 @@ import {
 import { apibaseUrl } from "../../Component/Apibaseurl";
 import MGallery from "../Home/Gallery";
 import Swal from "sweetalert2";
-import SVGBodyFront from "../../Component/SVGBodyFront";
+import SVGBody from "../../Component/SVGBody";
 const Artistabout = () => {
   const { token } = useUser();
   const navigate = useNavigate();
@@ -209,7 +209,7 @@ const Artistabout = () => {
                               </button>
                             </div>
                             <div className="modal-body">
-                              <SVGBodyFront />
+                              <SVGBody />
                               {/* <form onSubmit={handleSubmit}>
                                 <h5 className="text-left">
                                   How big would you like the tattoo?

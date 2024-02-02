@@ -1,8 +1,215 @@
 import React from "react";
 import SVGPath from "./SVGPath";
 
-const SVGBodyFront = () => {
+const SVGBody = () => {
   const [clickedDataKeys, setClickedDataKeys] = React.useState([]);
+  function createCircleAttributes(cx, cy) {
+    return {
+      cx,
+      cy,
+      r: 6,
+      fill: "var(--2301541356)",
+      style: { pointerEvents: "none" },
+    };
+  }
+
+  const frontCircleAttributes = {
+    "front-head": createCircleAttributes(
+      "113.00112533569336",
+      "23.665000915527344"
+    ),
+    "front-hip-right": createCircleAttributes(
+      "97.1751480102539",
+      "146.5099983215332"
+    ),
+    "front-neck": createCircleAttributes(
+      "112.86899948120117",
+      "51.79990005493164"
+    ),
+    "front-chest-right": createCircleAttributes(
+      "98.13000106811523",
+      "88.79999923706055"
+    ),
+    "front-upper-arm-right": createCircleAttributes(
+      "71.65859985351562",
+      "89.19010162353516"
+    ),
+    "front-elbow-right": createCircleAttributes(
+      "59.65089797973633",
+      "122.48500442504883"
+    ),
+    "front-forearm-right": createCircleAttributes(
+      "38.7495002746582",
+      "146.25499725341797"
+    ),
+    "front-upper-arm-left": createCircleAttributes(
+      "153.88400268554688",
+      "89.22000122070312"
+    ),
+    "front-chest-left": createCircleAttributes(
+      "127.3849983215332",
+      "88.83005142211914"
+    ),
+    "front-hand-left": createCircleAttributes(
+      "211.43287658691406",
+      "166.89128875732422"
+    ),
+    "front-abdomen": createCircleAttributes(
+      "112.50410079956055",
+      "122.09500122070312"
+    ),
+    "front-forearm-left": createCircleAttributes(
+      "186.7689971923828",
+      "146.29500579833984"
+    ),
+    "front-shin-left": createCircleAttributes(
+      "129.43800354003906",
+      "320.7300109863281"
+    ),
+    "front-knee-left": createCircleAttributes(
+      "129.85280227661133",
+      "258.4700012207031"
+    ),
+    "front-elbow-left": createCircleAttributes(
+      "165.86199951171875",
+      "122.5150032043457"
+    ),
+    "front-hip-left": createCircleAttributes(
+      "128.34499740600586",
+      "146.54500198364258"
+    ),
+    "front-shin-right": createCircleAttributes(
+      "96.5759506225586",
+      "321.0799865722656"
+    ),
+    "front-knee-right": createCircleAttributes(
+      "96.17644882202148",
+      "258.8250045776367"
+    ),
+    "front-thigh-right": createCircleAttributes(
+      "95.82582092285156",
+      "193.8300018310547"
+    ),
+    "front-thigh-left": createCircleAttributes(
+      "130.19997787475586",
+      "193.6500015258789"
+    ),
+    "front-groin": createCircleAttributes(
+      "112.7948989868164",
+      "172.39500427246094"
+    ),
+    "front-hand-right": createCircleAttributes(
+      "14.074706047773361",
+      "166.89128875732422"
+    ),
+    "front-foot-right": createCircleAttributes(
+      "96.06744766235352",
+      "362.8299865722656"
+    ),
+    "front-foot-left": createCircleAttributes(
+      "129.94260787963867",
+      "362.4700012207031"
+    ),
+  };
+
+  const backCircleAttributes = {
+    "back-head": createCircleAttributes(
+      "113.00612258911133",
+      "21.594999313354492"
+    ),
+    "back-shoulderblade-right": createCircleAttributes(
+      "127.37999725341797",
+      "78.41495132446289"
+    ),
+    "back-neck": createCircleAttributes(
+      "112.93000030517578",
+      "46.424800872802734"
+    ),
+    "back-shoulderblade-left": createCircleAttributes(
+      "98.14185333251953",
+      "78.41495132446289"
+    ),
+    "back-upper-arm-left": createCircleAttributes(
+      "71.65859985351562",
+      "89.19999885559082"
+    ),
+    "back-elbow-left": createCircleAttributes(
+      "59.65089797973633",
+      "122.49500274658203"
+    ),
+    "back-forearm-left": createCircleAttributes(
+      "38.7495002746582",
+      "146.25499725341797"
+    ),
+    "back-hand-left": createCircleAttributes(
+      "14.074706047773361",
+      "166.89128875732422"
+    ),
+    "back-loin-left": createCircleAttributes(
+      "98.1468505859375",
+      "128.2050018310547"
+    ),
+    "back-loin-right": createCircleAttributes(
+      "127.38500213623047",
+      "128.2050018310547"
+    ),
+    "back-buttock-left": createCircleAttributes(
+      "96.8327865600586",
+      "169.54153442382812"
+    ),
+    "back-buttock-right": createCircleAttributes(
+      "128.74426651000977",
+      "169.5436553955078"
+    ),
+    "back-thigh-left": createCircleAttributes(
+      "95.69874572753906",
+      "194.46499633789062"
+    ),
+    "back-thigh-right": createCircleAttributes(
+      "129.8631477355957",
+      "194.46499633789062"
+    ),
+    "back-knee-left": createCircleAttributes(
+      "96.17644882202148",
+      "258.8250045776367"
+    ),
+    "back-calf-left": createCircleAttributes(
+      "96.5759506225586",
+      "321.0799865722656"
+    ),
+    "back-foot-left": createCircleAttributes(
+      "96.06744766235352",
+      "362.8299865722656"
+    ),
+    "back-knee-right": createCircleAttributes(
+      "129.38080215454102",
+      "258.8250045776367"
+    ),
+    "back-calf-right": createCircleAttributes(
+      "128.98899841308594",
+      "321.0899963378906"
+    ),
+    "back-foot-right": createCircleAttributes(
+      "129.48960494995117",
+      "362.8299865722656"
+    ),
+    "back-upper-arm-right": createCircleAttributes(
+      "153.88400268554688",
+      "89.22000122070312"
+    ),
+    "back-elbow-right": createCircleAttributes(
+      "165.86199951171875",
+      "122.5150032043457"
+    ),
+    "back-forearm-right": createCircleAttributes(
+      "186.7689971923828",
+      "146.29500579833984"
+    ),
+    "back-hand-right": createCircleAttributes(
+      "211.43287658691406",
+      "166.89128875732422"
+    ),
+  };
 
   const handlePathClick = (event) => {
     const dataKey = event.target.getAttribute("data-key");
@@ -21,8 +228,6 @@ const SVGBodyFront = () => {
   const frontViewRef = React.useRef(null);
   const backViewRef = React.useRef(null);
   const viewContainerRef = React.useRef(null);
-
-  console.log(clickedDataKeys);
 
   return (
     <form method="post" action="/" className="h8crPVY">
@@ -195,1313 +400,17 @@ const SVGBodyFront = () => {
                     dataKey="front-hip-right"
                     d="M112.54 139.84V139.88L112.51 139.86L112.48 139.88V139.84L101.68 134.19L99.7403 122.32H86.5403C86.6703 122.88 86.7903 123.43 86.9003 123.98C87.0803 124.86 87.2403 125.71 87.3703 126.52C88.4403 132.21 87.9303 138.09 85.8903 143.51C85.7403 143.92 85.5903 144.32 85.4403 144.72C83.4403 150.04 81.7103 154.66 81.5703 159.3L93.8503 170.7L102.02 161.83L112.78 156.46V139.72L112.56 139.84H112.54Z"
                   />
-                  <circle
-                    cx="113.00112533569336"
-                    cy="23.665000915527344"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-head"
-                  />
 
-                  <circle
-                    cx="112.86899948120117"
-                    cy="51.79990005493164"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-neck"
-                  />
-
-                  <circle
-                    cx="98.13000106811523"
-                    cy="88.79999923706055"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-right"
-                  />
-                  <circle
-                    cx="71.65859985351562"
-                    cy="89.19010162353516"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-right"
-                  />
-
-                  <circle
-                    cx="59.65089797973633"
-                    cy="122.48500442504883"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-right"
-                  />
-
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="165.86199951171875"
-                    cy="122.5150032043457"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="186.7689971923828"
-                    cy="146.29500579833984"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-left"
-                  />
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="165.86199951171875"
-                    cy="122.5150032043457"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="186.7689971923828"
-                    cy="146.29500579833984"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-left"
-                  />
-                  <circle
-                    cx="211.43287658691406"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-left"
-                  />
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="165.86199951171875"
-                    cy="122.5150032043457"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="130.19997787475586"
-                    cy="193.6500015258789"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-thigh-left"
-                  />
-
-                  <circle
-                    cx="186.7689971923828"
-                    cy="146.29500579833984"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-left"
-                  />
-                  <circle
-                    cx="211.43287658691406"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-left"
-                  />
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="165.86199951171875"
-                    cy="122.5150032043457"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="130.19997787475586"
-                    cy="193.6500015258789"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-thigh-left"
-                  />
-                  <circle
-                    cx="129.85280227661133"
-                    cy="258.4700012207031"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-knee-left"
-                  />
-
-                  <circle
-                    cx="186.7689971923828"
-                    cy="146.29500579833984"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-left"
-                  />
-                  <circle
-                    cx="211.43287658691406"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-left"
-                  />
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="165.86199951171875"
-                    cy="122.5150032043457"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="130.19997787475586"
-                    cy="193.6500015258789"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-thigh-left"
-                  />
-                  <circle
-                    cx="129.85280227661133"
-                    cy="258.4700012207031"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-knee-left"
-                  />
-                  <circle
-                    cx="129.43800354003906"
-                    cy="320.7300109863281"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-shin-left"
-                  />
-
-                  <circle
-                    cx="186.7689971923828"
-                    cy="146.29500579833984"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-left"
-                  />
-                  <circle
-                    cx="211.43287658691406"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-left"
-                  />
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="165.86199951171875"
-                    cy="122.5150032043457"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="96.5759506225586"
-                    cy="321.0799865722656"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-shin-right"
-                  />
-                  <circle
-                    cx="130.19997787475586"
-                    cy="193.6500015258789"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-thigh-left"
-                  />
-                  <circle
-                    cx="129.85280227661133"
-                    cy="258.4700012207031"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-knee-left"
-                  />
-                  <circle
-                    cx="129.43800354003906"
-                    cy="320.7300109863281"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-shin-left"
-                  />
-
-                  <circle
-                    cx="186.7689971923828"
-                    cy="146.29500579833984"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-left"
-                  />
-                  <circle
-                    cx="211.43287658691406"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-left"
-                  />
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="165.86199951171875"
-                    cy="122.5150032043457"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="96.17644882202148"
-                    cy="258.8250045776367"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-knee-right"
-                  />
-                  <circle
-                    cx="96.5759506225586"
-                    cy="321.0799865722656"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-shin-right"
-                  />
-                  <circle
-                    cx="130.19997787475586"
-                    cy="193.6500015258789"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-thigh-left"
-                  />
-                  <circle
-                    cx="129.85280227661133"
-                    cy="258.4700012207031"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-knee-left"
-                  />
-                  <circle
-                    cx="129.43800354003906"
-                    cy="320.7300109863281"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-shin-left"
-                  />
-
-                  <circle
-                    cx="186.7689971923828"
-                    cy="146.29500579833984"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-left"
-                  />
-                  <circle
-                    cx="211.43287658691406"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-left"
-                  />
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="165.86199951171875"
-                    cy="122.5150032043457"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="95.82582092285156"
-                    cy="193.8300018310547"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-thigh-right"
-                  />
-                  <circle
-                    cx="96.17644882202148"
-                    cy="258.8250045776367"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-knee-right"
-                  />
-                  <circle
-                    cx="96.5759506225586"
-                    cy="321.0799865722656"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-shin-right"
-                  />
-                  <circle
-                    cx="130.19997787475586"
-                    cy="193.6500015258789"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-thigh-left"
-                  />
-                  <circle
-                    cx="129.85280227661133"
-                    cy="258.4700012207031"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-knee-left"
-                  />
-                  <circle
-                    cx="129.43800354003906"
-                    cy="320.7300109863281"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-shin-left"
-                  />
-
-                  <circle
-                    cx="186.7689971923828"
-                    cy="146.29500579833984"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-left"
-                  />
-                  <circle
-                    cx="211.43287658691406"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-left"
-                  />
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="165.86199951171875"
-                    cy="122.5150032043457"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
-                  <circle
-                    cx="38.7495002746582"
-                    cy="146.25499725341797"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-right"
-                  />
-                  <circle
-                    cx="14.074706047773361"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-right"
-                  />
-
-                  <circle
-                    cx="95.82582092285156"
-                    cy="193.8300018310547"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-thigh-right"
-                  />
-                  <circle
-                    cx="96.17644882202148"
-                    cy="258.8250045776367"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-knee-right"
-                  />
-                  <circle
-                    cx="96.5759506225586"
-                    cy="321.0799865722656"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-shin-right"
-                  />
-                  <circle
-                    cx="130.19997787475586"
-                    cy="193.6500015258789"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-thigh-left"
-                  />
-                  <circle
-                    cx="129.85280227661133"
-                    cy="258.4700012207031"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-knee-left"
-                  />
-                  <circle
-                    cx="129.43800354003906"
-                    cy="320.7300109863281"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-shin-left"
-                  />
-
-                  <circle
-                    cx="112.7948989868164"
-                    cy="172.39500427246094"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-groin"
-                  />
-                  <circle
-                    cx="186.7689971923828"
-                    cy="146.29500579833984"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-forearm-left"
-                  />
-                  <circle
-                    cx="211.43287658691406"
-                    cy="166.89128875732422"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hand-left"
-                  />
-                  <circle
-                    cx="153.88400268554688"
-                    cy="89.22000122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-upper-arm-left"
-                  />
-                  <circle
-                    cx="165.86199951171875"
-                    cy="122.5150032043457"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-elbow-left"
-                  />
-                  <circle
-                    cx="112.50410079956055"
-                    cy="122.09500122070312"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-abdomen"
-                  />
-                  <circle
-                    cx="127.3849983215332"
-                    cy="88.83005142211914"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-chest-left"
-                  />
-
-                  <circle
-                    cx="128.34499740600586"
-                    cy="146.54500198364258"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-left"
-                  />
-                  <circle
-                    cx="97.1751480102539"
-                    cy="146.5099983215332"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="front-hip-right"
-                  />
+                  {clickedDataKeys.map(
+                    (key) =>
+                      frontCircleAttributes[key] && (
+                        <circle
+                          {...frontCircleAttributes[key]}
+                          data-key={key}
+                          key={key}
+                        />
+                      )
+                  )}
                 </svg>
               </div>
               <div className="KMJniHw">
@@ -1671,14 +580,16 @@ const SVGBodyFront = () => {
                     dataKey="back-loin-right"
                     d="M142.02 106.41V108.01C141.52 112.14 140.74 116.23 139.68 120.25C139.52 120.78 139.37 121.31 139.23 121.83C139.1 122.39 138.73 123.61 138.62 124.16C138.44 125.04 138.28 125.89 138.15 126.7C137.08 132.39 137.59 138.27 139.63 143.69C139.78 144.1 139.93 144.5 140.08 144.9C140.74 146.67 141.38 148.36 141.94 150H112.75V121.86V106.41H142.01H142.02Z"
                   />
-                  <circle
-                    cx="127.37999725341797"
-                    cy="78.41495132446289"
-                    r={6}
-                    fill="var(--2301541356)"
-                    style={{ pointerEvents: "none" }}
-                    data-key="back-shoulderblade-right"
-                  />
+                  {clickedDataKeys.map(
+                    (key) =>
+                      backCircleAttributes[key] && (
+                        <circle
+                          {...backCircleAttributes[key]}
+                          data-key={key}
+                          key={key}
+                        />
+                      )
+                  )}
                 </svg>
               </div>
               <div className="KMJniHw">
@@ -1748,4 +659,4 @@ const SVGBodyFront = () => {
   );
 };
 
-export default SVGBodyFront;
+export default SVGBody;
