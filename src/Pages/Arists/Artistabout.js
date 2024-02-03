@@ -1,7 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../Account/UserContext";
 import axios from "axios";
+import {
+  Box,
+  Step,
+  StepDescription,
+  StepIcon,
+  StepIndicator,
+  StepNumber,
+  StepSeparator,
+  StepStatus,
+  StepTitle,
+  Stepper,
+  useSteps,
+} from "@chakra-ui/react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -26,14 +39,25 @@ import { apibaseUrl } from "../../Component/Apibaseurl";
 import MGallery from "../Home/Gallery";
 import Swal from "sweetalert2";
 import SVGBody from "../../Component/SVGBody";
+
+const steps = [
+  { title: "First", description: "Contact Info" },
+  { title: "Second", description: "Date & Time" },
+];
+
 const Artistabout = () => {
   const { token } = useUser();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [clickedDataKeys, setClickedDataKeys] = useState([]);
   const [user, setUserData] = useState([]);
   const [timedata, setTimedata] = useState([null]);
   const [bannerImagedata, setBannerimageData] = useState([]);
   const { slug } = useParams();
+  const { activeStep, setActiveStep } = useSteps({
+    index: 0,
+    count: steps.length,
+  });
 
   useEffect(() => {
     const apiUrl = `${apibaseUrl}/artist/${slug}`;
@@ -120,6 +144,146 @@ const Artistabout = () => {
       });
     }
   };
+
+  const StepOne = () => {
+    return (
+      <>
+        <h5 className="text-left">How big would you like the tattoo?</h5>
+        <ul>
+          <div className="sizze">
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="size"
+                  type="radio"
+                  className="radio"
+                  value="Credit Card"
+                  checked={tatto.size === "Credit Card"}
+                  onChange={handleChange}
+                />
+                Size of a Credit Card
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="size"
+                  type="radio"
+                  className="radio"
+                  value="Palm Sized"
+                  checked={tatto.size === "Palm Sized"}
+                  onChange={handleChange}
+                />
+                Palm Sized
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="size"
+                  type="radio"
+                  className="radio"
+                  value="Hand Sized"
+                  checked={tatto.size === "Hand Sized"}
+                  onChange={handleChange}
+                />
+                Hand Sized
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="size"
+                  type="radio"
+                  className="radio"
+                  value="Larger Sized"
+                  checked={tatto.size === "Larger Sized"}
+                  onChange={handleChange}
+                />
+                Half-Sleeve or Larger
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="size"
+                  type="radio"
+                  className="radio"
+                  value="Not Decided"
+                  checked={tatto.size === "Not Decided"}
+                  onChange={handleChange}
+                />
+                Haven't Decided
+              </label>
+            </li>
+          </div>
+        </ul>
+
+        <h5 className="text-left">
+          Would you like your tattoo to have color or only black & grey ink?
+        </h5>
+        <ul>
+          <div className="d-flex">
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="color"
+                  type="radio"
+                  value="Color"
+                  onChange={handleChange}
+                  className="radio"
+                  checked={tatto.color === "Color"}
+                />
+                Color
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="color"
+                  type="radio"
+                  value="Black & Grey"
+                  onChange={handleChange}
+                  className="radio"
+                  checked={tatto.color === "Black & Grey"}
+                />
+                Black & Grey
+              </label>
+            </li>
+
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="color"
+                  type="radio"
+                  value="Not Decided"
+                  onChange={handleChange}
+                  className="radio"
+                  checked={tatto.color === "Not Decided"}
+                />
+                Haven't Decided
+              </label>
+            </li>
+          </div>
+        </ul>
+        <h5 className="text-left">
+          Describe your tattoo idea and where you’d like the tattoo to be on
+          your body.
+        </h5>
+        <textarea
+          className="form-control form-controls"
+          type="text"
+          name="description"
+          value={tatto.description}
+          onChange={handleChange}
+          maxLength="100"
+          minLength="10"
+          placeholder="Describe your text here..."
+        />
+      </>
+    );
+  };
+
   // console.log('kk',user.id);
   return (
     <>
@@ -209,159 +373,66 @@ const Artistabout = () => {
                               </button>
                             </div>
                             <div className="modal-body">
-                              <SVGBody />
-                              {/* <form onSubmit={handleSubmit}>
-                                <h5 className="text-left">
-                                  How big would you like the tattoo?
-                                </h5>
-                                <ul>
-                                  <div className="sizze">
-                                    <li className="styling">
-                                      <label className="d-flex gapping">
-                                        <input
-                                          name="size"
-                                          type="radio"
-                                          className="radio"
-                                          value="Credit Card"
-                                          checked={tatto.size === "Credit Card"}
-                                          onChange={handleChange}
+                              <form onSubmit={handleSubmit}>
+                                <Stepper size="lg" index={activeStep}>
+                                  {steps.map((step, index) => (
+                                    <Step
+                                      key={index}
+                                      onClick={() => setActiveStep(index)}
+                                    >
+                                      <StepIndicator>
+                                        <StepStatus
+                                          complete={<StepIcon />}
+                                          incomplete={<StepNumber />}
+                                          active={<StepNumber />}
                                         />
-                                        Size of a Credit Card
-                                      </label>
-                                    </li>
-                                    <li className="styling">
-                                      <label className="d-flex gapping">
-                                        <input
-                                          name="size"
-                                          type="radio"
-                                          className="radio"
-                                          value="Palm Sized"
-                                          checked={tatto.size === "Palm Sized"}
-                                          onChange={handleChange}
-                                        />
-                                        Palm Sized
-                                      </label>
-                                    </li>
-                                    <li className="styling">
-                                      <label className="d-flex gapping">
-                                        <input
-                                          name="size"
-                                          type="radio"
-                                          className="radio"
-                                          value="Hand Sized"
-                                          checked={tatto.size === "Hand Sized"}
-                                          onChange={handleChange}
-                                        />
-                                        Hand Sized
-                                      </label>
-                                    </li>
-                                    <li className="styling">
-                                      <label className="d-flex gapping">
-                                        <input
-                                          name="size"
-                                          type="radio"
-                                          className="radio"
-                                          value="Larger Sized"
-                                          checked={
-                                            tatto.size === "Larger Sized"
-                                          }
-                                          onChange={handleChange}
-                                        />
-                                        Half-Sleeve or Larger
-                                      </label>
-                                    </li>
-                                    <li className="styling">
-                                      <label className="d-flex gapping">
-                                        <input
-                                          name="size"
-                                          type="radio"
-                                          className="radio"
-                                          value="Not Decided"
-                                          checked={tatto.size === "Not Decided"}
-                                          onChange={handleChange}
-                                        />
-                                        Haven't Decided
-                                      </label>
-                                    </li>
-                                  </div>
-                                </ul>
+                                      </StepIndicator>
 
-                                <h5 className="text-left">
-                                  Would you like your tattoo to have color or
-                                  only black & grey ink?
-                                </h5>
-                                <ul>
-                                  <div className="d-flex">
-                                    <li className="styling">
-                                      <label className="d-flex gapping">
-                                        <input
-                                          name="color"
-                                          type="radio"
-                                          value="Color"
-                                          onChange={handleChange}
-                                          className="radio"
-                                          checked={tatto.color === "Color"}
-                                        />
-                                        Color
-                                      </label>
-                                    </li>
-                                    <li className="styling">
-                                      <label className="d-flex gapping">
-                                        <input
-                                          name="color"
-                                          type="radio"
-                                          value="Black & Grey"
-                                          onChange={handleChange}
-                                          className="radio"
-                                          checked={
-                                            tatto.color === "Black & Grey"
-                                          }
-                                        />
-                                        Black & Grey
-                                      </label>
-                                    </li>
+                                      <StepSeparator />
+                                    </Step>
+                                  ))}
+                                </Stepper>
+                                <Box>
+                                  {activeStep === 0 && <StepOne />}
+                                  {activeStep === 1 && (
+                                    <SVGBody
+                                      clickedDataKeys={clickedDataKeys}
+                                      setClickedDataKeys={setClickedDataKeys}
+                                    />
+                                  )}
+                                </Box>
 
-                                    <li className="styling">
-                                      <label className="d-flex gapping">
-                                        <input
-                                          name="color"
-                                          type="radio"
-                                          value="Not Decided"
-                                          onChange={handleChange}
-                                          className="radio"
-                                          checked={
-                                            tatto.color === "Not Decided"
-                                          }
-                                        />
-                                        Haven't Decided
-                                      </label>
-                                    </li>
-                                  </div>
-                                </ul>
-                                <h5 className="text-left">
-                                  Describe your tattoo idea and where you’d like
-                                  the tattoo to be on your body.
-                                </h5>
-                                <textarea
-                                  className="form-control form-controls"
-                                  type="text"
-                                  name="description"
-                                  value={tatto.description}
-                                  onChange={handleChange}
-                                  maxLength="100"
-                                  minLength="10"
-                                  placeholder="Describe your text here..."
-                                />
                                 <div className="modal-footer">
-                                  <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                  >
-                                    Get Quote
-                                  </button>
+                                  {activeStep === 0 && (
+                                    <button
+                                      onClick={() => setActiveStep(1)}
+                                      className="btn btn-primary"
+                                    >
+                                      Next
+                                    </button>
+                                  )}
+                                  {activeStep === 1 && (
+                                    <div style={{
+                                      display: "flex",
+                                      justifyContent: "flex-end",
+                                      width: "100%",
+                                    }}>
+                                      <button
+                                        onClick={() => setActiveStep(0)}
+                                        className="btn btn-primary"
+                                      >
+                                        Previous
+                                      </button>
+                                      <button
+                                        type="submit"
+                                        className="btn btn-primary"
+                                      >
+                                        Get Quote
+                                      </button>
+                                    </div>
+                                  )}
                                 </div>
-
-                              </form> */}
+                              </form>
                             </div>
                           </div>
                         </div>

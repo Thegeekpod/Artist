@@ -11,6 +11,8 @@ import Artistabout from "./Pages/Arists/Artistabout";
 import ArtistNotfound from "./Pages/Arists/ArtistNotfound";
 import Allcomment from "./Pages/Account/Allcomment";
 import Search from "./Pages/Search/Search";
+import { ChakraProvider } from "@chakra-ui/react";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -71,7 +73,11 @@ function App() {
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <ChakraProvider>
+      <RouterProvider router={router} />
+    </ChakraProvider>
+  );
 }
 
 export default App;

@@ -1,8 +1,7 @@
 import React from "react";
 import SVGPath from "./SVGPath";
 
-const SVGBody = () => {
-  const [clickedDataKeys, setClickedDataKeys] = React.useState([]);
+const SVGBody = ({ clickedDataKeys, setClickedDataKeys }) => {
   function createCircleAttributes(cx, cy) {
     return {
       cx,
