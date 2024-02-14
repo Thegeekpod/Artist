@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useUser } from "../Account/UserContext";
+import { isAuthenticated, useUser } from "../Account/UserContext";
 import axios from "axios";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import {
   Box,
+  Flex,
   Step,
   StepDescription,
   StepIcon,
@@ -39,11 +42,32 @@ import { apibaseUrl } from "../../Component/Apibaseurl";
 import MGallery from "../Home/Gallery";
 import Swal from "sweetalert2";
 import SVGBody from "../../Component/SVGBody";
+import { useForm } from "react-hook-form";
 
 const steps = [
   { title: "First", description: "Contact Info" },
   { title: "Second", description: "Date & Time" },
 ];
+
+const detailsSchema = yup
+  .object({
+    color: yup.string().required(),
+    size: yup.string().required(),
+    description: yup.string().optional(),
+    artist_id: yup.string().required(),
+    when_get_tattooed: yup.string().required(),
+    reference_image: yup.string().optional(),
+    budget: yup.string().required(),
+    availability: yup.string().required(),
+  })
+  .required();
+
+const schema = yup.object({
+  front_back_view: yup
+    .string()
+    .min(1, "Please select at least one view")
+    .required("Please select at least one view"),
+});
 
 const Artistabout = () => {
   const { token } = useUser();
@@ -58,6 +82,91 @@ const Artistabout = () => {
     index: 0,
     count: steps.length,
   });
+
+  const {
+    register: detailsRegister,
+    handleSubmit: detailsHandleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm({
+    resolver: yupResolver(detailsSchema),
+    defaultValues: {
+      color: "",
+      size: "",
+      description: "",
+      artist_id: slug,
+      when_get_tattooed: "",
+      reference_image: "",
+      budget: "",
+      availability: "",
+    },
+  });
+
+  const {
+    handleSubmit,
+    setValue,
+    formState: { errors: viewErrors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      front_back_view: "",
+    },
+  });
+
+  useEffect(() => {
+    if (clickedDataKeys) {
+      // separeted by comma
+      const selectedViews = clickedDataKeys.map((key) => key).join(",");
+      setValue("front_back_view", selectedViews.toString());
+    }
+  }, [clickedDataKeys, setValue]);
+
+  const onDetailsSubmit = (data) => {
+    console.log(data);
+    setActiveStep(1);
+  };
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("front_back_view", data.front_back_view);
+    formData.append("artist_id", getValues("artist_id"));
+    formData.append("color", getValues("color"));
+    formData.append("size", getValues("size"));
+    formData.append("description", getValues("description"));
+    formData.append("when_get_tattooed", getValues("when_get_tattooed"));
+    formData.append("reference_image", getValues("reference_image"));
+    formData.append("budget", getValues("budget"));
+    formData.append("availability", getValues("availability"));
+
+    try {
+      // Send form data using Axios POST request to your API endpoint
+      const response = await axios.post(
+        `${apibaseUrl}/quote`,
+        formData, // This should be the data you want to send in the request body
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Display success message if the request was successful
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Tattoo details submitted!",
+          text: "Your tattoo information has been submitted successfully.",
+        });
+      }
+    } catch (error) {
+      // Handle error scenarios here
+      console.error("Error occurred:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
+  };
 
   useEffect(() => {
     const apiUrl = `${apibaseUrl}/artist/${slug}`;
@@ -84,70 +193,10 @@ const Artistabout = () => {
         console.error("Error fetching data:", error);
       });
   }, [token, navigate, slug]);
-  const id = user.id;
-  const [tatto, setTatto] = useState({
-    size: "Credit Card",
-    description: "",
-    color: "Color",
-    artist_id: user.id,
-  });
-  useEffect(() => {
-    // Update artist_id in tatto whenever user.id changes
-    setTatto((prevTatto) => ({
-      ...prevTatto,
-      artist_id: user.id,
-    }));
-  }, [user.id]);
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTatto({ ...tatto, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("dd", id);
-    console.log(tatto);
-    try {
-      // Send form data using Axios POST request to your API endpoint
-      const response = await axios.post(
-        `${apibaseUrl}/quote`,
-        tatto, // This should be the data you want to send in the request body
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      // Display success message if the request was successful
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Tattoo details submitted!",
-          text: "Your tattoo information has been submitted successfully.",
-        });
-        // Optionally, you can reset the form after submission
-        setTatto({
-          size: "Credit Card",
-          description: "",
-          color: "Color",
-        });
-      }
-    } catch (error) {
-      // Handle error scenarios here
-      console.error("Error occurred:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    }
-  };
 
   const StepOne = () => {
     return (
-      <>
+      <form onSubmit={detailsHandleSubmit(onDetailsSubmit)}>
         <h5 className="text-left">How big would you like the tattoo?</h5>
         <ul>
           <div className="sizze">
@@ -158,8 +207,7 @@ const Artistabout = () => {
                   type="radio"
                   className="radio"
                   value="Credit Card"
-                  checked={tatto.size === "Credit Card"}
-                  onChange={handleChange}
+                  {...detailsRegister("size")}
                 />
                 Size of a Credit Card
               </label>
@@ -171,8 +219,7 @@ const Artistabout = () => {
                   type="radio"
                   className="radio"
                   value="Palm Sized"
-                  checked={tatto.size === "Palm Sized"}
-                  onChange={handleChange}
+                  {...detailsRegister("size")}
                 />
                 Palm Sized
               </label>
@@ -184,8 +231,7 @@ const Artistabout = () => {
                   type="radio"
                   className="radio"
                   value="Hand Sized"
-                  checked={tatto.size === "Hand Sized"}
-                  onChange={handleChange}
+                  {...detailsRegister("size")}
                 />
                 Hand Sized
               </label>
@@ -197,8 +243,7 @@ const Artistabout = () => {
                   type="radio"
                   className="radio"
                   value="Larger Sized"
-                  checked={tatto.size === "Larger Sized"}
-                  onChange={handleChange}
+                  {...detailsRegister("size")}
                 />
                 Half-Sleeve or Larger
               </label>
@@ -210,13 +255,13 @@ const Artistabout = () => {
                   type="radio"
                   className="radio"
                   value="Not Decided"
-                  checked={tatto.size === "Not Decided"}
-                  onChange={handleChange}
+                  {...detailsRegister("size")}
                 />
                 Haven't Decided
               </label>
             </li>
           </div>
+          {errors.size && <p className="text-danger">{errors.size.message}</p>}
         </ul>
 
         <h5 className="text-left">
@@ -230,9 +275,7 @@ const Artistabout = () => {
                   name="color"
                   type="radio"
                   value="Color"
-                  onChange={handleChange}
-                  className="radio"
-                  checked={tatto.color === "Color"}
+                  {...detailsRegister("color")}
                 />
                 Color
               </label>
@@ -243,9 +286,7 @@ const Artistabout = () => {
                   name="color"
                   type="radio"
                   value="Black & Grey"
-                  onChange={handleChange}
-                  className="radio"
-                  checked={tatto.color === "Black & Grey"}
+                  {...detailsRegister("color")}
                 />
                 Black & Grey
               </label>
@@ -257,14 +298,167 @@ const Artistabout = () => {
                   name="color"
                   type="radio"
                   value="Not Decided"
-                  onChange={handleChange}
-                  className="radio"
-                  checked={tatto.color === "Not Decided"}
+                  {...detailsRegister("color")}
                 />
                 Haven't Decided
               </label>
             </li>
           </div>
+          {errors.color && (
+            <p className="text-danger">{errors.color.message}</p>
+          )}
+        </ul>
+        <h5 className="text-left">
+          Do you have any reference images for your tattoo?
+        </h5>
+        <input
+          type="file"
+          name="reference_image"
+          {...detailsRegister("reference_image")}
+        />
+        <h5 className="text-left">
+          Are you flexible with the availability of the tattoo artist?
+        </h5>
+        <input
+          type="date"
+          name="availability"
+          className="form-control"
+          {...detailsRegister("availability")}
+        />
+        {errors.availability && (
+          <p className="text-danger">{errors.availability.message}</p>
+        )}
+
+        <h5 className="text-left">
+          What is your budget for this tattoo? (This will help us match you
+          with)
+        </h5>
+        <ul>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+            }}
+          >
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="budget"
+                  type="radio"
+                  value="Under $100"
+                  {...detailsRegister("budget")}
+                />
+                Under $100
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="budget"
+                  type="radio"
+                  value="$100 - $200"
+                  {...detailsRegister("budget")}
+                />
+                $100 - $200
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="budget"
+                  type="radio"
+                  value="$200 - $500"
+                  {...detailsRegister("budget")}
+                />
+                $200 - $500
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="budget"
+                  type="radio"
+                  value="$500 - $1000"
+                  {...detailsRegister("budget")}
+                />
+                $500 - $1000
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="budget"
+                  type="radio"
+                  value="Over $1000"
+                  {...detailsRegister("budget")}
+                />
+                Over $1000
+              </label>
+            </li>
+          </div>
+          {errors.budget && (
+            <p className="text-danger">{errors.budget.message}</p>
+          )}
+        </ul>
+        <h5 className="text-left">
+          When would you like to get tattooed? (This will help us match you with
+          a tattoo artist)
+        </h5>
+        <ul>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+            }}
+          >
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="when_get_tattooed"
+                  type="radio"
+                  value="Next few days"
+                  {...detailsRegister("when_get_tattooed")}
+                />
+                Next few days
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="when_get_tattooed"
+                  type="radio"
+                  value="Next week"
+                  {...detailsRegister("when_get_tattooed")}
+                />
+                Next week
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="when_get_tattooed"
+                  type="radio"
+                  value="Next few weeks"
+                  {...detailsRegister("when_get_tattooed")}
+                />
+                Next month
+              </label>
+            </li>
+            <li className="styling">
+              <label className="d-flex gapping">
+                <input
+                  name="when_get_tattooed"
+                  type="radio"
+                  value="I'm flexible"
+                  {...detailsRegister("when_get_tattooed")}
+                />
+                I'm flexible
+              </label>
+            </li>
+          </div>
+          {errors.when_get_tattooed && (
+            <p className="text-danger">{errors.when_get_tattooed.message}</p>
+          )}
         </ul>
         <h5 className="text-left">
           Describe your tattoo idea and where you’d like the tattoo to be on
@@ -274,20 +468,30 @@ const Artistabout = () => {
           className="form-control form-controls"
           type="text"
           name="description"
-          value={tatto.description}
-          onChange={handleChange}
+          {...detailsRegister("description")}
           maxLength="100"
           minLength="10"
           placeholder="Describe your text here..."
         />
-      </>
+        {errors.description && (
+          <p className="text-danger">{errors.description.message}</p>
+        )}
+        <button
+          type="submit"
+          className="btn btn-primary"
+          style={{
+            marginTop: "10px",
+          }}
+        >
+          Next
+        </button>
+      </form>
     );
   };
 
-  // console.log('kk',user.id);
   return (
     <>
-      <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
+      <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1 ">
         <div className="container">
           <section className="bg-header breadcrumbs-custom">
             <div className="container">
@@ -325,25 +529,42 @@ const Artistabout = () => {
                               No Imgae
                             </h4>
                             <div className="row text-center">
-                              {/* <button type="button" className="btn btn-info" onClick={() => { navigate('/editprofile#profileupdate') }}>Upload Now</button> */}
+                              <button
+                                type="button"
+                                className="btn btn-info"
+                                onClick={() => {
+                                  navigate("/editprofile#profileupdate");
+                                }}
+                              >
+                                Upload Now
+                              </button>
                             </div>
                           </div>
                         </div>
                       )}
 
-                      {/* <button type="button" className="btn btn-success" style={{ width: '100%' }} onClick={() => { navigate('/editprofile') }}>Edit Profile</button> */}
-                      {/* {isAuthenticated() ? ( */}
                       <button
                         type="button"
-                        className="btn btn-primary"
-                        data-toggle="modal"
-                        data-target="#staticBackdrop"
+                        className="btn btn-success"
+                        style={{ width: "100%" }}
+                        onClick={() => {
+                          navigate("/editprofile");
+                        }}
                       >
-                        Get A Free Quote
+                        Edit Profile
                       </button>
-                      {/* ) : (
+                      {isAuthenticated() ? (
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          data-toggle="modal"
+                          data-target="#staticBackdrop"
+                        >
+                          Get A Free Quote
+                        </button>
+                      ) : (
                         ""
-                      )} */}
+                      )}
 
                       <div
                         className="modal fade"
@@ -355,7 +576,7 @@ const Artistabout = () => {
                         aria-hidden="true"
                       >
                         <div className="modal-dialog">
-                          <div className="modal-content">
+                          <div className="modal-content ds">
                             <div className="modal-header">
                               <h5
                                 className="modal-title"
@@ -373,65 +594,58 @@ const Artistabout = () => {
                               </button>
                             </div>
                             <div className="modal-body">
-                              <form onSubmit={handleSubmit}>
-                                <Stepper size="lg" index={activeStep}>
-                                  {steps.map((step, index) => (
-                                    <Step
-                                      key={index}
-                                      onClick={() => setActiveStep(index)}
-                                    >
-                                      <StepIndicator>
-                                        <StepStatus
-                                          complete={<StepIcon />}
-                                          incomplete={<StepNumber />}
-                                          active={<StepNumber />}
-                                        />
-                                      </StepIndicator>
+                              <Stepper size="lg" index={activeStep}>
+                                {steps.map((step, index) => (
+                                  <Step
+                                    key={index}
+                                    onClick={() => setActiveStep(index)}
+                                  >
+                                    <StepIndicator>
+                                      <StepStatus
+                                        complete={<StepIcon />}
+                                        incomplete={<StepNumber />}
+                                        active={<StepNumber />}
+                                      />
+                                    </StepIndicator>
 
-                                      <StepSeparator />
-                                    </Step>
-                                  ))}
-                                </Stepper>
-                                <Box>
-                                  {activeStep === 0 && <StepOne />}
-                                  {activeStep === 1 && (
-                                    <SVGBody
-                                      clickedDataKeys={clickedDataKeys}
-                                      setClickedDataKeys={setClickedDataKeys}
-                                    />
-                                  )}
-                                </Box>
-
-                                <div className="modal-footer">
-                                  {activeStep === 0 && (
+                                    <StepSeparator />
+                                  </Step>
+                                ))}
+                              </Stepper>
+                              {activeStep === 0 && <StepOne />}
+                              <form onSubmit={handleSubmit(onSubmit)}>
+                                {activeStep === 1 && (
+                                  <SVGBody
+                                    clickedDataKeys={clickedDataKeys}
+                                    setClickedDataKeys={setClickedDataKeys}
+                                  />
+                                )}
+                                {viewErrors.front_back_view && (
+                                  <p className="text-danger">
+                                    {viewErrors.front_back_view.message}
+                                  </p>
+                                )}
+                                {activeStep === 1 && (
+                                  <Flex
+                                    justifyContent={"center"}
+                                    gap={3}
+                                    marginTop={5}
+                                  >
                                     <button
-                                      onClick={() => setActiveStep(1)}
+                                      type="button"
+                                      className="btn btn-primary"
+                                      onClick={() => setActiveStep(0)}
+                                    >
+                                      Back
+                                    </button>
+                                    <button
+                                      type="submit"
                                       className="btn btn-primary"
                                     >
-                                      Next
+                                      Submit
                                     </button>
-                                  )}
-                                  {activeStep === 1 && (
-                                    <div style={{
-                                      display: "flex",
-                                      justifyContent: "flex-end",
-                                      width: "100%",
-                                    }}>
-                                      <button
-                                        onClick={() => setActiveStep(0)}
-                                        className="btn btn-primary"
-                                      >
-                                        Previous
-                                      </button>
-                                      <button
-                                        type="submit"
-                                        className="btn btn-primary"
-                                      >
-                                        Get Quote
-                                      </button>
-                                    </div>
-                                  )}
-                                </div>
+                                  </Flex>
+                                )}
                               </form>
                             </div>
                           </div>
@@ -496,49 +710,6 @@ const Artistabout = () => {
               </div>
             </div>
           </section>
-          {/* <section className="text-center text-md-start section-lg bg-default">
-<div className="container">
-<h1 className='text-center'>Art's Gallery</h1>
-<div className="container">
-<div className="row">
-<div className="col-sm-3">
-<Link to={`/${artist}/a`}> <img src='/images/black-and-grey-octopus-tattoo-7-400x400.jpg'/></Link>
-</div>
-<div className="col-sm-3" >
-<Link to={`/${artist}/b`}>  <img src='/images/20230401_3Gj9Ld7xTphqUkk.webp'/></Link> 
-
-</div>
-<div className="col-sm-3" >
-<Link to={`/${artist}/c`}> <img src='/images/goat-neck-tattoo-400x400.jpg'/></Link> 
-
-</div>
-<div className="col-sm-3" >
-<Link to={`/${artist}/d`}> <img src='/images/black-and-grey-sun-tattoo-2-400x400.jpg'/></Link> 
-
-</div>
-</div>
-<div className="row">
-<div className="col-sm-3">
-<Link to={`/${artist}/a`}> <img src='/images/black-and-grey-octopus-tattoo-7-400x400.jpg'/></Link>
-</div>
-<div className="col-sm-3" >
-<Link to={`/${artist}/b`}>  <img src='/images/20230401_3Gj9Ld7xTphqUkk.webp'/></Link> 
-
-</div>
-<div className="col-sm-3" >
-<Link to={`/${artist}/c`}> <img src='/images/goat-neck-tattoo-400x400.jpg'/></Link> 
-
-</div>
-<div className="col-sm-3" >
-<Link to={`/${artist}/d`}> <img src='/images/black-and-grey-sun-tattoo-2-400x400.jpg'/></Link> 
-
-</div>
-</div>
-</div>
-
-
-</div>
-</section> */}
         </div>
       </div>
       {/* Breadcrumbs*/}
