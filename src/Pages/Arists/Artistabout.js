@@ -543,7 +543,7 @@ const Artistabout = () => {
                         </div>
                       )}
 
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-success"
                         style={{ width: "100%" }}
@@ -552,7 +552,7 @@ const Artistabout = () => {
                         }}
                       >
                         Edit Profile
-                      </button>
+                      </button> */}
                       {isAuthenticated() ? (
                         <button
                           type="button"
