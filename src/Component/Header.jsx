@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import { isAuthenticated, useUser } from "../Pages/Account/UserContext";
+import { RequestType, geocode, setDefaults } from "react-geocode";
 const Header = () => {
   const [isActive, setIsActive] = useState(false);
   const { setUser, setToken, user, token, logout } = useUser();
@@ -10,7 +11,65 @@ const Header = () => {
   const toggleMenu = () => {
     setIsActive(!isActive);
   };
-  //login
+  // define the function that finds the users geolocation
+  const getUserLocation = () => {
+    // if geolocation is supported by the users browser
+    if (navigator.geolocation) {
+      setDefaults({
+        key: "AIzaSyD0mP_CP-hW2ZnJLo5s6CB5zH79Xs4RCXA", // Your API key here.
+        language: "en", // Default language for responses.
+        region: "es", // Default region for responses.
+      });
+      // get the current users location
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // save the geolocation coordinates in two variables
+          const { latitude, longitude } = position.coords;
+
+          geocode(RequestType.LATLNG, `${latitude},${longitude}`, {
+            location_type: "ROOFTOP", // Override location type filter for this request.
+            enable_address_descriptor: true, // Include address descriptor in response.
+          })
+            .then(({ results }) => {
+              const address = results[0].formatted_address;
+              const { city, state, country, postal_code } =
+                results[0].address_components.reduce((acc, component) => {
+                  if (component.types.includes("locality"))
+                    acc.city = component.long_name;
+                  else if (
+                    component.types.includes("administrative_area_level_1")
+                  )
+                    acc.state = component.long_name;
+                  else if (component.types.includes("country"))
+                    acc.country = component.long_name;
+                  else if (component.types.includes("postal_code"))
+                    acc.postal_code = component.long_name;
+                  return acc;
+                }, {});
+              localStorage.setItem(
+                "postal_code",
+                JSON.stringify({ postal_code })
+              );
+            })
+            .catch(console.error);
+          // update the value of userlocation variable
+
+          localStorage.setItem(
+            "userLocation",
+            JSON.stringify({ latitude, longitude })
+          );
+        },
+        // if there was an error getting the users location
+        (error) => {
+          console.error("Error getting user location:", error);
+        }
+      );
+    }
+    // if geolocation is not supported by the users browser
+    else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,6 +118,7 @@ const Header = () => {
     logout();
     navigate("/login");
   };
+
   return (
     <>
       {/* Logo: contains logo in various header layouts */}
@@ -209,9 +269,15 @@ const Header = () => {
                 )}
 
                 <li>
-                  <Link to="/search" className="search_modal_button serach-button">
+                  <a
+                    className="search_modal_button serach-button"
+                    onClick={() => {
+                      getUserLocation();
+                      navigate("/search");
+                    }}
+                  >
                     <i className="fa fa-search" aria-hidden="true" />
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>

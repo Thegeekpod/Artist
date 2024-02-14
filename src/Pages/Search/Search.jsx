@@ -19,7 +19,7 @@ const Search = () => {
     placementName: "",
     date: "",
     dateTo: "",
-    zipCode: "",
+    zipCode: JSON.parse(localStorage.getItem("postal_code")).postal_code,
     radius: "",
     country: "United States of America",
   });
@@ -162,7 +162,7 @@ const Search = () => {
                     name="username"
                     id="username"
                     className="form-control"
-                    placeholder="Finde by username"
+                    placeholder="Find by username"
                     onChange={handleArtInputChange}
                   />
                 </div>
@@ -177,6 +177,7 @@ const Search = () => {
                     className="form-control"
                     placeholder="Please Enter Zip Code"
                     onChange={handleArtInputChange}
+                    defaultValue={artworkData.zipCode}
                   />
                 </div>
 
