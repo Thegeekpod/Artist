@@ -125,8 +125,6 @@ const Artistabout = () => {
     console.log(data);
     setActiveStep(1);
   };
-  const referenceImageFile = getValues("reference_image");
-
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("front_back_view", data.front_back_view);
@@ -135,10 +133,11 @@ const Artistabout = () => {
     formData.append("size", getValues("size"));
     formData.append("description", getValues("description"));
     formData.append("when_get_tattooed", getValues("when_get_tattooed"));
-    formData.append("reference_image", referenceImageFile);
+    formData.append("reference_image", data.reference_image);
+    // formData.append("reference_image", getValues("reference_image"));
     formData.append("budget", getValues("budget"));
-    formData.append("availability", getValues("availability")[0].file);
-// console.log(getValues("reference_image")[0])
+    formData.append("availability", getValues("availability"));
+
     try {
       // Send form data using Axios POST request to your API endpoint
       const response = await axios.post(
@@ -316,7 +315,11 @@ const Artistabout = () => {
         <input
           type="file"
           name="reference_image"
-          {...detailsRegister("reference_image")}
+          ref={detailsRegister("reference_image")}
+          onChange={(event) => {
+            const file = event.target.files[0];
+            setValue("reference_image", file);
+          }}
         />
         <h5 className="text-left">
           Are you flexible with the availability of the tattoo artist?
@@ -975,7 +978,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Mon</td>
                       {timedata?.monday_from === null ||
-                      timedata?.monday_from === "null" ? (
+                        timedata?.monday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -990,7 +993,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Tue</td>
                       {timedata?.tuesday_from === null ||
-                      timedata?.tuesday_from === "null" ? (
+                        timedata?.tuesday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1005,7 +1008,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Wed</td>
                       {timedata?.wednesday_from === null ||
-                      timedata?.wednesday_to === "null" ? (
+                        timedata?.wednesday_to === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1020,7 +1023,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Thu</td>
                       {timedata?.thrusday_from === null ||
-                      timedata?.thrusday_from === "null" ? (
+                        timedata?.thrusday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1035,7 +1038,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Fri</td>
                       {timedata?.friday_from === null ||
-                      timedata?.friday_from === "null" ? (
+                        timedata?.friday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1050,7 +1053,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Sat</td>
                       {timedata?.saterday_from === null ||
-                      timedata?.saterday_from === "null" ? (
+                        timedata?.saterday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1065,7 +1068,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Sun</td>
                       {timedata?.sunday_from === null ||
-                      timedata?.sunday_from === "null" ? (
+                        timedata?.sunday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
