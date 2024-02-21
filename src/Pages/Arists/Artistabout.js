@@ -125,6 +125,8 @@ const Artistabout = () => {
     console.log(data);
     setActiveStep(1);
   };
+  const referenceImageFile = getValues("reference_image");
+
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("front_back_view", data.front_back_view);
@@ -133,10 +135,10 @@ const Artistabout = () => {
     formData.append("size", getValues("size"));
     formData.append("description", getValues("description"));
     formData.append("when_get_tattooed", getValues("when_get_tattooed"));
-    formData.append("reference_image", getValues("reference_image"));
+    formData.append("reference_image", referenceImageFile);
     formData.append("budget", getValues("budget"));
-    formData.append("availability", getValues("availability"));
-
+    formData.append("availability", getValues("availability")[0].file);
+// console.log(getValues("reference_image")[0])
     try {
       // Send form data using Axios POST request to your API endpoint
       const response = await axios.post(
