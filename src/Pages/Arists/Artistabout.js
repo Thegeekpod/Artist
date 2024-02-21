@@ -128,7 +128,7 @@ const Artistabout = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("front_back_view", data.front_back_view);
-    formData.append("artist_id", getValues("artist_id"));
+    formData.append("artist_id", user.id);
     formData.append("color", getValues("color"));
     formData.append("size", getValues("size"));
     formData.append("description", getValues("description"));
