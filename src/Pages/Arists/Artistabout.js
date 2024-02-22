@@ -180,15 +180,17 @@ const Artistabout = () => {
     register: anotherRegister,
     handleSubmit: anotherHandleSubmit,
     formState: { errors: anotherErrors },
-    getValues: getAnotherValues,
+    setValue: anotherSetValue,
   } = useForm({
     resolver: yupResolver(appoinmentschema),
     defaultValues: {
       message: "",
-      artist_id: user.id,
+      artist_id: slug,
       availability: "",
     },
   });
+
+  console.log(anotherErrors);
   const onSubmitAnother = async (data) => {
     console.log(data);
     const formData = new FormData();
@@ -245,6 +247,7 @@ const Artistabout = () => {
         } else {
           setData(response.data.data.artworks);
           setUserData(response.data.data);
+          anotherSetValue("artist_id", response.data.data.id);
           setTimedata(response.data.data.time_data);
           setBannerimageData(response.data.data.banner_images);
         }
