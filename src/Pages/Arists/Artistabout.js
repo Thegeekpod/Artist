@@ -68,7 +68,11 @@ const schema = yup.object({
     .min(1, "Please select at least one view")
     .required("Please select at least one view"),
 });
-
+const appoinmentschema = yup.object().shape({
+  message: yup.string().required(),
+  artist_id: yup.string().required(),
+  availability: yup.string().required(),
+});
 const Artistabout = () => {
   const { token } = useUser();
   const navigate = useNavigate();
@@ -142,6 +146,62 @@ const Artistabout = () => {
       // Send form data using Axios POST request to your API endpoint
       const response = await axios.post(
         `${apibaseUrl}/quote`,
+        formData, // This should be the data you want to send in the request body
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Display success message if the request was successful
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Tattoo details submitted!",
+          text: "Your tattoo information has been submitted successfully.",
+        });
+      }
+    } catch (error) {
+      // Handle error scenarios here
+      console.error("Error occurred:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
+  };
+  //aksjjjjjjjjjjjjjjjj
+  //appoinment
+
+  const {
+    register: anotherRegister,
+    handleSubmit: anotherHandleSubmit,
+    formState: { errors: anotherErrors },
+    getValues: getAnotherValues,
+  } = useForm({
+    resolver: yupResolver(appoinmentschema),
+    defaultValues: {
+      message: '',
+      artist_id: '',
+      availability: '',
+    },
+  });
+  const onSubmitAnother = async (data) => {
+    console.log('Form Data:', data); // Log form data
+
+    const formData = new FormData();
+    formData.append('message', data.message);
+    formData.append('artist_id', user.id);
+    formData.append('availability', data.availability);
+
+    // Here you can send formData to your backend or do any other processing
+    console.log('Form Data for FormData:', formData); // Log FormData
+    try {
+      // Send form data using Axios POST request to your API endpoint
+      const response = await axios.post(
+        `${apibaseUrl}/appointment`,
         formData, // This should be the data you want to send in the request body
         {
           headers: {
@@ -559,14 +619,26 @@ const Artistabout = () => {
                         Edit Profile
                       </button> */}
                       {isAuthenticated() ? (
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          data-toggle="modal"
-                          data-target="#staticBackdrop"
-                        >
-                          Get A Free Quote
-                        </button>
+                        <>
+                        <div style={{justifyContent:"space-between",display:'flex',padding:'12px'}}>
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#staticBackdrop"
+                          >
+                            Get A Free Quote
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#staticBackdrop1"
+                          >
+                            Appoinment Booking
+                          </button>
+                          </div>
+                        </>
                       ) : (
                         ""
                       )}
@@ -651,6 +723,52 @@ const Artistabout = () => {
                                     </button>
                                   </Flex>
                                 )}
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        className="modal fade"
+                        id="staticBackdrop1"
+                        data-backdrop="static"
+                        data-keyboard="false"
+                        tabindex="-1"
+                        aria-labelledby="staticBackdropLabel"
+                        aria-hidden="true"
+                      >
+                        <div className="modal-dialog">
+                          <div className="modal-content ds">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="staticBackdropLabel1"
+                              >
+                               Book An Appoinment
+                              </h5>
+                              <button
+                                type="button"
+                                className="close closee"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                X
+                              </button>
+                            </div>
+                            <div className="modal-body">
+                              <form onSubmit={anotherHandleSubmit(onSubmitAnother)}>
+                                <div>
+                                <h5 className="text-left">Message:</h5>
+                                  <input id="message" {...anotherRegister('message')}       className="form-control form-controls"/>
+                                  {anotherErrors.message && <span>{anotherErrors.message.message}</span>}
+                                </div>
+                                <div>
+                                <h5 className="text-left">Availability:</h5>
+                                  <input type="date" id="availability" {...anotherRegister('availability')}       className="form-control form-controls" />
+                                  {anotherErrors.availability && <span>{anotherErrors.availability.message}</span>}
+                                </div>
+                                <button type="submit" className="btn btn-primary" style={{margin:'20px'}}>Submit</button>
                               </form>
                             </div>
                           </div>
