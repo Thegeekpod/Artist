@@ -19,7 +19,7 @@ const Search = () => {
     placementName: "",
     date: "",
     dateTo: "",
-    zipCode: JSON.parse(localStorage.getItem("postal_code")).postal_code,
+    zipCode: JSON.parse(localStorage.getItem("postal_code"))?.postal_code,
     radius: "",
     country: "United States of America",
   });
