@@ -69,6 +69,12 @@ const schema = yup.object({
     .required("Please select at least one view"),
 });
 
+const appointmentSchema = yup.object({
+  message: yup.string().required("Message is required"),
+  artist_id: yup.string().required("Artist id is required"),
+  availability: yup.string().required("Availability is required"),
+});
+
 const Artistabout = () => {
   const { token } = useUser();
   const navigate = useNavigate();
@@ -110,6 +116,18 @@ const Artistabout = () => {
     resolver: yupResolver(schema),
     defaultValues: {
       front_back_view: "",
+    },
+  });
+  const {
+    register: appointmentRegister,
+    handleSubmit: appointmentHandleSubmit,
+    formState: { errors: appointmentErrors },
+  } = useForm({
+    resolver: yupResolver(appointmentSchema),
+    defaultValues: {
+      message: "",
+      artist_id: slug,
+      availability: "",
     },
   });
 
@@ -156,6 +174,43 @@ const Artistabout = () => {
           icon: "success",
           title: "Tattoo details submitted!",
           text: "Your tattoo information has been submitted successfully.",
+        });
+      }
+    } catch (error) {
+      // Handle error scenarios here
+      console.error("Error occurred:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
+  };
+
+  const onAppointmentSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("message", data.message);
+    formData.append("artist_id", user.id);
+    formData.append("availability", data.availability);
+
+    try {
+      // Send form data using Axios POST request to your API endpoint
+      const response = await axios.post(
+        `${apibaseUrl}/appointment`,
+        formData, // This should be the data you want to send in the request body
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Display success message if the request was successful
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Appointment submitted!",
+          text: "Your appointment has been submitted successfully.",
         });
       }
     } catch (error) {
@@ -547,7 +602,6 @@ const Artistabout = () => {
                           </div>
                         </div>
                       )}
-
                       {/* <button
                         type="button"
                         className="btn btn-success"
@@ -558,18 +612,113 @@ const Artistabout = () => {
                       >
                         Edit Profile
                       </button> */}
-                      {isAuthenticated() ? (
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          data-toggle="modal"
-                          data-target="#staticBackdrop"
-                        >
-                          Get A Free Quote
-                        </button>
-                      ) : (
-                        ""
-                      )}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        {isAuthenticated() && (
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#staticBackdrop"
+                          >
+                            Get A Free Quote
+                          </button>
+                        )}
+                        {isAuthenticated() && (
+                          <button
+                            type="button"
+                            className="btn btn-success"
+                            data-toggle="modal"
+                            data-target="#appointment"
+                          >
+                            Book your appointment
+                          </button>
+                        )}
+                      </div>
+                      <div
+                        className="modal fade"
+                        id="appointment"
+                        data-backdrop="static"
+                        data-keyboard="false"
+                        tabindex="-1"
+                        aria-labelledby="staticBackdropLabel"
+                        aria-hidden="true"
+                      >
+                        <div className="modal-dialog">
+                          <div className="modal-content ds">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="staticBackdropLabel"
+                              >
+                                Book your appointment
+                              </h5>
+                              <button
+                                type="button"
+                                className="close closee"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                X
+                              </button>
+                            </div>
+                            <div className="modal-body">
+                              <form
+                                onSubmit={appointmentHandleSubmit(
+                                  onAppointmentSubmit
+                                )}
+                              >
+                                <div className="form-group">
+                                  <h5 className="text-left">Message</h5>
+                                  <textarea
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter message"
+                                    {...appointmentRegister("message")}
+                                  ></textarea>
+                                  {appointmentErrors.message && (
+                                    <p className="text-danger">
+                                      {appointmentErrors.message.message}
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="form-group">
+                                  <h5 className="text-left">
+                                    Are you flexible with the availability of
+                                    the tattoo artist?
+                                  </h5>
+                                  <input
+                                    type="date"
+                                    name="availability"
+                                    className="form-control"
+                                    {...appointmentRegister("availability")}
+                                  />
+                                  {appointmentErrors.availability && (
+                                    <p className="text-danger">
+                                      {appointmentErrors.availability.message}
+                                    </p>
+                                  )}
+                                </div>
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary"
+                                  style={{
+                                    marginTop: "10px",
+                                  }}
+                                >
+                                  Submit
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                       <div
                         className="modal fade"
@@ -978,7 +1127,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Mon</td>
                       {timedata?.monday_from === null ||
-                        timedata?.monday_from === "null" ? (
+                      timedata?.monday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -993,7 +1142,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Tue</td>
                       {timedata?.tuesday_from === null ||
-                        timedata?.tuesday_from === "null" ? (
+                      timedata?.tuesday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1008,7 +1157,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Wed</td>
                       {timedata?.wednesday_from === null ||
-                        timedata?.wednesday_to === "null" ? (
+                      timedata?.wednesday_to === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1023,7 +1172,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Thu</td>
                       {timedata?.thrusday_from === null ||
-                        timedata?.thrusday_from === "null" ? (
+                      timedata?.thrusday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1038,7 +1187,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Fri</td>
                       {timedata?.friday_from === null ||
-                        timedata?.friday_from === "null" ? (
+                      timedata?.friday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1053,7 +1202,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Sat</td>
                       {timedata?.saterday_from === null ||
-                        timedata?.saterday_from === "null" ? (
+                      timedata?.saterday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1068,7 +1217,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Sun</td>
                       {timedata?.sunday_from === null ||
-                        timedata?.sunday_from === "null" ? (
+                      timedata?.sunday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
