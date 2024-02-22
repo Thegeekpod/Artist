@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { isAuthenticated, useUser } from "../Account/UserContext";
 import axios from "axios";
@@ -82,6 +82,7 @@ const Artistabout = () => {
   const [timedata, setTimedata] = useState([null]);
   const [bannerImagedata, setBannerimageData] = useState([]);
   const { slug } = useParams();
+  const appoinmentRef = useRef();
   const { activeStep, setActiveStep } = useSteps({
     index: 0,
     count: steps.length,
@@ -183,21 +184,17 @@ const Artistabout = () => {
   } = useForm({
     resolver: yupResolver(appoinmentschema),
     defaultValues: {
-      message: '',
-      artist_id: '',
-      availability: '',
+      message: "",
+      artist_id: "",
+      availability: "",
     },
   });
   const onSubmitAnother = async (data) => {
-    console.log('Form Data:', data); // Log form data
-
     const formData = new FormData();
-    formData.append('message', data.message);
-    formData.append('artist_id', user.id);
-    formData.append('availability', data.availability);
+    formData.append("message", data.message);
+    formData.append("artist_id", user.id);
+    formData.append("availability", data.availability);
 
-    // Here you can send formData to your backend or do any other processing
-    console.log('Form Data for FormData:', formData); // Log FormData
     try {
       // Send form data using Axios POST request to your API endpoint
       const response = await axios.post(
@@ -212,6 +209,7 @@ const Artistabout = () => {
 
       // Display success message if the request was successful
       if (response.status === 200) {
+        appoinmentRef.current.click();
         Swal.fire({
           icon: "success",
           title: "Tattoo details submitted!",
@@ -618,29 +616,32 @@ const Artistabout = () => {
                       >
                         Edit Profile
                       </button> */}
-                      {isAuthenticated() ? (
+                      {isAuthenticated() && (
                         <>
-                        <div style={{justifyContent:"space-between",display:'flex'}}>
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                            data-toggle="modal"
-                            data-target="#staticBackdrop"
+                          <div
+                            style={{
+                              justifyContent: "space-between",
+                              display: "flex",
+                            }}
                           >
-                            Get A Free Quote
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                            data-toggle="modal"
-                            data-target="#staticBackdrop1"
-                          >
-                            Appoinment Booking
-                          </button>
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              data-toggle="modal"
+                              data-target="#staticBackdrop"
+                            >
+                              Get A Free Quote
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              data-toggle="modal"
+                              data-target="#staticBackdrop1"
+                            >
+                              Appoinment Booking
+                            </button>
                           </div>
                         </>
-                      ) : (
-                        ""
                       )}
 
                       <div
@@ -745,30 +746,54 @@ const Artistabout = () => {
                                 className="modal-title"
                                 id="staticBackdropLabel1"
                               >
-                               Book An Appoinment
+                                Book An Appoinment
                               </h5>
                               <button
                                 type="button"
                                 className="close closee"
                                 data-dismiss="modal"
                                 aria-label="Close"
+                                ref={appoinmentRef}
                               >
                                 X
                               </button>
                             </div>
                             <div className="modal-body">
-                              <form onSubmit={anotherHandleSubmit(onSubmitAnother)}>
+                              <form
+                                onSubmit={anotherHandleSubmit(onSubmitAnother)}
+                              >
                                 <div>
-                                <h5 className="text-left">Message:</h5>
-                                  <input id="message" {...anotherRegister('message')}       className="form-control form-controls"/>
-                                  {anotherErrors.message && <span>{anotherErrors.message.message}</span>}
+                                  <h5 className="text-left">Message:</h5>
+                                  <input
+                                    id="message"
+                                    {...anotherRegister("message")}
+                                    className="form-control form-controls"
+                                  />
+                                  {anotherErrors.message && (
+                                    <span>{anotherErrors.message.message}</span>
+                                  )}
                                 </div>
                                 <div>
-                                <h5 className="text-left">Availability:</h5>
-                                  <input type="date" id="availability" {...anotherRegister('availability')}       className="form-control form-controls" />
-                                  {anotherErrors.availability && <span>{anotherErrors.availability.message}</span>}
+                                  <h5 className="text-left">Availability:</h5>
+                                  <input
+                                    type="date"
+                                    id="availability"
+                                    {...anotherRegister("availability")}
+                                    className="form-control form-controls"
+                                  />
+                                  {anotherErrors.availability && (
+                                    <span>
+                                      {anotherErrors.availability.message}
+                                    </span>
+                                  )}
                                 </div>
-                                <button type="submit" className="btn btn-primary" style={{margin:'20px'}}>Submit</button>
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary"
+                                  style={{ margin: "20px" }}
+                                >
+                                  Submit
+                                </button>
                               </form>
                             </div>
                           </div>
@@ -1096,7 +1121,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Mon</td>
                       {timedata?.monday_from === null ||
-                        timedata?.monday_from === "null" ? (
+                      timedata?.monday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1111,7 +1136,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Tue</td>
                       {timedata?.tuesday_from === null ||
-                        timedata?.tuesday_from === "null" ? (
+                      timedata?.tuesday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1126,7 +1151,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Wed</td>
                       {timedata?.wednesday_from === null ||
-                        timedata?.wednesday_to === "null" ? (
+                      timedata?.wednesday_to === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1141,7 +1166,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Thu</td>
                       {timedata?.thrusday_from === null ||
-                        timedata?.thrusday_from === "null" ? (
+                      timedata?.thrusday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1156,7 +1181,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Fri</td>
                       {timedata?.friday_from === null ||
-                        timedata?.friday_from === "null" ? (
+                      timedata?.friday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1171,7 +1196,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Sat</td>
                       {timedata?.saterday_from === null ||
-                        timedata?.saterday_from === "null" ? (
+                      timedata?.saterday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
@@ -1186,7 +1211,7 @@ const Artistabout = () => {
                     <tr>
                       <td>Sun</td>
                       {timedata?.sunday_from === null ||
-                        timedata?.sunday_from === "null" ? (
+                      timedata?.sunday_from === "null" ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
