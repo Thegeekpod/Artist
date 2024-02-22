@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { isAuthenticated, useUser } from "../Account/UserContext";
 import axios from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -83,6 +83,7 @@ const Artistabout = () => {
   const [bannerImagedata, setBannerimageData] = useState([]);
   const { slug } = useParams();
   const appoinmentRef = useRef();
+  const quoteRef = useRef();
   const { activeStep, setActiveStep } = useSteps({
     index: 0,
     count: steps.length,
@@ -157,6 +158,8 @@ const Artistabout = () => {
 
       // Display success message if the request was successful
       if (response.status === 200) {
+        quoteRef.current.click();
+        window.location.reload();
         Swal.fire({
           icon: "success",
           title: "Tattoo details submitted!",
@@ -190,7 +193,6 @@ const Artistabout = () => {
     },
   });
 
-  console.log(anotherErrors);
   const onSubmitAnother = async (data) => {
     console.log(data);
     const formData = new FormData();
@@ -213,6 +215,7 @@ const Artistabout = () => {
       // Display success message if the request was successful
       if (response.status === 200) {
         appoinmentRef.current.click();
+        window.location.reload();
         Swal.fire({
           icon: "success",
           title: "Tattoo details submitted!",
@@ -671,6 +674,7 @@ const Artistabout = () => {
                                 className="close closee"
                                 data-dismiss="modal"
                                 aria-label="Close"
+                                ref={quoteRef}
                               >
                                 X
                               </button>
