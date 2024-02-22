@@ -185,11 +185,12 @@ const Artistabout = () => {
     resolver: yupResolver(appoinmentschema),
     defaultValues: {
       message: "",
-      artist_id: "",
+      artist_id: user.id,
       availability: "",
     },
   });
   const onSubmitAnother = async (data) => {
+    console.log(data);
     const formData = new FormData();
     formData.append("message", data.message);
     formData.append("artist_id", user.id);
