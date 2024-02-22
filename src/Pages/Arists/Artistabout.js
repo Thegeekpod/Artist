@@ -620,7 +620,7 @@ const Artistabout = () => {
                       </button> */}
                       {isAuthenticated() ? (
                         <>
-                        <div style={{justifyContent:"space-between",display:'flex',padding:'12px'}}>
+                        <div style={{justifyContent:"space-between",display:'flex'}}>
                           <button
                             type="button"
                             className="btn btn-primary"
