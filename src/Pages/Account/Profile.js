@@ -63,9 +63,10 @@ const Profile = () => {
       });
   }, [token, isAuthenticated, navigate]);
 
-
+console.log(user.type)
   return (
     <>
+
       <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
         <div className="container">
 
@@ -136,6 +137,7 @@ const Profile = () => {
                           href="mailto:#"
                         >
                           <i class="fa fa-envelope white" aria-hidden="true"> {user?.email}</i>
+                        
                         </a> {'\u00A0'} </li>{'\u00A0'}
                         <li> <a
                           className="h4 text-regular text-middle text-lightener"
@@ -212,7 +214,7 @@ const Profile = () => {
         </div>
       </div>
       {/* Breadcrumbs*/}
-      <div className="ds ms section_padding_top_60 section_padding_bottom_10 tab-recent-work">
+      {user?.type === 'artist' ?   <div className="ds ms section_padding_top_60 section_padding_bottom_10 tab-recent-work">
         <div className="container">
           <Swiper
             effect={'coverflow'}
@@ -268,9 +270,9 @@ const Profile = () => {
 
           </Swiper>
         </div>
-      </div>
-
-      <div className="ds section_padding_top_105 section_padding_bottom_120 parallax-block-1 parallax">
+      </div>:''}
+    
+      {user?.type === 'artist' ? <div className="ds section_padding_top_105 section_padding_bottom_120 parallax-block-1 parallax">
         <div className="container">
           <h3 class="page-title-1 text-center ">Highlights From {user?.username}</h3>
           <div className="row rowflex">
@@ -378,8 +380,8 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
+      </div>:''}
+      {user?.type === 'artist' ? <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
         <div className="container">
           <div className="row bottommargin_40">
             <div className="col-lg-12 text-center">
@@ -538,8 +540,8 @@ const Profile = () => {
 
           </div>
         </div>
-      </div>
-      <div className="ds ms section_padding_top_60 section_padding_bottom_10 tab-recent-work">
+      </div>:''}
+      {user?.type === 'artist' ? <div className="ds ms section_padding_top_60 section_padding_bottom_10 tab-recent-work">
         <div className="container">
           <h3 class="page-title-1 text-center ">Amenities From The Business</h3>
           <div className="row rowflex">
@@ -634,8 +636,9 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="ds section_padding_top_90 section_padding_bottom_160">
+      </div>:''}
+      
+      {user?.type === 'artist' ? <div className="ds section_padding_top_90 section_padding_bottom_160">
         <div className="container">
           <div className="row bottommargin_40">
             <div className="col-lg-12 text-center">
@@ -671,7 +674,7 @@ const Profile = () => {
 
           </div>
         </div>
-      </div>
+      </div>:''}
       <style jsx>
         {`th, td {
     padding: 21px !important;

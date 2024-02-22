@@ -561,7 +561,7 @@ const zip = formData.zipcode;
                   />
                 </div>
               </div>
-              <table className="table" style={{ marginTop: '25px' }}>
+              {user?.type === 'artist' ?  <table className="table" style={{ marginTop: '25px' }}>
                 <thead>
                   <tr>
                     <th>Day</th>
@@ -927,7 +927,8 @@ const zip = formData.zipcode;
                     </td>
                   </tr>
                 </tbody>
-              </table>
+              </table>:''}
+             
               {sucessprofileinfo && <><div>
                 <p className='sucess'>Profile Update Sucessfull</p>
               </div></>}
@@ -942,6 +943,7 @@ const zip = formData.zipcode;
             </form>
 
           </div>
+          {user?.type === 'artist' ? <>
           <div className='frombg' ref={artsupload} id="artsupload"  >
             <div className='row text-center'>
               <h4 class="page-title-1 " style={{ color: 'white' }}> Upload Your Arts </h4>
@@ -1182,6 +1184,8 @@ const zip = formData.zipcode;
 
             </div>
           </div>
+          </>:''}
+          
         </section>
 
       </div>
