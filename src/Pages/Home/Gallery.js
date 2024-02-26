@@ -30,11 +30,12 @@ export default function MGallery({ image, ussername }) {
     setImages(image);
     // other logic
   }, [image]);
-  const handleImageClick = (index) => {
+  const handleImageClick = (index,key) => {
+    setSelectedImageIndex(key);
     if(!index){
       navigate('/login')
     }else{
-      setSelectedImageIndex(index);
+
       viewHandler(index);
    
     }
@@ -70,18 +71,7 @@ export default function MGallery({ image, ussername }) {
     }
     return [];
   };
-  // useEffect(() => {
-  //   // Retrieve likes data from local storage when the component mounts
-
-  //   const storeviws = localStorage.getItem('views');
-  //   if (storeviws) {
-  //     setView(JSON.parse(storeviws));
-  //   }
-  //   //   const storedComments = localStorage.getItem('comments');
-  //   // if (storedComments) {
-  //   //   setComments(JSON.parse(storedComments));
-  //   // }
-  // }, []);
+ 
 
   const likeHandler = (index) => {
     if(!index){
@@ -236,7 +226,7 @@ export default function MGallery({ image, ussername }) {
             <i
               className="fa fa-eye view"
               aria-hidden="true"
-              onClick={() => handleImageClick(item?.id)}
+              onClick={() => handleImageClick(item?.id,index)}
             >
               <span className="space">
                 {view[item.id] || item.views?.length}
