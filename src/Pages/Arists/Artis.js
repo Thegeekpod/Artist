@@ -66,48 +66,29 @@ const navigate = useNavigate();
         </div>
         <div className="row">
         {data && data.length ? (
-        data.map((item, index) => (
-          <div key={index}>
-          <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center" onClick={()=>{navigate(`/artists/${item.username}`)}}>
-            <div className="team-item text-center">
-              <figure className="team-item__img ">
-                  <img style={{width:'298px', height:'295px'}} src={`${apiimageurl}/ProfileImage/${item.profile_image || 'noimg.jpg'}`} alt="" />
-              </figure>
-              <div className="team-item__content text-center pb-2">
-                <h5 className="team-item__title">
-                  <Link to={`/artists/${item.username}`}>{item.name}</Link>
-                </h5>
-                <p className="team-item__prof">{item.username}</p>
-              </div>
-              {/* <ul className="social-list text-center social-list--team">
-                <li>
-                  <a href="#">
-                    <i className="fa fa-facebook" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-twitter" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-youtube-play" aria-hidden="true" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-google-plus" aria-hidden="true" />
-                  </a>
-                </li>
-              </ul> */}
+  data
+    .filter(item => item.type === "artist") // Filter items where type is "artist"
+    .map((item, index) => (
+      <div key={index}>
+        <div className="col-sm-4 col-md-4 col-lg-4 text-sm-center" onClick={() => { navigate(`/artists/${item.username}`) }}>
+          <div className="team-item text-center">
+            <figure className="team-item__img ">
+              <img style={{ width: '298px', height: '295px' }} src={`${apiimageurl}/ProfileImage/${item.profile_image || 'noimg.jpg'}`} alt="" />
+            </figure>
+            <div className="team-item__content text-center pb-2">
+              <h5 className="team-item__title">
+                <Link to={`/artists/${item.username}`}>{item.name}</Link>
+              </h5>
+              <p className="team-item__prof">{item.username}</p>
             </div>
           </div>
-          </div>
-        ))
-      ) : (
-        <div>No data available.</div>
-      )}
+        </div>
+      </div>
+    ))
+) : (
+  <div>No Artist available.</div>
+)}
+
           
       
         </div>
