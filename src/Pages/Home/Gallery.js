@@ -6,6 +6,7 @@ import { useUser,isAuthenticated } from "../Account/UserContext";
 import { apiProxybaseUrl, apibaseUrl } from "../../Component/Apibaseurl";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { color } from "framer-motion";
 
 export default function MGallery({ image, ussername }) {
   const { user, token } = useUser();
@@ -258,13 +259,18 @@ export default function MGallery({ image, ussername }) {
               <div className="row d-flex">
                 <div className="coll-6 text-left">
                   <i
+                     style={{
+                      color: item.likes.some((like) => like.user_id === user.id) ? '#1fbad6' : 'white'
+                    }}
+                    
                     className="fa fa-thumbs-up like"
                     aria-hidden="true"
                     onClick={() => likeHandler(item?.id)}
                   >
-                    {""}
+                  
                     <span className="space">
                       {likes[item.id] || item.likes?.length}
+                      
                     </span>
                   </i>
                 </div>
@@ -367,8 +373,7 @@ export default function MGallery({ image, ussername }) {
           <button
             type="button"
             className="saikoihsaoP"
-            onClick={handleAddComment}
-          >
+            onClick={handleAddComment} >
             Submit
           </button>
         </div>
