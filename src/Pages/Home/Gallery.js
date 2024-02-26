@@ -259,9 +259,7 @@ export default function MGallery({ image, ussername }) {
               <div className="row d-flex">
                 <div className="coll-6 text-left">
                   <i
-                     style={{
-                      color: item.likes.map((like) => like.user_id === user.id) ? '#1fbad6' : 'white'
-                    }}
+                     
                     
                     className="fa fa-thumbs-up like"
                     aria-hidden="true"
