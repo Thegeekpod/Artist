@@ -30,9 +30,14 @@ export default function MGallery({ image, ussername }) {
     // other logic
   }, [image]);
   const handleImageClick = (index) => {
-   
+    if(index){
+      navigate('/login')
+    }else{
+      setSelectedImageIndex(index);
       viewHandler(index);
-
+   
+    }
+   
   };
 
   const closeLightbox = () => {
@@ -81,7 +86,7 @@ export default function MGallery({ image, ussername }) {
     if(isAuthenticated){
       navigate('/login')
     }else{
-      const user_id = user.id;
+      const user_id = user?.id;
 
       // Your API endpoint to store a like
       const apiUrl = `${apibaseUrl}/like`;
@@ -113,7 +118,7 @@ export default function MGallery({ image, ussername }) {
 
   const viewHandler = (index) => {
 
-    const user_id = user.id;
+    const user_id = user?.id;
 
     // Your API endpoint to store a like
     const apiUrl = `${apibaseUrl}/view`;
@@ -230,7 +235,7 @@ export default function MGallery({ image, ussername }) {
             <i
               className="fa fa-eye view"
               aria-hidden="true"
-              onClick={() => handleImageClick(item.id)}
+              onClick={() => handleImageClick(item?.id)}
             >
               <span className="space">
                 {view[item.id] || item.views?.length}
@@ -255,7 +260,7 @@ export default function MGallery({ image, ussername }) {
                   <i
                     className="fa fa-thumbs-up like"
                     aria-hidden="true"
-                    onClick={() => likeHandler(item.id)}
+                    onClick={() => likeHandler(item?.id)}
                   >
                     {""}
                     <span className="space">
