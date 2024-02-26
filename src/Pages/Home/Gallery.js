@@ -30,13 +30,9 @@ export default function MGallery({ image, ussername }) {
     // other logic
   }, [image]);
   const handleImageClick = (index) => {
-    setSelectedImageIndex(index);
-    if(isAuthenticated){
-      navigate('/login')
-    }else{
-      viewHandler(index);
    
-    }
+      viewHandler(index);
+
   };
 
   const closeLightbox = () => {
