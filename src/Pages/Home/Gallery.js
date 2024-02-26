@@ -30,7 +30,7 @@ export default function MGallery({ image, ussername }) {
     // other logic
   }, [image]);
   const handleImageClick = (index) => {
-    if(index){
+    if(!index){
       navigate('/login')
     }else{
       setSelectedImageIndex(index);
@@ -83,7 +83,7 @@ export default function MGallery({ image, ussername }) {
   // }, []);
 
   const likeHandler = (index) => {
-    if(isAuthenticated){
+    if(!index){
       navigate('/login')
     }else{
       const user_id = user?.id;
