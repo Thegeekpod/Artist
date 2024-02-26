@@ -260,7 +260,7 @@ export default function MGallery({ image, ussername }) {
                 <div className="coll-6 text-left">
                   <i
                      style={{
-                      color: item.likes.some((like) => like.user_id === user.id) ? '#1fbad6' : 'white'
+                      color: item.likes.map((like) => like.user_id === user.id) ? '#1fbad6' : 'white'
                     }}
                     
                     className="fa fa-thumbs-up like"
