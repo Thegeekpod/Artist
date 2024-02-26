@@ -171,8 +171,8 @@ const Register = () => {
                   value={type}
                   onChange={(e) => setType(e.target.value)}>
                     <option>Select</option>
-                    <option value="Artist">I am an Artist</option>
-                    <option value="Customer">I am a Customer</option>
+                    <option value="artist">I am an Artist</option>
+                    <option value="customer">I am a Customer</option>
                   </select>
                   {errorMessages.email && <p className='error'> {errorMessages.email[0]}</p>}
                 </div>

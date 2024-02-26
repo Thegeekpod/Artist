@@ -214,7 +214,8 @@ console.log(user.type)
         </div>
       </div>
       {/* Breadcrumbs*/}
-      {user?.type === 'artist' ?   <div className="ds ms section_padding_top_60 section_padding_bottom_10 tab-recent-work">
+      {user?.type === 'artist' ? <> 
+       <div className="ds ms section_padding_top_60 section_padding_bottom_10 tab-recent-work">
         <div className="container">
           <Swiper
             effect={'coverflow'}
@@ -270,9 +271,9 @@ console.log(user.type)
 
           </Swiper>
         </div>
-      </div>:''}
+      </div>
     
-      {user?.type === 'artist' ? <div className="ds section_padding_top_105 section_padding_bottom_120 parallax-block-1 parallax">
+       <div className="ds section_padding_top_105 section_padding_bottom_120 parallax-block-1 parallax">
         <div className="container">
           <h3 class="page-title-1 text-center ">Highlights From {user?.username}</h3>
           <div className="row rowflex">
@@ -380,8 +381,8 @@ console.log(user.type)
             </div>
           </div>
         </div>
-      </div>:''}
-      {user?.type === 'artist' ? <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
+      </div>
+     <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
         <div className="container">
           <div className="row bottommargin_40">
             <div className="col-lg-12 text-center">
@@ -540,8 +541,8 @@ console.log(user.type)
 
           </div>
         </div>
-      </div>:''}
-      {user?.type === 'artist' ? <div className="ds ms section_padding_top_60 section_padding_bottom_10 tab-recent-work">
+      </div>
+      <div className="ds ms section_padding_top_60 section_padding_bottom_10 tab-recent-work">
         <div className="container">
           <h3 class="page-title-1 text-center ">Amenities From The Business</h3>
           <div className="row rowflex">
@@ -636,9 +637,9 @@ console.log(user.type)
             </div>
           </div>
         </div>
-      </div>:''}
+      </div>
       
-      {user?.type === 'artist' ? <div className="ds section_padding_top_90 section_padding_bottom_160">
+      <div className="ds section_padding_top_90 section_padding_bottom_160">
         <div className="container">
           <div className="row bottommargin_40">
             <div className="col-lg-12 text-center">
@@ -674,7 +675,9 @@ console.log(user.type)
 
           </div>
         </div>
-      </div>:''}
+      </div>
+      </>
+      :''}
       <style jsx>
         {`th, td {
     padding: 21px !important;
