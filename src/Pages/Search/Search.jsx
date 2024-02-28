@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { apibaseUrl } from "../../Component/Apibaseurl";
 import axios from "axios";
 import MGallery from "../Home/Gallery";
+import getNearbyZipCodes from "../../utils/getNearbyZipCodes";
+import { filter } from "@chakra-ui/react";
 
 const Search = () => {
   const [loading, setLoading] = useState(true);
@@ -20,7 +22,7 @@ const Search = () => {
     date: "",
     dateTo: "",
     zipCode: JSON.parse(localStorage.getItem("postal_code"))?.postal_code,
-    radius: "",
+    radius: "20",
     country: "United States of America",
   });
 
@@ -30,6 +32,7 @@ const Search = () => {
         "https://sweetdevelopers.com/artist/api/all-artworks"
       );
       setData(response.data.data);
+      setSearchResults(response.data.data);
       setLoading(false);
     } catch (error) {
       setError(error);
@@ -66,12 +69,17 @@ const Search = () => {
   const handleArtInputChange = (e) => {
     const selectedDate = e.target.value;
     const dateObject = new Date(selectedDate);
-    const dayName = dateObject.toLocaleDateString("en-US", { weekday: "long" });
+
+    const time = dateObject.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
     setArtworkData({
       ...artworkData,
 
       [e.target.name]: e.target.value,
-      date: dayName,
+      date: dateObject,
+      dateTo: time.split(" ")[0],
     });
     // console.log("Selected day:", artworkData.date);
   };
@@ -80,6 +88,13 @@ const Search = () => {
     e.preventDefault();
     try {
       // Fetch data only if it's not already available
+      const zipcodes = await getNearbyZipCodes(
+        artworkData.zipCode,
+        artworkData.radius
+      );
+
+      console.log(zipcodes);
+
       if (!data) {
         await fetchData();
       }
@@ -97,36 +112,41 @@ const Search = () => {
   };
 
   const simulateFilteringData = (filters) => {
-    // Apply filters
+    const dayName = new Date(filters.date).toLocaleDateString("en-US", {
+      weekday: "long",
+    });
+    const currentDate = `${dayName.toLowerCase()}_to`;
+    // Apply filters based on the form values which are not empty
+
     const filteredData = data.filter((artwork) => {
       return (
-        (filters.subjectName
-          ? artwork.subject_id === parseInt(filters.subjectName)
-          : true) &&
-        (filters.styleName
-          ? artwork.style_id === parseInt(filters.styleName)
-          : true) &&
-        (filters.placementName
-          ? artwork.placement_id === parseInt(filters.placementName)
-          : true) &&
-        (filters.zipCode ? artwork.zipcode === filters.zipCode : true) &&
-        (filters.username
-          ? artwork.user.username === filters.username
-          : true) &&
-        (filters.radius ? true : true) && // Placeholder for radius filter
-        (filters.country ? artwork.country === filters.country : true)
+        (!filters.username ||
+          artwork.user.username
+            .toLowerCase()
+            .includes(filters.username.toLowerCase())) &&
+        (!filters.country ||
+          artwork.country.trim().toLowerCase() ===
+            filters.country.trim().toLowerCase()) &&
+        (!filters.subjectName ||
+          artwork.subject_id.toString() === filters.subjectName) &&
+        (!filters.styleName ||
+          artwork.style_id.toString() === filters.styleName) &&
+        (!filters.placementName ||
+          artwork.placement_id.toString() === filters.placementName)
       );
     });
 
     return filteredData;
   };
 
+  console.log("Artwork data:", artworkData);
+
   useEffect(() => {
     fetchData();
     fetchSubjectsData();
     fetchStyleData();
     fetchPlacement();
-  }, [searchResults]);
+  }, []);
 
   return (
     <>
@@ -284,7 +304,7 @@ const Search = () => {
                       Availability Date
                     </label>
                     <input
-                      type="date"
+                      type="datetime-local"
                       name="date"
                       id="date"
                       className="form-control"
@@ -308,7 +328,7 @@ const Search = () => {
                 <p>Loading...</p>
               ) : (
                 <>
-                  <MGallery image={data} />
+                  <MGallery image={searchResults} />
                 </>
               )}
             </div>
