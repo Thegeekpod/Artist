@@ -30,17 +30,20 @@ export default function MGallery({ image, ussername }) {
     setImages(image);
     // other logic
   }, [image]);
-  const handleImageClick = (index,key) => {
+  const handleImageClick = (index, key) => {
+    // Set the selected image index to the value of the 'key' parameter
     setSelectedImageIndex(key);
-    if(!index){
-      navigate('/login')
-    }else{
 
-      viewHandler(index);
-   
+    // Check if the user is authenticated
+    if (!isAuthenticated()) {
+        // If authenticated, navigate to the login page
+        navigate('/login');
+    } else {
+        // If not authenticated, call the 'viewHandler' function with the 'index' parameter
+        viewHandler(index);
     }
-   
-  };
+};
+
 
   const closeLightbox = () => {
     setSelectedImageIndex(null);
@@ -74,7 +77,7 @@ export default function MGallery({ image, ussername }) {
  
 
   const likeHandler = (index) => {
-    if(!index){
+    if(!isAuthenticated()){
       navigate('/login')
     }else{
       const user_id = user?.id;
@@ -139,9 +142,14 @@ export default function MGallery({ image, ussername }) {
   };
 
   const openModal = (index) => {
-    setIsOpen(true);
-    setSelectedIndex(index);
-    fetchCommentsForArtwork(index);
+if(!isAuthenticated()){
+navigate('/login')
+}else{
+  setIsOpen(true);
+  setSelectedIndex(index);
+  fetchCommentsForArtwork(index);
+}
+
   };
 
   const closeModal = () => {
@@ -266,7 +274,7 @@ export default function MGallery({ image, ussername }) {
                   <i
                     className="fa fa-comment like"
                     aria-hidden="true"
-                    onClick={() => openModal(item.id)}
+                    onClick={() => openModal(item?.id)}
                   >
                     {""}
                     <span className="space">
