@@ -18,6 +18,7 @@ import 'swiper/css/navigation';
 import { EffectCoverflow, Pagination, Autoplay, Mousewheel, Navigation } from 'swiper/modules';
 import { apibaseUrl } from '../../Component/Apibaseurl';
 import MGallery from '../Home/Gallery';
+import MapContainer from '../../Component/MapContainer';
 const Profile = () => {
 
   const { token } = useUser();
@@ -542,9 +543,10 @@ const Profile = () => {
   <li>Paste the code into your profile address.</li>
 </ol>
 </div>
-<div  dangerouslySetInnerHTML={{
+{/* <div  dangerouslySetInnerHTML={{
         __html: user.address
-      }} />
+      }} /> */}
+        <MapContainer  lat={user?.lat || 37.7749} lng={user.lng || -122.4194}/>
               </div>
             </div>
 

@@ -43,6 +43,7 @@ import MGallery from "../Home/Gallery";
 import Swal from "sweetalert2";
 import SVGBody from "../../Component/SVGBody";
 import { useForm } from "react-hook-form";
+import MapContainer from "../../Component/MapContainer";
 
 const steps = [
   { title: "First", description: "Contact Info" },
@@ -1264,11 +1265,13 @@ const convertTo12HourFormat = (time24hr) => {
                     <li>Paste the code into your profile address.</li>
                   </ol>
                 </div>
-                <div
+                {/* <div
                   dangerouslySetInnerHTML={{
                     __html: user.address,
                   }}
-                />
+                /> */}
+              <MapContainer  lat={user?.lat || 37.7749} lng={user.lng || -122.4194}/>
+              
               </div>
             </div>
           </div>
