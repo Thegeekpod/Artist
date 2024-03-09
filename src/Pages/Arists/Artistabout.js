@@ -563,6 +563,13 @@ const checkauth = () =>{
     navigate('/login');
   }
 }
+const convertTo12HourFormat = (time24hr) => {
+  if (!time24hr) return null; // Handle cases where time is not available
+  const [hour, minute] = time24hr.split(":");
+  const hour12hr = ((parseInt(hour, 10) % 12) || 12).toString(); // Convert hour to 12-hour format
+  const amPm = parseInt(hour, 10) < 12 ? "AM" : "PM"; // Determine AM/PM
+  return `${hour12hr}:${minute} ${amPm}`;
+};
   return (
     <>
       <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1 ">
@@ -1125,109 +1132,112 @@ const checkauth = () =>{
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Mon</td>
-                      {timedata?.monday_from === null ||
-                      timedata?.monday_from === "null" ? (
-                        <>
-                          <td>Close</td>
-                          <td>Close</td>
-                        </>
-                      ) : (
-                        <>
-                          <td>{timedata?.monday_from}</td>
-                          <td>{timedata?.monday_to}</td>
-                        </>
-                      )}
+                      <td>Mon</td>{timedata?.monday_from === null || timedata?.monday_from === 'null' ?
+                        (
+                          <>
+                            <td>Close</td>
+                            <td>Close</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{convertTo12HourFormat(timedata?.monday_from)}</td>
+                            <td>{convertTo12HourFormat(timedata?.monday_to)}</td>
+                          </>
+                        )
+                      }
+
                     </tr>
                     <tr>
-                      <td>Tue</td>
-                      {timedata?.tuesday_from === null ||
-                      timedata?.tuesday_from === "null" ? (
-                        <>
-                          <td>Close</td>
-                          <td>Close</td>
-                        </>
-                      ) : (
-                        <>
-                          <td>{timedata?.tuesday_from}</td>
-                          <td>{timedata?.tuesday_to}</td>
-                        </>
-                      )}
+                      <td>Tue</td>{
+                        timedata?.tuesday_from === null || timedata?.tuesday_from === 'null' ? (
+                          <>
+                            <td>Close</td>
+                            <td>Close</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{convertTo12HourFormat(timedata?.tuesday_from)}</td>
+                            <td>{convertTo12HourFormat(timedata?.tuesday_to)}</td>
+                          </>
+                        )
+                      }
+
                     </tr>
                     <tr>
-                      <td>Wed</td>
-                      {timedata?.wednesday_from === null ||
-                      timedata?.wednesday_to === "null" ? (
-                        <>
-                          <td>Close</td>
-                          <td>Close</td>
-                        </>
-                      ) : (
-                        <>
-                          <td>{timedata?.wednesday_from}</td>
-                          <td>{timedata?.wednesday_from}</td>
-                        </>
-                      )}
+                      <td>Wed</td>{
+                        timedata?.wednesday_from === null || timedata?.wednesday_to === 'null' ? (
+                          <>
+                            <td>Close</td>
+                            <td>Close</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{convertTo12HourFormat(timedata?.wednesday_from)}</td>
+                            <td>{convertTo12HourFormat(timedata?.wednesday_from)}</td>
+                          </>
+                        )
+                      }
+
                     </tr>
                     <tr>
                       <td>Thu</td>
-                      {timedata?.thrusday_from === null ||
-                      timedata?.thrusday_from === "null" ? (
-                        <>
-                          <td>Close</td>
-                          <td>Close</td>
-                        </>
-                      ) : (
-                        <>
-                          <td>{timedata?.thrusday_from}</td>
-                          <td>{timedata?.thrusday_to}</td>
-                        </>
-                      )}
+                      {timedata?.thrusday_from === null || timedata?.thrusday_from === 'null' ?
+                        (
+                          <>
+                            <td>Close</td>
+                            <td>Close</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{convertTo12HourFormat(timedata?.thrusday_from)}</td>
+                            <td>{convertTo12HourFormat(timedata?.thrusday_to)}</td>
+                          </>
+                        )}
                     </tr>
                     <tr>
-                      <td>Fri</td>
-                      {timedata?.friday_from === null ||
-                      timedata?.friday_from === "null" ? (
-                        <>
-                          <td>Close</td>
-                          <td>Close</td>
-                        </>
-                      ) : (
-                        <>
-                          <td>{timedata?.friday_from}</td>
-                          <td>{timedata?.friday_to}</td>
-                        </>
-                      )}
+                      <td>Fri</td>{timedata?.friday_from === null || timedata?.friday_from === 'null' ?
+                        (
+                          <>
+                            <td>Close</td>
+                            <td>Close</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{convertTo12HourFormat(timedata?.friday_from)}</td>
+                            <td>{convertTo12HourFormat(timedata?.friday_to)}</td>
+                          </>
+                        )}
+
                     </tr>
                     <tr>
-                      <td>Sat</td>
-                      {timedata?.saterday_from === null ||
-                      timedata?.saterday_from === "null" ? (
+                      <td>Sat</td>{timedata?.saterday_from === null || timedata?.saterday_from === 'null' ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
                         </>
                       ) : (
                         <>
-                          <td>{timedata?.saterday_from}</td>
-                          <td>{timedata?.saterday_to}</td>
+                          <td>{convertTo12HourFormat(timedata?.saterday_from)}</td>
+                          <td>{convertTo12HourFormat(timedata?.saterday_to)}</td>
                         </>
                       )}
+
                     </tr>
                     <tr>
                       <td>Sun</td>
-                      {timedata?.sunday_from === null ||
-                      timedata?.sunday_from === "null" ? (
+                      {(timedata?.sunday_from === null || timedata?.sunday_from === 'null') ? (
                         <>
                           <td>Close</td>
                           <td>Close</td>
                         </>
                       ) : (
                         <>
-                          <td>{timedata?.sunday_from}</td>
-                          <td>{timedata?.sunday_to}</td>
+                          <td>{convertTo12HourFormat(timedata?.sunday_from)}</td>
+                          <td>{convertTo12HourFormat(timedata?.sunday_to)}</td>
                         </>
                       )}
+
+
                     </tr>
                   </tbody>
                 </table>

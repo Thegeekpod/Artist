@@ -62,8 +62,17 @@ const Profile = () => {
         console.error('Error fetching data:', error);
       });
   }, [token, isAuthenticated, navigate]);
-
-console.log(user.type)
+  const formatPhoneNumber = (number) => {
+    // Use regular expression to format the phone number
+    return number.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+  }
+  const convertTo12HourFormat = (time24hr) => {
+    if (!time24hr) return null; // Handle cases where time is not available
+    const [hour, minute] = time24hr.split(":");
+    const hour12hr = ((parseInt(hour, 10) % 12) || 12).toString(); // Convert hour to 12-hour format
+    const amPm = parseInt(hour, 10) < 12 ? "AM" : "PM"; // Determine AM/PM
+    return `${hour12hr}:${minute} ${amPm}`;
+  };
   return (
     <>
 
@@ -143,7 +152,7 @@ console.log(user.type)
                           className="h4 text-regular text-middle text-lightener"
                           href="tel:#"
                         >
-                          <i class="fa fa-phone white" aria-hidden="true"> {user?.phone}</i>
+                          <i class="fa fa-phone white" aria-hidden="true">  {user?.phone && formatPhoneNumber(user.phone)}</i>
                         </a></li>{'\u00A0'}
                         <li>
                           <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -415,8 +424,8 @@ console.log(user.type)
                           </>
                         ) : (
                           <>
-                            <td>{timedata?.monday_from}</td>
-                            <td>{timedata?.monday_to}</td>
+                            <td>{convertTo12HourFormat(timedata?.monday_from)}</td>
+                            <td>{convertTo12HourFormat(timedata?.monday_to)}</td>
                           </>
                         )
                       }
@@ -431,8 +440,8 @@ console.log(user.type)
                           </>
                         ) : (
                           <>
-                            <td>{timedata?.tuesday_from}</td>
-                            <td>{timedata?.tuesday_to}</td>
+                            <td>{convertTo12HourFormat(timedata?.tuesday_from)}</td>
+                            <td>{convertTo12HourFormat(timedata?.tuesday_to)}</td>
                           </>
                         )
                       }
@@ -447,8 +456,8 @@ console.log(user.type)
                           </>
                         ) : (
                           <>
-                            <td>{timedata?.wednesday_from}</td>
-                            <td>{timedata?.wednesday_from}</td>
+                            <td>{convertTo12HourFormat(timedata?.wednesday_from)}</td>
+                            <td>{convertTo12HourFormat(timedata?.wednesday_from)}</td>
                           </>
                         )
                       }
@@ -464,8 +473,8 @@ console.log(user.type)
                           </>
                         ) : (
                           <>
-                            <td>{timedata?.thrusday_from}</td>
-                            <td>{timedata?.thrusday_to}</td>
+                            <td>{convertTo12HourFormat(timedata?.thrusday_from)}</td>
+                            <td>{convertTo12HourFormat(timedata?.thrusday_to)}</td>
                           </>
                         )}
                     </tr>
@@ -478,8 +487,8 @@ console.log(user.type)
                           </>
                         ) : (
                           <>
-                            <td>{timedata?.friday_from}</td>
-                            <td>{timedata?.friday_to}</td>
+                            <td>{convertTo12HourFormat(timedata?.friday_from)}</td>
+                            <td>{convertTo12HourFormat(timedata?.friday_to)}</td>
                           </>
                         )}
 
@@ -492,8 +501,8 @@ console.log(user.type)
                         </>
                       ) : (
                         <>
-                          <td>{timedata?.saterday_from}</td>
-                          <td>{timedata?.saterday_to}</td>
+                          <td>{convertTo12HourFormat(timedata?.saterday_from)}</td>
+                          <td>{convertTo12HourFormat(timedata?.saterday_to)}</td>
                         </>
                       )}
 
@@ -507,8 +516,8 @@ console.log(user.type)
                         </>
                       ) : (
                         <>
-                          <td>{timedata?.sunday_from}</td>
-                          <td>{timedata?.sunday_to}</td>
+                          <td>{convertTo12HourFormat(timedata?.sunday_from)}</td>
+                          <td>{convertTo12HourFormat(timedata?.sunday_to)}</td>
                         </>
                       )}
 

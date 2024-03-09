@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { apibaseUrl } from '../../Component/Apibaseurl';
 import Swal from 'sweetalert2';
 import imageCompression from 'browser-image-compression';
+import InputMask from 'react-input-mask';
 const Editprofile = () => {
   const [formData, setFormData] = useState([]);
   const [artdata, setArtData] = useState([]);
@@ -127,7 +128,16 @@ const Editprofile = () => {
         profile_image: selectedImage,
         imagePreview: URL.createObjectURL(selectedImage),
       }));
+    } else if (e.target.name === 'phone') {
+      // For phone input, remove formatting characters and save the value
+      const { name, value } = e.target;
+      const phoneNumber = value.replace(/\D/g, ''); // Remove all non-numeric characters
+      setUserinfo((prevInfo) => ({
+        ...prevInfo,
+        [name]: phoneNumber,
+      }));
     } else {
+      // For other inputs, continue with masking
       const { name, value } = e.target;
       setUserinfo((prevInfo) => ({
         ...prevInfo,
@@ -135,6 +145,7 @@ const Editprofile = () => {
       }));
     }
   };
+  
 
   const handleTimeInputChange = (day, field, value) => {
     if (field === 'from_to') {
@@ -509,14 +520,15 @@ const zip = formData.zipcode;
                   <label htmlFor="phone" className="form-label">
                     Phone
                   </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="phone"
-                    placeholder="Enter your phone number"
-                    value={userinfo.phone || formData.phone}
-                    onChange={handleInputChange}
-                  />
+                  <InputMask
+      mask="(999) 999-9999"
+      maskChar=""
+      className="form-control"
+      name="phone"
+      placeholder="Enter your phone number"
+      value={userinfo.phone || formData.phone || ''}
+      onChange={handleInputChange}
+    />
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="address" className="form-label">
