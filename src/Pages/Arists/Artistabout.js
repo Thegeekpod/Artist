@@ -558,7 +558,11 @@ const Artistabout = () => {
       </form>
     );
   };
-
+const checkauth = () =>{
+  if(!isAuthenticated ()){
+    navigate('/login');
+  }
+}
   return (
     <>
       <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1 ">
@@ -598,17 +602,7 @@ const Artistabout = () => {
                             >
                               No Imgae
                             </h4>
-                            <div className="row text-center">
-                              <button
-                                type="button"
-                                className="btn btn-info"
-                                onClick={() => {
-                                  navigate("/editprofile#profileupdate");
-                                }}
-                              >
-                                Upload Now
-                              </button>
-                            </div>
+                           
                           </div>
                         </div>
                       )}
@@ -623,19 +617,22 @@ const Artistabout = () => {
                       >
                         Edit Profile
                       </button> */}
-                      {isAuthenticated() && (
+                      
                         <>
                           <div
                             style={{
                               justifyContent: "space-between",
                               display: "flex",
+                              padding:'0 8px 0 0px'
                             }}
+                           
                           >
                             <button
                               type="button"
                               className="btn btn-primary"
                               data-toggle="modal"
                               data-target="#staticBackdrop"
+                              onClick={()=>checkauth()}
                             >
                               Get A Free Quote
                             </button>
@@ -644,12 +641,13 @@ const Artistabout = () => {
                               className="btn btn-primary"
                               data-toggle="modal"
                               data-target="#staticBackdrop1"
+                              onClick={()=>checkauth()}
                             >
                               Appoinment Booking
                             </button>
                           </div>
                         </>
-                      )}
+                  
 
                       <div
                         className="modal fade"
