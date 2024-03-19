@@ -26,5 +26,5 @@ const MapContainer = ({ google, lat, lng }) => {
 }
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyC_pgkXoju8f9rN1fuMsqrXFcO1TI0OqkI'
+    apiKey: 'AIzaSyAE6dk-Oc544R2gZpwVqPQDhN0VGAjkxhw'
 })(MapContainer);
