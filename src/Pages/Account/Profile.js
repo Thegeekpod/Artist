@@ -20,6 +20,7 @@ import { apibaseUrl } from '../../Component/Apibaseurl';
 import MGallery from '../Home/Gallery';
 import MapContainer from '../../Component/MapContainer';
 const Profile = () => {
+  const { logout } = useUser();
 
   const { token } = useUser();
   const navigate = useNavigate();
@@ -73,6 +74,11 @@ const Profile = () => {
     const hour12hr = ((parseInt(hour, 10) % 12) || 12).toString(); // Convert hour to 12-hour format
     const amPm = parseInt(hour, 10) < 12 ? "AM" : "PM"; // Determine AM/PM
     return `${hour12hr}:${minute} ${amPm}`;
+  };
+  //logout
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
   return (
     <>
@@ -706,13 +712,13 @@ const Profile = () => {
                       }
    
       <div className="align-self-center ">
-      <p  className='p-0'>Name : {user?.username}</p>
-      <p className='p-0'>Email : {user?.email}</p>
+      <p  className='p-0' style={{color:'white'}}>Name : {user?.username}</p>
+      <p className='p-0' style={{color:'white'}}>Email : {user?.email}</p>
       <div>
-      <a style={{margin :'10px'}} href="#" className="btn btn-primary">
+      <a style={{margin :'10px'}} href="#" onClick={() => { navigate('/editprofile') }} className="btn btn-primary">
         Edit Profile
       </a>
-      <a style={{margin :'10px'}} href="#" className="btn btn-danger">
+      <a style={{margin :'10px'}} href="#" onClick={handleLogout} className="btn btn-danger">
         Logout
       </a>
       </div>
@@ -727,11 +733,13 @@ const Profile = () => {
       </>}
       <style jsx>
         {`
-        .align-self-center {
-          align-items: center !important;
-          display: flex;
-          flex-direction: column;
-      }
+      .align-self-center {
+        align-items: center !important;
+        display: flex;
+        flex-direction: column;
+        padding: 35px;
+        font-size:18px;
+    }
         p.p-0 {
           margin: 0;
           padding: 0;
