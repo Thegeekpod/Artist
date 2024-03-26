@@ -1,22 +1,22 @@
 import React, { useRef, useEffect } from 'react';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 
-const MapContainer = ({ google, latitude, longitude }) => {
+const MapContainer = ({ google, lat, lng }) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
     if (!google || !mapRef.current) return;
 
     const map = new google.maps.Map(mapRef.current, {
-      center: { latitude: latitude , longitude: longitude },
+      center: { lat: lat , lng: lng },
       zoom: 14
     });
 
     new google.maps.Marker({
-      position: { latitude: latitude , longitude: longitude },
+      position: { lat: lat , lng: lng },
       map: map
     });
-  }, [google, latitude, longitude]);
+  }, [google, lat, lng]);
 
   return (
     <div style={{ width: '100%', height: '430px' }}>
