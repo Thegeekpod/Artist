@@ -5,15 +5,15 @@ const MapContainer = ({ google, lat, lng }) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    if (!google || !mapRef.current) return;
+    if (!google || !mapRef.current || lat === undefined || lng === undefined) return;
 
     const map = new google.maps.Map(mapRef.current, {
-      center: { lat: lat , lng: lng },
+      center: { lat: parseFloat(lat), lng: parseFloat(lng) },
       zoom: 14
     });
 
     new google.maps.Marker({
-      position: { lat: lat , lng: lng },
+      position: { lat: parseFloat(lat), lng: parseFloat(lng) },
       map: map
     });
   }, [google, lat, lng]);
