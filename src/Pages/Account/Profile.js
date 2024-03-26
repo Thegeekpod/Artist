@@ -77,7 +77,8 @@ const Profile = () => {
   return (
     <>
 
-      <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
+{user?.type === 'artist' ? <>
+<div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1">
         <div className="container">
 
           <section className="bg-header breadcrumbs-custom">
@@ -224,7 +225,7 @@ const Profile = () => {
         </div>
       </div>
       {/* Breadcrumbs*/}
-      {user?.type === 'artist' ? <> 
+       
        <div className="ds ms section_padding_top_60 section_padding_bottom_10 tab-recent-work">
         <div className="container">
           <Swiper
@@ -688,9 +689,60 @@ const Profile = () => {
         </div>
       </div>
       </>
-      :''}
+      :<>
+<div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1" style={{padding:'100px 0'}}>
+  <div className="row">
+    <div className="col-md-4 col-md-offset-4 text-center d-flex">
+    {user.profile_image && user.profile_image.length ?
+                        <img  className="img-responsive profile-image "
+                          src={`https://sweetdevelopers.com/artist/storage/ProfileImage/${user?.profile_image}`}
+                          alt=""
+                          style={{ width: '100%', height: "295px", marginBottom: '10px' }}
+                        /> : <div class="imgbox">
+                          <img   className="img-responsive profile-image "src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`} alt={''} />
+                          
+
+                        </div>
+                      }
+   
+      <div className="align-self-center ">
+      <p  className='p-0'>Name : {user?.username}</p>
+      <p className='p-0'>Email : {user?.email}</p>
+      <div>
+      <a style={{margin :'10px'}} href="#" className="btn btn-primary">
+        Edit Profile
+      </a>
+      <a style={{margin :'10px'}} href="#" className="btn btn-danger">
+        Logout
+      </a>
+      </div>
+      
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+      </>}
       <style jsx>
-        {`th, td {
+        {`
+        .align-self-center {
+          align-items: center !important;
+          display: flex;
+          flex-direction: column;
+      }
+        p.p-0 {
+          margin: 0;
+          padding: 0;
+      }
+        img.img-responsive.profile-image {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          object-fit: cover;
+      }
+        th, td {
     padding: 21px !important;
     text-align: center;
 }`}
