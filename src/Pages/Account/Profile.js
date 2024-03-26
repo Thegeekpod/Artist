@@ -546,7 +546,7 @@ const Profile = () => {
 {/* <div  dangerouslySetInnerHTML={{
         __html: user.address
       }} /> */}
-        <MapContainer  lat={user?.lat || 37.7749} lng={user.lng || -122.4194}/>
+        <MapContainer  lat={user?.latitude || 37.7749} lng={user.longitude || -122.4194}/>
               </div>
             </div>
 
