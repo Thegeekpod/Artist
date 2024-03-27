@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { apibaseUrl } from "../../Component/Apibaseurl";
 import axios from "axios";
 import MGallery from "../Home/Gallery";
-import getNearbyZipCodes from "../../utils/getNearbyZipCodes";
-import { filter } from "@chakra-ui/react";
 
 const Search = () => {
   const [loading, setLoading] = useState(true);
@@ -87,14 +85,6 @@ const Search = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Fetch data only if it's not already available
-      const zipcodes = await getNearbyZipCodes(
-        artworkData.zipCode,
-        artworkData.radius
-      );
-
-      console.log(zipcodes);
-
       if (!data) {
         await fetchData();
       }
@@ -105,7 +95,6 @@ const Search = () => {
       // Update the searchResults state with the filtered data
       setSearchResults(filteredData);
       setLoading(false);
-      console.log("Search results 1:", searchResults);
     } catch (error) {
       console.error("Error during search:", error);
     }
@@ -115,31 +104,58 @@ const Search = () => {
     const dayName = new Date(filters.date).toLocaleDateString("en-US", {
       weekday: "long",
     });
+    const userLocation = JSON.parse(localStorage.getItem("userLocation"));
     const currentDate = `${dayName.toLowerCase()}_to`;
-    // Apply filters based on the form values which are not empty
 
-    const filteredData = data.filter((artwork) => {
-      return (
-        (!filters.username ||
-          artwork.user.username
-            .toLowerCase()
-            .includes(filters.username.toLowerCase())) &&
-        (!filters.country ||
-          artwork.country.trim().toLowerCase() ===
-            filters.country.trim().toLowerCase()) &&
-        (!filters.subjectName ||
-          artwork.subject_id.toString() === filters.subjectName) &&
-        (!filters.styleName ||
-          artwork.style_id.toString() === filters.styleName) &&
-        (!filters.placementName ||
-          artwork.placement_id.toString() === filters.placementName)
-      );
-    });
+    // from the user lattitude and longitude search for the artist within the radius
+    const getDistance = (lat1, lon1, lat2, lon2) => {
+      const R = 6371; // Radius of the earth in km
+      const dLat = deg2rad(lat2 - lat1); // deg2rad below
+      const dLon = deg2rad(lon2 - lon1);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) *
+          Math.cos(deg2rad(lat2)) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const d = R * c; // Distance in km
+      return d;
+    };
 
-    return filteredData;
+    const deg2rad = (deg) => {
+      return deg * (Math.PI / 180);
+    };
+
+    if (userLocation) {
+      const filteredData = data.filter((artwork) => {
+        return (
+          (!filters.username ||
+            artwork.user.username
+              .toLowerCase()
+              .includes(filters.username.toLowerCase())) &&
+          (!filters.country ||
+            artwork.country.trim().toLowerCase() ===
+              filters.country.trim().toLowerCase()) &&
+          (!filters.subjectName ||
+            artwork.subject_id.toString() === filters.subjectName) &&
+          (!filters.styleName ||
+            artwork.style_id.toString() === filters.styleName) &&
+          (!filters.placementName ||
+            artwork.placement_id.toString() === filters.placementName) &&
+          (!filters.date || new Date(artwork[currentDate]) <= filters.date) &&
+          (!filters.zipCode ||
+            getDistance(
+              userLocation.latitude,
+              userLocation.longitude,
+              artwork.user.latitude,
+              artwork.user.longitude
+            ) <= parseInt(filters.radius))
+        );
+      });
+      return filteredData;
+    }
   };
-
-  console.log("Artwork data:", artworkData);
 
   useEffect(() => {
     fetchData();
@@ -212,11 +228,11 @@ const Search = () => {
                     value={artworkData.radius}
                     onChange={handleArtInputChange}
                   >
-                    <option>20 Miles</option>
-                    <option>25 Miles</option>
-                    <option>30 Miles</option>
-                    <option>35 Miles</option>
-                    <option>40 Miles</option>
+                    <option value={"20"}>20 Miles</option>
+                    <option value={"25"}>25 Miles</option>
+                    <option value={"30"}>30 Miles</option>
+                    <option value={"35"}>35 Miles</option>
+                    <option value={"40"}>40 Miles</option>
                   </select>
                 </div>
 

@@ -58,6 +58,10 @@ const Header = () => {
             "userLocation",
             JSON.stringify({ latitude, longitude })
           );
+          localStorage.setItem(
+            "userLocation",
+            JSON.stringify({ latitude, longitude })
+          );
         },
         // if there was an error getting the users location
         (error) => {

@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Modal from "react-modal";
-import { useUser,isAuthenticated } from "../Account/UserContext";
-import { apiProxybaseUrl, apibaseUrl } from "../../Component/Apibaseurl";
+import { useUser, isAuthenticated } from "../Account/UserContext";
+import { apibaseUrl } from "../../Component/Apibaseurl";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { color } from "framer-motion";
 
 export default function MGallery({ image, ussername }) {
   const { user, token } = useUser();
@@ -36,14 +35,13 @@ export default function MGallery({ image, ussername }) {
 
     // Check if the user is authenticated
     if (!isAuthenticated()) {
-        // If authenticated, navigate to the login page
-        navigate('/login');
+      // If authenticated, navigate to the login page
+      navigate("/login");
     } else {
-        // If not authenticated, call the 'viewHandler' function with the 'index' parameter
-        viewHandler(index);
+      // If not authenticated, call the 'viewHandler' function with the 'index' parameter
+      viewHandler(index);
     }
-};
-
+  };
 
   const closeLightbox = () => {
     setSelectedImageIndex(null);
@@ -74,23 +72,22 @@ export default function MGallery({ image, ussername }) {
     }
     return [];
   };
- 
 
   const likeHandler = (index) => {
-    if(!isAuthenticated()){
-      navigate('/login')
-    }else{
+    if (!isAuthenticated()) {
+      navigate("/login");
+    } else {
       const user_id = user?.id;
 
       // Your API endpoint to store a like
       const apiUrl = `${apibaseUrl}/like`;
-  
+
       // Data to be sent in the request body
       const data = {
         artwork_id: index,
         user_id: user_id,
       };
-  
+
       axios
         .post(apiUrl, data, axiosConfig)
         .then((response) => {
@@ -98,7 +95,7 @@ export default function MGallery({ image, ussername }) {
           console.log(response.data.data);
           const updatedlikes = [...likes];
           updatedlikes[index] = response.data.data; // Assuming response.data.data contains the updated view count
-  
+
           // Update the view state with the modified array
           setLikes(updatedlikes);
         })
@@ -107,11 +104,9 @@ export default function MGallery({ image, ussername }) {
           console.error("Error storing like:", error);
         });
     }
-   
   };
 
   const viewHandler = (index) => {
-
     const user_id = user?.id;
 
     // Your API endpoint to store a like
@@ -142,14 +137,13 @@ export default function MGallery({ image, ussername }) {
   };
 
   const openModal = (index) => {
-if(!isAuthenticated()){
-navigate('/login')
-}else{
-  setIsOpen(true);
-  setSelectedIndex(index);
-  fetchCommentsForArtwork(index);
-}
-
+    if (!isAuthenticated()) {
+      navigate("/login");
+    } else {
+      setIsOpen(true);
+      setSelectedIndex(index);
+      fetchCommentsForArtwork(index);
+    }
   };
 
   const closeModal = () => {
@@ -226,6 +220,9 @@ navigate('/login')
     }
   };
 
+  if (images.length === 0)
+    return <div className="text-center">No data found</div>;
+
   return (
     <>
       {images.map((item, index) => (
@@ -234,7 +231,7 @@ navigate('/login')
             <i
               className="fa fa-eye view"
               aria-hidden="true"
-              onClick={() => handleImageClick(item?.id,index)}
+              onClick={() => handleImageClick(item?.id, index)}
             >
               <span className="space">
                 {view[item.id] || item.views?.length}
@@ -257,16 +254,12 @@ navigate('/login')
               <div className="row d-flex">
                 <div className="coll-6 text-left">
                   <i
-                     
-                    
                     className="fa fa-thumbs-up like"
                     aria-hidden="true"
                     onClick={() => likeHandler(item?.id)}
                   >
-                  
                     <span className="space">
                       {likes[item.id] || item.likes?.length}
-                      
                     </span>
                   </i>
                 </div>
@@ -369,7 +362,8 @@ navigate('/login')
           <button
             type="button"
             className="saikoihsaoP"
-            onClick={handleAddComment} >
+            onClick={handleAddComment}
+          >
             Submit
           </button>
         </div>
