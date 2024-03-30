@@ -53,7 +53,8 @@ const Login = () => {
         setError2(true);
         setTimeout(() => {
           setError2(false);
-          window.open('https://sweetdevelopers.com/artist/', '_blank');
+          window.location.href = 'https://sweetdevelopers.com/artist/';
+          // window.open('https://sweetdevelopers.com/artist/', '_blank');
       }, 5000);
       }
     } catch (error) {
