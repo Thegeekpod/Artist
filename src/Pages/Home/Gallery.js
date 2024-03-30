@@ -350,7 +350,7 @@ export default function MGallery({ image, ussername }) {
             </div>
           )}
         </div>
-        <div>
+        <div className="coomnet">
           {/* Input for adding comments */}
           <input
             className="akls"

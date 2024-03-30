@@ -8,7 +8,7 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [type, setType] = useState('');
+  const [type, setType] = useState('customer');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [sucess, setSucess] = useState(false);
@@ -158,24 +158,8 @@ const Register = () => {
                   />
                   {errorMessages.email && <p className='error'> {errorMessages.email[0]}</p>}
                 </div>
-
-                <div className="form-group validate-required validate-email" id="billing_email_field">
-                  <label htmlFor="profile" className="control-label">
-                    <span className="grey">Register as a </span>
-                    <span className="required">*</span>
-                  </label>
-                  <select required
-                  className="form-control"
-                  name="type" 
-                  id="type"
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}>
-                    <option>Select</option>
-                    <option value="artist">I am an Artist</option>
-                    <option value="customer">I am a Customer</option>
-                  </select>
-                  {errorMessages.email && <p className='error'> {errorMessages.email[0]}</p>}
-                </div>
+             
+             
                 <div className="form-group" id="billing_password_field">
                   <label htmlFor="billing_password" className="control-label">
                     <span className="grey">Password</span>
@@ -194,11 +178,19 @@ const Register = () => {
                 </div>
               </div>
 
-              <div className="col-sm-12">
+          
+              <div className="col-lg-6">
                 <button type="submit" className="theme-button">
                   Register
                 </button>
+                </div>
+                <div className="col-lg-6 text-right text-sm-center">
+                <p>
+                  if you have account please{" "}
+                  <Link to="/login">Login Now</Link>{" "}
+                </p>
               </div>
+              
             </form>
           </div>
         </div>

@@ -9,6 +9,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [error2, setError2] = useState(false);
+
   const navigate = useNavigate();
   useEffect(() => {
     // Check if the user is authenticated when the component mounts
@@ -40,16 +42,19 @@ const Login = () => {
           setError(false);
         }, 5000);
         // You might want to update state, show an error message, etc.
-      } else if (data.status === true) {
+      } else if (data.status === true && data.data.type==='customer') {
         setError(true);
         // Handle successful login scenario
         setUser(data.data);
         setToken(data.token);
-        console.log(data.data);
         navigate("/profile");
         // You can also redirect the user or perform other actions based on the successful login.
       } else {
-        // Handle other scenarios if needed
+        setError2(true);
+        setTimeout(() => {
+          setError2(false);
+          window.open('https://sweetdevelopers.com/artist/', '_blank');
+      }, 5000);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -86,6 +91,8 @@ const Login = () => {
             <form className="shop-register" onSubmit={handleFormSubmit}>
               <div className="col-sm-12">
                 {error && <p className="error"> Incorrect email or password</p>}
+                {error2 && <p className="sucess"> You are an a Artist Please login Here</p>}
+
 
                 <div
                   className="form-group validate-required validate-email"
