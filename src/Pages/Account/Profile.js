@@ -695,7 +695,8 @@ const Profile = () => {
         </div>
       </div>
       </>
-      :<>
+      :''}
+      {user?.type === 'customer' ? <>
 <div className="ds section_padding_top_90 section_padding_bottom_50 dec-t-1" style={{padding:'100px 0'}}>
   <div className="row">
     <div className="col-md-4 col-md-offset-4 text-center d-flex">
@@ -730,7 +731,7 @@ const Profile = () => {
 </div>
 
 
-      </>}
+      </> :''}
       <style jsx>
         {`
       .align-self-center {

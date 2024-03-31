@@ -174,7 +174,7 @@ const Header = () => {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      <span onClick={() => navigate("/profile")}>
+                      <span style={{color:'white'}} >
                         {" "}
                         Welcome {user?.username}
                       </span>
@@ -182,92 +182,32 @@ const Header = () => {
                     <div
                       className="dropdown-menu logout"
                       aria-labelledby="login"
-                      onClick={handleLogout}
+                     
                     >
-                      Log Out
+                      <div className="d-p" onClick={() => navigate("/profile")}>
+                        Profile
+                      </div>
+                      <div   className="d-p" onClick={handleLogout}>
+                        Log Out
+
+                      </div>
                     </div>
                   </li>
                 ) : (
                   <>
-                    <li className="dropdown login-dropdown my-account ">
-                      <a
+  <li className="dropdown login-dropdown my-account ">
+                      <Link
                         className="header-button"
                         id="login"
                         data-target="#"
-                        href="https://html.modernwebtemplates.com/"
+                        to="/login"
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
                         <span>Sign In / Sign Up</span>
-                      </a>
-                      <div className="dropdown-menu" aria-labelledby="login">
-                        <p>
-                          <strong>
-                            If you have an account, please log in:
-                          </strong>
-                        </p>
-                        <form
-                          className="shop-register"
-                          onSubmit={handleFormSubmit}
-                        >
-                          <div>
-                            {error && (
-                              <p className="error">
-                                {" "}
-                                Incorrect email or password
-                              </p>
-                            )}
-
-                            <div className="form-group ">
-                              <label
-                                htmlFor="login_email"
-                                className="control-label"
-                              >
-                                <span className="grey">Email Address </span>
-                                <span className="required">*</span>
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="login_email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                              />
-                            </div>
-
-                            <div className="form-group">
-                              <label
-                                htmlFor="login_password"
-                                className="control-label"
-                              >
-                                <span className="grey">Password</span>
-                                <span className="required">*</span>
-                              </label>
-                              <input
-                                type="password"
-                                className="form-control"
-                                name="login_password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                              />
-                            </div>
-                          </div>
-
-                          <div>
-                            <button type="submit" className="theme-button">
-                              Login
-                            </button>
-                          </div>
-                        </form>
-                        <div className="password-info topmargin_20">
-                          <a href="#">Forgot Your Password?</a>
-                          <p>
-                            if you no account please{" "}
-                            <Link to="/register">Register Now</Link>{" "}
-                          </p>
-                        </div>
-                      </div>
+                      </Link>
+                     
                     </li>
                   </>
                 )}
@@ -300,99 +240,63 @@ const Header = () => {
                     style={{ width: "110%" }}
                   >
                     <ul className="controls-list text-right text-md-center">
-                      <li className="dropdown login-dropdown my-account">
-                        <a
-                          className="header-button"
-                          id="login"
-                          data-target="#"
-                          href="#"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <span>Sign In / Sign Up</span>
-                        </a>
-                        <div className="dropdown-menu" aria-labelledby="login">
-                          <p>
-                            <strong>
-                              If you have an account, please log in:
-                            </strong>
-                          </p>
-                          <form
-                            className="shop-register"
-                            onSubmit={handleFormSubmit}
-                          >
-                            <div className="col-sm-12">
-                              {error && (
-                                <p className="error">
-                                  {" "}
-                                  Incorrect email or password
-                                </p>
-                              )}
+                    {isAuthenticated() ? (
+                  <li className="dropdown login-dropdown my-account">
+                    <a
+                      className="header-button"
+                      id="login"
+                      data-target="#"
+                      href="https://html.modernwebtemplates.com/"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <span style={{color:'white'}} >
+                        {" "}
+                        Welcome {user?.username}
+                      </span>
+                    </a>
+                    <div
+                      className="dropdown-menu logout"
+                      aria-labelledby="login"
+                     
+                    >
+                      <div className="d-p" onClick={() => navigate("/profile")}>
+                        Profile
+                      </div>
+                      <div   className="d-p" onClick={handleLogout}>
+                        Log Out
 
-                              <div className="form-group ">
-                                <label
-                                  htmlFor="login_email"
-                                  className="control-label"
-                                >
-                                  <span className="grey">Email Address </span>
-                                  <span className="required">*</span>
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  name="login_email"
-                                  value={email}
-                                  onChange={(e) => setEmail(e.target.value)}
-                                />
-                              </div>
+                      </div>
+                    </div>
+                  </li>
+                ) : (
+                  <>
+  <li className="dropdown login-dropdown my-account ">
+                      <Link
+                        className="header-button"
+                        id="login"
+                        data-target="#"
+                        to="/login"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <span>Sign In / Sign Up</span>
+                      </Link>
+                     
+                    </li>
+                  </>
+                )}
 
-                              <div className="form-group">
-                                <label
-                                  htmlFor="login_password"
-                                  className="control-label"
-                                >
-                                  <span className="grey">Password</span>
-                                  <span className="required">*</span>
-                                </label>
-                                <input
-                                  type="password"
-                                  className="form-control"
-                                  name="login_password"
-                                  value={password}
-                                  onChange={(e) => setPassword(e.target.value)}
-                                />
-                              </div>
-                            </div>
-
-                            <div className="col-sm-12">
-                              <button type="submit" className="theme-button">
-                                Login
-                              </button>
-                            </div>
-                          </form>
-                          <div className="password-info topmargin_20">
-                            <a href="#">Forgot Your Password?</a>
-                          </div>
-                        </div>
-                      </li>
-
-                      <li>
-                        <Link
-                          to="/search"
-                          className="search_modal_button serach-button"
-                        >
-                          <i className="fa fa-search" aria-hidden="true" />
-                        </Link>
-                      </li>
+                      
                     </ul>
                   </div>
                   <div className="col-sm-6 coll-6 ">
                     <span
                       onClick={toggleMenu}
-                      className={`toggle_menu ${
-                        isActive ? "mobile-active" : ""
-                      }`}
+                      className={`toggle_menu ${isActive ? "mobile-active" : ""
+                        }`}
                     >
                       <span />
                     </span>

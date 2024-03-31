@@ -462,7 +462,7 @@ th {
 .logout {
   width: auto !important;
 
-  right: -5px !important;
+  right: 15px !important;
   padding: 5px !important;
 }
 .error {
@@ -3024,4 +3024,22 @@ html.lights-out .bniG7UD {
   padding: 0 10px;
   border-radius: 10px;
   margin: 10px 0px;
+}
+.d-p {
+  font-size: 14px;
+  height: 33px;
+  margin: 11px 0;
+  padding: 3px 13px;
+  font-weight: 600;
+}
+.d-p:hover {
+  background: #f0f0f052;
+  padding: 3px 15px;
+  color: white;
+}
+
+@media (max-width: 480px){
+.my-account .dropdown-menu {
+    margin-right: -158px !important;
+}
 }
