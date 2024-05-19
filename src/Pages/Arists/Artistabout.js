@@ -1244,27 +1244,7 @@ const convertTo12HourFormat = (time24hr) => {
                 </table>
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6">
-                <p className="map">
-                  How to Upload your location{" "}
-                  <i className="fa fa-question-circle" aria-hidden="true"></i>
-                </p>
-                <div className="instruction">
-                  <p>
-                    <strong>Instructions:</strong>
-                  </p>
-                  <p>Follow these steps to embed a Google Map on your Page:</p>
-                  <ol>
-                    <li>Access Google Maps.</li>
-                    <li>Search for your desired location.</li>
-                    <li>
-                      Click the menu icon and select "Share or embed map."
-                    </li>
-                    <li>Switch to the "Embed map" tab.</li>
-                    <li>Customize the map size and settings if needed.</li>
-                    <li>Copy the generated iframe code.</li>
-                    <li>Paste the code into your profile address.</li>
-                  </ol>
-                </div>
+               
                 {/* <div
                   dangerouslySetInnerHTML={{
                     __html: user.address,

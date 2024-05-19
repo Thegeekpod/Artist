@@ -669,7 +669,7 @@ const Home = () => {
         <p>Loading...</p>
       ) : (
        <>
-          <MGallery image={data}/>
+          <MGallery image={data.data}/>
       </>
       )}
       

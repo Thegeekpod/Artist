@@ -344,7 +344,7 @@ const Search = () => {
                 <p>Loading...</p>
               ) : (
                 <>
-                  <MGallery image={searchResults} />
+                  <MGallery image={searchResults.data} />
                 </>
               )}
             </div>
