@@ -24,9 +24,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      // const proxyUrl = `https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/login`;
+      const proxyUrl = `https://artisttattoome.store/proxy.php?url=https://artisttattoome.store/api`;
 
-      const response = await axios.post(`https://sweetdevelopers.com/api/login`, {
+      const response = await axios.post(`${proxyUrl}/login`, {
         email,
         password,
       });
@@ -53,8 +53,8 @@ const Login = () => {
         setError2(true);
         setTimeout(() => {
           setError2(false);
-          window.location.href = 'https://sweetdevelopers.com/artist/';
-          // window.open('https://sweetdevelopers.com/artist/', '_blank');
+          window.location.href = 'https://artisttattoome.store';
+          // window.open('https://artisttattoome.store', '_blank');
       }, 5000);
       }
     } catch (error) {

@@ -27,7 +27,7 @@ const Register = () => {
 
     try {
 
-      const response = await axios.post(`https://sweetdevelopers.com/api/register`, {
+      const response = await axios.post(`https://artisttattoome.store/proxy.php?url=https://sweetdevelopers.com/api/register`, {
         name,
         username,
         email,
