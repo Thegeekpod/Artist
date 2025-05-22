@@ -26,9 +26,8 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const proxyUrl = 'https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/register';
 
-      const response = await axios.post(`${apibaseUrl}/register`, {
+      const response = await axios.post(`https://sweetdevelopers.com/api/register`, {
         name,
         username,
         email,

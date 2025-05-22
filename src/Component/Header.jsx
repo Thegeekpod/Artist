@@ -83,7 +83,7 @@ const Header = () => {
 
     try {
       const proxyUrl =
-        "https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/login";
+        "https://artisttattoome.store/api/login";
 
       const response = await axios.post(proxyUrl, {
         email,

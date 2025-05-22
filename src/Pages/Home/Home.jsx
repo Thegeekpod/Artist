@@ -24,7 +24,8 @@ const Home = () => {
     // Function to fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://sweetdevelopers.com/artist/api/all-artworks');
+        const response = await axios.get('https://artisttattoome.store/api/all-artworks');
+        // console.log(response.data.data);  
         setData(response.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -660,24 +661,24 @@ const Home = () => {
               <h3 className="page-title-1">FINE ART &amp; TATTOO</h3>
               <h6 className="subheader-type-1">Artists that use incredible techniques to design unique creations like glow-in-the-dark tattoos</h6>
             </div>
-           
+
           </div>
           <div className='row text-center'>
-              
-              
-              {loading ? (
-        <p>Loading...</p>
-      ) : (
-       <>
-          <MGallery image={data.data}/>
-      </>
-      )}
-      
-            </div>
+
+
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <>
+                <MGallery image={data.data}/>
+              </>
+            )}
+
+          </div>
         </div>
-        
+
       </div>
-   
+
 
 
     </>

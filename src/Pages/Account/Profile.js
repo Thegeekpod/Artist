@@ -103,11 +103,11 @@ const Profile = () => {
 
                       {user.profile_image && user.profile_image.length ?
                         <img
-                          src={`https://sweetdevelopers.com/artist/storage/ProfileImage/${user?.profile_image}`}
+                          src={`https://artisttattoome.store/storage/ProfileImage/${user?.profile_image}`}
                           alt=""
                           style={{ width: '100%', height: "295px", marginBottom: '10px' }}
                         /> : <div class="imgbox">
-                          <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`} alt={''} />
+                          <img className="imgbo" src={`https://artisttattoome.store/storage/ArtworkImage/noimg.jpg`} alt={''} />
                           <div className='imgtitle'>
                             <h4 class="page-title-1 " style={{ color: 'white' }}>
                               No Imgae
@@ -260,7 +260,7 @@ const Profile = () => {
               <>
                 {bannerImagedata.map(item => (
                   <SwiperSlide key={item.id}>
-                    <img src={`https://sweetdevelopers.com/artist/storage/BannerImage/${item.banner_image}`} alt={item.banner_image} />
+                    <img src={`https://artisttattoome.store/storage/BannerImage/${item.banner_image}`} alt={item.banner_image} />
                   </SwiperSlide>
                 ))}
               </>
@@ -269,7 +269,7 @@ const Profile = () => {
                 {[...Array(8)].map((_, index) => (
                   <SwiperSlide key={index}>
                     <div class="imgbox">
-                      <img className="" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`} alt={''} />
+                      <img className="" src={`https://artisttattoome.store/storage/ArtworkImage/noimg.jpg`} alt={''} />
                       <div className='imgtitle'>
                         <h4 class="page-title-1 " style={{ color: 'white' }}>
                           No Imgae in Banner
@@ -676,7 +676,7 @@ const Profile = () => {
               <>
                 <div className="col-lg-4 ">
                   <div class="imgbox">
-                    <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`} alt={''} />
+                    <img className="imgbo" src={`https://artisttattoome.store/storage/ArtworkImage/noimg.jpg`} alt={''} />
                     <div className='imgtitle'>
                       <h4 class="page-title-1 " style={{ color: 'white' }}>
                         No Imgae
@@ -702,11 +702,11 @@ const Profile = () => {
     <div className="col-md-4 col-md-offset-4 text-center d-flex">
     {user.profile_image && user.profile_image.length ?
                         <img  className="img-responsive profile-image "
-                          src={`https://sweetdevelopers.com/artist/storage/ProfileImage/${user?.profile_image}`}
+                          src={`https://artisttattoome.store/storage/ProfileImage/${user?.profile_image}`}
                           alt=""
                           style={{ width: '100%', height: "295px", marginBottom: '10px' }}
                         /> : <div class="imgbox">
-                          <img   className="img-responsive profile-image "src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`} alt={''} />
+                          <img   className="img-responsive profile-image "src={`https://artisttattoome.store/storage/ArtworkImage/noimg.jpg`} alt={''} />
                           
 
                         </div>

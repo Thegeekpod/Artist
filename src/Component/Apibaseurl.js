@@ -1,5 +1,5 @@
 
-const apibaseUrl = 'https://sweetdevelopers.com/artist/api'; // Replace this with your actual base URL
-const apiProxybaseUrl = 'https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api'; // Replace this with your actual base URL
-const apiimageurl  ='https://sweetdevelopers.com/artist/storage';
-export {apibaseUrl, apiProxybaseUrl,apiimageurl};
+const apibaseUrl = 'https://artisttattoome.store/api'; // Replace this with your actual base URL
+// const apiProxybaseUrl = 'https://artisttattoome.store/proxy.php?url=https://artisttattoome.store/api'; // Replace this with your actual base URL
+const apiimageurl  ='https://artisttattoome.store/storage';
+export {apibaseUrl,apiimageurl};

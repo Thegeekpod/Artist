@@ -67,7 +67,7 @@ export default function MGallery({ image, ussername }) {
         ...images.slice(0, startIndex),
       ];
       return slicedImages.map((item) => ({
-        src: `https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`,
+        src: `https://artisttattoome.store/storage/ArtworkImage/${item.image}`,
       }));
     }
     return [];
@@ -239,7 +239,7 @@ export default function MGallery({ image, ussername }) {
             </i>
             <img
               className="imgbo"
-              src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`}
+              src={`https://artisttattoome.store/storage/ArtworkImage/${item.image}`}
               alt={item.title}
             />
             <div className="imgtitle">

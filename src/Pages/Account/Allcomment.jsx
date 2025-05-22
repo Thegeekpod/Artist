@@ -151,7 +151,7 @@ const Allcomment = () => {
                               <tr key={comment.id}>
                                 <td>
                                   <p className='commp'>{item.title}</p>
-                                  <img style={{ width: '80px' }} src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title} />
+                                  <img style={{ width: '80px' }} src={`https://artisttattoome.store/storage/ArtworkImage/${item.image}`} alt={item.title} />
 
                                 </td>
                                 <td><p className='comcom'>{comment.comment}</p></td>

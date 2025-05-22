@@ -27,7 +27,7 @@ const Search = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://sweetdevelopers.com/artist/api/all-artworks"
+        "https://artisttattoome.store/artist/api/all-artworks"
       );
       setData(response.data.data);
       setSearchResults(response.data.data);

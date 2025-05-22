@@ -280,7 +280,7 @@ const zip = formData.zipcode;
     formData.append('zipcode', artworkData.zipcode);
     // console.log('Artwork data:', artworkData);
     try {
-      const response = await axios.post(`https://sweetdevelopers.com/artist/api/upload-artwork`, formData, axiosConfig);
+      const response = await axios.post(`https://artisttattoome.store/api/upload-artwork`, formData, axiosConfig);
       console.log('File uploaded successfully:', response.data);
       // Update ArtData after successful upload
       // setArtData(response.data.data.artworks);
@@ -327,7 +327,7 @@ const zip = formData.zipcode;
 
     if (confirmed.isConfirmed) {
       try {
-        const response = await axios.delete(`https://sweetdevelopers.com/artist/api/delete-artwork/${idToDelete}`, axiosConfig);
+        const response = await axios.delete(`https://artisttattoome.store/api/delete-artwork/${idToDelete}`, axiosConfig);
 
         if (response.status === 200) {
           console.log(`Item with ID ${idToDelete} deleted`);
@@ -412,7 +412,7 @@ const zip = formData.zipcode;
 
     if (confirmed.isConfirmed) {
       try {
-        const response = await axios.delete(`https://sweetdevelopers.com/artist/api/delete-banner/${idToDelete}`, axiosConfig);
+        const response = await axios.delete(`https://artisttattoome.store/api/delete-banner/${idToDelete}`, axiosConfig);
 
         if (response.status === 200) {
           console.log(`Item with ID ${idToDelete} deleted`);
@@ -464,7 +464,7 @@ const zip = formData.zipcode;
               <div className="row mb-3">
                 <div className="col-md-12 mt-3 text-center ">
                   <img
-                    src={userinfo.imagePreview || `https://sweetdevelopers.com/artist/storage/ProfileImage/${formData.profile_image || 'noimg.jpg'}  `}
+                    src={userinfo.imagePreview || `https://artisttattoome.store/storage/ProfileImage/${formData.profile_image || 'noimg.jpg'}  `}
 
                     alt="Preview"
                     style={{ maxWidth: '200px%', height: '200px' }}
@@ -1100,7 +1100,7 @@ const zip = formData.zipcode;
                   {artdata.map(item => (
                     <div className="col-lg-4 " key={item.id}>
                       <div class="imgbox">
-                        <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/${item.image}`} alt={item.title} />
+                        <img className="imgbo" src={`https://artisttattoome.store/storage/ArtworkImage/${item.image}`} alt={item.title} />
                         <div className='imgtitle'>
 
                           <h4 class="page-title-1 " style={{ color: 'white' }}>
@@ -1178,7 +1178,7 @@ const zip = formData.zipcode;
                   {bannerImagedata.map(item => (
                     <div className="col-lg-4 " key={item.id}>
                       <div class="imgbox">
-                        <img className="imgbo" src={`https://sweetdevelopers.com/artist/storage/BannerImage/${item.banner_image}`} alt={item.banner_image} />
+                        <img className="imgbo" src={`https://artisttattoome.store/storage/BannerImage/${item.banner_image}`} alt={item.banner_image} />
                         <div className='imgtitle'>
 
 

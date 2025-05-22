@@ -588,7 +588,7 @@ const convertTo12HourFormat = (time24hr) => {
                     <div className="img-wrap-1">
                       {user.profile_image && user.profile_image.length ? (
                         <img
-                          src={`https://sweetdevelopers.com/artist/storage/ProfileImage/${user?.profile_image}`}
+                          src={`https://artisttattoome.store/artist/storage/ProfileImage/${user?.profile_image}`}
                           alt=""
                           style={{
                             width: "100%",
@@ -600,7 +600,7 @@ const convertTo12HourFormat = (time24hr) => {
                         <div className="imgbox">
                           <img
                             className="imgbo"
-                            src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`}
+                            src={`https://artisttattoome.store/artist/storage/ArtworkImage/noimg.jpg`}
                             alt={""}
                           />
                           <div className="imgtitle">
@@ -910,7 +910,7 @@ const convertTo12HourFormat = (time24hr) => {
                 {bannerImagedata.map((item) => (
                   <SwiperSlide key={item.id}>
                     <img
-                      src={`https://sweetdevelopers.com/artist/storage/BannerImage/${item.banner_image}`}
+                      src={`https://artisttattoome.store/artist/storage/BannerImage/${item.banner_image}`}
                       alt={item.banner_image}
                     />
                   </SwiperSlide>
@@ -923,7 +923,7 @@ const convertTo12HourFormat = (time24hr) => {
                     <div className="imgbox">
                       <img
                         className=""
-                        src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`}
+                        src={`https://artisttattoome.store/artist/storage/ArtworkImage/noimg.jpg`}
                         alt={""}
                       />
                       <div className="imgtitle">
@@ -1441,7 +1441,7 @@ const convertTo12HourFormat = (time24hr) => {
                   <div className="imgbox">
                     <img
                       className="imgbo"
-                      src={`https://sweetdevelopers.com/artist/storage/ArtworkImage/noimg.jpg`}
+                      src={`https://artisttattoome.store/artist/storage/ArtworkImage/noimg.jpg`}
                       alt={""}
                     />
                     <div className="imgtitle">
