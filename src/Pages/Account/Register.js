@@ -26,8 +26,9 @@ const Register = () => {
     e.preventDefault();
 
     try {
+      const proxyUrl = 'https://sweetdevelopers.com/proxy.php?url=https://sweetdevelopers.com/artist/api/register';
 
-      const response = await axios.post(`https://artisttattoome.store/proxy.php?url=https://sweetdevelopers.com/api/register`, {
+      const response = await axios.post(`${apibaseUrl}/register`, {
         name,
         username,
         email,
